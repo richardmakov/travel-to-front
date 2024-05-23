@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 import useBadge from '../../../hooks/useBadge';
+import useAlertSnackbar from '../../../components/Snackbar/useSnackbar';
+import useAuthStore from '../../../stores/authStore';
 
 export default function DisplayInfo() {
 
@@ -22,6 +24,12 @@ export default function DisplayInfo() {
     const { id } = useParams();
     const { selectedBadge } = useBadge();
     const oferta = ofertasViajes.find(oferta => oferta.id === id);
+    const { isLogged } = useAuthStore();
+    const { handleClickVariant } = useAlertSnackbar();
+
+    const handleClickBookNow = () =>{
+        handleClickVariant('You have to be logged', 'info')
+    }
     return (
         <Box sx={{ maxWidth: '100%', margin: 'auto', px: 2 }}>
             <Box
@@ -73,7 +81,7 @@ export default function DisplayInfo() {
                     Discover the best of {oferta?.title ?? 'this destination'} and enjoy a few days of relaxation in the beach area of your choice
                 </Typography>
                 <Typography variant='body1' sx={{ fontWeight: '100', mt: 2 }}>
-                    Visiting Bangkok, River Kwai, Ayutthaya, Lopburi, Phitsanuloke, Sukhothai, Chiang Rai, Chiang Mai, P.N. Doi Inthanon and beaches, all with Premium Vip services
+                    {oferta?.visit}
                 </Typography>
             </Box>
 
@@ -100,9 +108,9 @@ export default function DisplayInfo() {
             <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
                 <Typography variant='h5' sx={{ fontWeight: '300' }}>Trip to {oferta?.title}</Typography>
                 <Typography variant='body1' sx={{ fontWeight: '100', mt: 2 }}>
-                    Embark on an enchanting journey to Thailand, a country renowned for its warm hospitality, rich culture, and breathtaking scenery. Nestled in the heart of Southeast Asia, Thailand offers an array of experiences that captivate travelers from around the globe.
+                    {oferta?.description}
                 </Typography>
-                {/* Rest of your content */}
+
             </Box>
 
             <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
@@ -112,11 +120,19 @@ export default function DisplayInfo() {
                     <Typography variant="subtitle1">Departure Date: July 10, 2024</Typography>
                     <Typography variant="subtitle1">Duration: 10 days</Typography>
                     <Typography variant="subtitle1">Total Price: {selectedBadge.symbol === 'EUR' ? (oferta?.priceEUR) : (oferta?.priceUSD)}</Typography>
-                    <Button variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
+                    {isLogged ? (
                         <NavLink to={`/checkout/circuit/${oferta?.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                            Book Now
+                            <Button variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
+                                Book Now
+                            </Button>
                         </NavLink>
-                    </Button>
+                    ) : (
+                        <Button variant="contained" color="secondary" size="large" sx={{ mt: 2 }} onClick={handleClickBookNow}>
+                            Book Now
+                        </Button>
+                    )}
+
+
                 </Box>
             </Box>
 

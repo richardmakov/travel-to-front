@@ -1,7 +1,7 @@
 // useSuccessSnackbar.ts
 import { useSnackbar, VariantType } from 'notistack';
 
-const useSuccessSnackbar = () => {
+const useAlertSnackbar = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleClickVariant = (message: string, variant: VariantType) => {
@@ -11,4 +11,4 @@ const useSuccessSnackbar = () => {
   return { handleClickVariant };
 };
 
-export default useSuccessSnackbar;
+export default useAlertSnackbar;

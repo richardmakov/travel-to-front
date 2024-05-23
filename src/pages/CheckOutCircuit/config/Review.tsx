@@ -10,19 +10,19 @@ import Typography from '@mui/material/Typography';
 import { ofertasViajes } from '../../Home/components/data/offerts';
 import { useParams } from 'react-router-dom';
 import useBadge from '../../../hooks/useBadge';
-import { IFormInputs } from './useCheckOutViewModel';
+import useAuthStore from '../../../stores/authStore';
 
 interface ReviewProps {
-  formInputs: IFormInputs;
   paymentType: string;
   cardNumber: string;
   expirationDate: string;
   cardHolder: string;
 }
 
-export default function Review({formInputs, paymentType, cardNumber, expirationDate, cardHolder }: ReviewProps) {
+export default function Review({paymentType, cardNumber, expirationDate, cardHolder }: ReviewProps) {
   const { id } = useParams();
   const { selectedBadge } = useBadge();
+  const {user} = useAuthStore();
 
   const payments = [
     { name: 'Card type:', detail: paymentType },
@@ -111,9 +111,9 @@ export default function Review({formInputs, paymentType, cardNumber, expirationD
           <Typography variant="subtitle2" gutterBottom>
             Shipment details
           </Typography>
-          <Typography gutterBottom>{formInputs.firstName} {formInputs.lastName}</Typography>
+          <Typography gutterBottom>{user?.firstname} {user?.lastname}</Typography>
           <Typography color="text.secondary" gutterBottom>
-            {formInputs.address1}
+            {user?.idCard} {user?.email}
           </Typography>
         </div>
         <div>

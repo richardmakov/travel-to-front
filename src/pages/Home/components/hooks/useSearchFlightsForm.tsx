@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormValuesSearchFlights } from '../interface/flightsInterface';
 import { useNavigate } from 'react-router-dom';
 import useBadge from '../../../../hooks/useBadge';
@@ -34,7 +34,14 @@ const useFlightSearchForm = () => {
         itineraryType: 'ONE_WAY'
     };
 
-    const [formValues, setFormValues] = useState<FormValuesSearchFlights>(initialFormValues);
+    const [formValues, setFormValues] = useState<FormValuesSearchFlights>(() => {
+        const savedFormValues = localStorage.getItem('formValues');
+        return savedFormValues ? JSON.parse(savedFormValues) : initialFormValues;
+    });
+
+    useEffect(() => {
+        localStorage.setItem('formValues', JSON.stringify(formValues));
+    }, [formValues]);
 
     const [formError, setFormError] = useState('');
 
@@ -47,7 +54,7 @@ const useFlightSearchForm = () => {
     const { searchFlights, searchAirportArrival, searchAirportDeparture, airportsDeparture, airportsLanding } = useFlightStore();
 
     const handleChange = (field: keyof FormValuesSearchFlights, value: string) => {
-        setFormValues(prevState => ({
+        setFormValues((prevState) => ({
             ...prevState,
             [field]: value
         }));

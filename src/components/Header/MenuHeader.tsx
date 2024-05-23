@@ -4,11 +4,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useAuthStore from '../../stores/authStore';
+import useAlertSnackbar from '../Snackbar/useSnackbar';
 
 
 export default function MenuHeader() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { handleClickVariant } = useAlertSnackbar();
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -20,6 +22,7 @@ export default function MenuHeader() {
   const handleLogOutClose = () => {
     handleClose()
     signout()
+    handleClickVariant('Logged out', 'warning');
   }
 
   return (

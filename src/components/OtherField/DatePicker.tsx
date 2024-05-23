@@ -9,19 +9,21 @@ type DatePickerProps = {
 }
 
 export default function DatePicker({ handleDateChange }: DatePickerProps) {
+
+
     return (
         <>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
                     <ExternalDatePicker
-                        
                         name="date"
                         label={'Date of Birth *'}
                         views={['year', 'month', 'day']}
                         onChange={handleDateChange}
+                        
                     />
                 </DemoContainer>
             </LocalizationProvider>
         </>
-    )
+    );
 }

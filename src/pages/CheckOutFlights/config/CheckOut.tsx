@@ -16,20 +16,21 @@ import { PaletteMode } from '@mui/material';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import AddressForm from './AddressForm';
+import PassengersForm from './PassengersForm';
 import Info from './Info';
 import InfoMobile from './InfoMobile';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
-import ToggleColorMode from './ToggleColorMode';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import { IFormInputs, IPaymentFields } from './useCheckOutViewModel';
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+import dayjs from 'dayjs';
+const steps = ['Passengers', 'Payment details', 'Review and Pay'];
 
 interface CheckoutProps {
-    handleInputChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
-    formInputs: IFormInputs;
+    handleDateChange: (e: dayjs.Dayjs | null, index: number) => void;
+    handleInputChange: (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    formInputs: IFormInputs[];
     paymentType: string;
     setPaymentType: React.Dispatch<React.SetStateAction<string>>;
     cardNumber: string;
@@ -43,7 +44,7 @@ interface CheckoutProps {
     handleBack: () => void;
     handleNext: () => void;
     activeStep: number;
-    errors: Partial<IFormInputs>;
+    errors:  Partial<IFormInputs>[];
     errors2: Partial<IPaymentFields>;
 }
 
@@ -80,21 +81,21 @@ type Flight = {
     };
 };
 
-function getStepContent(errors2: Partial<IPaymentFields>, errors: Partial<IFormInputs>, step: number, handleInputChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>, formInputs: IFormInputs, paymentType: string, setPaymentType: React.Dispatch<React.SetStateAction<string>>, cardNumber: string, setCardNumber: React.Dispatch<React.SetStateAction<string>>, cvv: string, setCvv: React.Dispatch<React.SetStateAction<string>>, expirationDate: string, setExpirationDate: React.Dispatch<React.SetStateAction<string>>, cardHolder: string, setCardHolder: React.Dispatch<React.SetStateAction<string>>) {
+function getStepContent(handleDateChange:(e: dayjs.Dayjs | null, index: number) => void , errors2: Partial<IPaymentFields>, errors:  Partial<IFormInputs>[], step: number, handleInputChange: (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, formInputs: IFormInputs[], paymentType: string, setPaymentType: React.Dispatch<React.SetStateAction<string>>, cardNumber: string, setCardNumber: React.Dispatch<React.SetStateAction<string>>, cvv: string, setCvv: React.Dispatch<React.SetStateAction<string>>, expirationDate: string, setExpirationDate: React.Dispatch<React.SetStateAction<string>>, cardHolder: string, setCardHolder: React.Dispatch<React.SetStateAction<string>>) {
     switch (step) {
         case 0:
-            return <AddressForm handleInputChange={handleInputChange} formInputs={formInputs} errors={errors} />;
+            return <PassengersForm handleDateChange={handleDateChange}  handleInputChange={handleInputChange} formInputs={formInputs} errors={errors} />;
         case 1:
             return <PaymentForm errors2={errors2} paymentType={paymentType} setPaymentType={setPaymentType} cardNumber={cardNumber} setCardNumber={setCardNumber} cvv={cvv} setCvv={setCvv} expirationDate={expirationDate} setExpirationDate={setExpirationDate} cardHolder={cardHolder} setCardHolder={setCardHolder} />;
         case 2:
-            return <Review formInputs={formInputs} paymentType={paymentType} cardNumber={cardNumber} expirationDate={expirationDate} cardHolder={cardHolder} />;
+            return <Review paymentType={paymentType} cardNumber={cardNumber} expirationDate={expirationDate} cardHolder={cardHolder} />;
         default:
             throw new Error('Unknown step');
     }
 }
 
-export default function Checkout({ errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
-    const [mode, setMode] = React.useState<PaletteMode>('light');
+export default function Checkout({ handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
+    const [mode] = React.useState<PaletteMode>('light');
     const defaultTheme = createTheme({ palette: { mode } });
 
     const location = useLocation();
@@ -112,10 +113,6 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
         return totalPriceWithIVA.toFixed(2);
     }
 
-    const toggleColorMode = () => {
-        setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
-    };
-
     const generateBookingNumber = () => {
         const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const length = 8;
@@ -130,12 +127,12 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
     return (
         <ThemeProvider theme={defaultTheme}>
             <CssBaseline />
-            <Grid container sx={{ height: { xs: '100%', sm: '100dvh' } }}>
+            <Grid container sx={{ height: { xs: '100%', sm: '100vh' } }}>
                 <Grid
                     item
                     xs={12}
                     sm={5}
-                    lg={4}
+                    lg={6}
                     sx={{
                         display: { xs: 'none', md: 'flex' },
                         flexDirection: 'column',
@@ -151,15 +148,15 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                     <Box
                         sx={{
                             display: 'flex',
-                            alignItems: 'end',
-                            height: 150,
+                            alignItems: 'center',
+                            
                         }}
                     >
                         <Button
                             startIcon={<ArrowBackRoundedIcon />}
                             component="a"
                             href="/"
-                            sx={{ ml: '-8px', p: 0, px: 2 }}
+                            sx={{ ml: '-8px', py: 1, px: 2 }}
                         >
                             Back
                         </Button>
@@ -170,7 +167,6 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                             flexDirection: 'column',
                             flexGrow: 1,
                             width: '100%',
-                            maxWidth: 500,
                         }}
                     >
                         <Info />
@@ -180,7 +176,7 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                     item
                     sm={12}
                     md={7}
-                    lg={8}
+                    lg={6}
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -218,7 +214,7 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                                     Back
                                 </Button>
                             </NavLink>
-                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+                    {/*         <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} /> */}
                         </Box>
                         <Box
                             sx={{
@@ -227,22 +223,22 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                                 justifyContent: 'space-between',
                                 alignItems: 'flex-end',
                                 flexGrow: 1,
-                                height: 150,
+                                height: 50,
                             }}
                         >
-                            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
+                       {/*      <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} /> */}
                             <Stepper
                                 id="desktop-stepper"
                                 activeStep={activeStep}
                                 sx={{
                                     width: '100%',
-                                    height: 40,
+                                    height: 50,
                                 }}
                             >
                                 {steps.map((label) => (
                                     <Step
                                         sx={{
-                                            ':first-child': { pl: 0 },
+                                            ':first-of-type': { pl: 0 },
                                             ':last-child': { pr: 0 },
                                         }}
                                         key={label}
@@ -283,7 +279,6 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            flexGrow: 1,
                             width: '100%',
                             maxWidth: { sm: '100%', md: 600 },
                             maxHeight: '720px',
@@ -299,7 +294,7 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                             {steps.map((label) => (
                                 <Step
                                     sx={{
-                                        ':first-child': { pl: 0 },
+                                        ':first-of-type': { pl: 0 },
                                         ':last-child': { pr: 0 },
                                         '& .MuiStepConnector-root': { top: { xs: 6, sm: 12 } },
                                     }}
@@ -336,7 +331,7 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                             </Stack>
                         ) : (
                             <React.Fragment>
-                                {getStepContent(errors2, errors, activeStep, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder)}
+                                {getStepContent(handleDateChange, errors2, errors, activeStep, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder)}
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -347,7 +342,7 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                                         gap: 1,
                                         pb: { xs: 12, sm: 0 },
                                         mt: { xs: 2, sm: 0 },
-                                        mb: '60px',
+                                        mb: 4,
                                     }}
                                 >
                                     {activeStep !== 0 && (
@@ -370,6 +365,7 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                                             fullWidth
                                             sx={{
                                                 display: { xs: 'flex', sm: 'none' },
+                                                mb: 4
                                             }}
                                         >
                                             Previous
@@ -381,6 +377,7 @@ export default function Checkout({ errors, errors2, handleInputChange, formInput
                                         onClick={handleNext}
                                         sx={{
                                             width: { xs: '100%', sm: 'fit-content' },
+                                            mb: 4
                                         }}
                                     >
                                         {activeStep === steps.length - 1 ? 'Pay' : 'Next'}

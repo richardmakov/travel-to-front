@@ -3,7 +3,7 @@ import { Container, Typography} from '@mui/material'
 export default function MessageUS() {
 
     return (
-        <Container sx={{py:7}}>
+        <Container sx={{py:15}}>
             <Typography variant="h2" >
                 About TravelTO
             </Typography>

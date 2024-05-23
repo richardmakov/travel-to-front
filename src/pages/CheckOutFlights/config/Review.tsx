@@ -7,10 +7,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useLocation } from 'react-router-dom';
-import { IFormInputs } from './useCheckOutViewModel';
+import useAuthStore from '../../../stores/authStore';
 
 interface ReviewProps {
-  formInputs: IFormInputs;
   paymentType: string;
   cardNumber: string;
   expirationDate: string;
@@ -50,7 +49,9 @@ type Flight = {
   };
 };
 
-export default function Review({ formInputs, paymentType, cardNumber, expirationDate, cardHolder }: ReviewProps) {
+export default function Review({ paymentType, cardNumber, expirationDate, cardHolder }: ReviewProps) {
+
+  const {user} = useAuthStore();
 
   const payments = [
     { name: 'Card type:', detail: paymentType },
@@ -113,9 +114,9 @@ export default function Review({ formInputs, paymentType, cardNumber, expiration
           <Typography variant="subtitle2" gutterBottom>
             Shipment details
           </Typography>
-          <Typography gutterBottom>{formInputs.firstName} {formInputs.lastName}</Typography>
+          <Typography gutterBottom>{user?.firstname} {user?.lastname}</Typography>
           <Typography color="text.secondary" gutterBottom>
-            {formInputs.address1}
+            {user?.idCard} {user?.email}
           </Typography>
         </div>
         <div>

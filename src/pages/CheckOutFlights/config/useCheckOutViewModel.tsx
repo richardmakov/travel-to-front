@@ -1,15 +1,13 @@
+import dayjs from 'dayjs';
 import React from 'react'
+import useFlightSearchForm from '../../Home/components/hooks/useSearchFlightsForm';
 
 export interface IFormInputs {
     firstName: string;
     lastName: string;
-    address1: string;
-    address2?: string;
-    city: string;
-    state: string;
-    zip: string;
-    country: string;
-    saveAddress?: boolean;
+    dateOfBirth: string;
+    passport: string;
+    children: boolean;
 }
 
 export interface IPaymentFields {
@@ -21,62 +19,61 @@ export interface IPaymentFields {
 }
 
 export const useCheckOutViewModel = () => {
+
     const [activeStep, setActiveStep] = React.useState(0);
-    const [formInputs, setFormInputs] = React.useState<IFormInputs>({
-        firstName: '',
-        lastName: '',
-        address1: '',
-        address2: '',
-        city: '',
-        state: '',
-        zip: '',
-        country: ''
+
+    const { formValues } = useFlightSearchForm()
+    const [formInputs, setFormInputs] = React.useState<IFormInputs[]>(() => {
+        return Array.from({ length: formValues.numberAdults + formValues.numberSenior }, () => ({
+            firstName: '',
+            lastName: '',
+            dateOfBirth: '',
+            passport: '',
+            children: false
+        }));
     });
 
-    const [errors, setErrors] = React.useState<Partial<IFormInputs>>({});
+    const [errors, setErrors] = React.useState<Partial<IFormInputs>[]>([]);
     const [errors2, setErrors2] = React.useState<Partial<IPaymentFields>>({});
 
     const validate = (): boolean => {
-        const newErrors: Partial<IFormInputs> = {};
+        const newErrors: Partial<IFormInputs>[] = formInputs.map(() => ({}));
 
         const nameRegex = /^[a-zA-Z\s]+$/;
-        const zipRegex = /^\d{5}(?:[-\s]\d{4})?$/;
-        if (formInputs.firstName && !nameRegex.test(formInputs.firstName)) {
-            newErrors.firstName = 'Invalid characters. Only letters and spaces are allowed.';
-        }
+        const dobRegex = /^\d{4}-\d{2}-\d{2}$/;
+        const passportRegex = /^[a-zA-Z0-9]+$/;
 
-        if (formInputs.lastName && !nameRegex.test(formInputs.lastName)) {
-            newErrors.lastName = 'Invalid characters. Only letters and spaces are allowed.';
-        }
+        formInputs.forEach((formInput, index) => {
+            if (!formInput.firstName) {
+                newErrors[index].firstName = 'First name is required';
+            } else if (!nameRegex.test(formInput.firstName)) {
+                newErrors[index].firstName = 'Invalid characters. Only letters and spaces are allowed.';
+            }
 
-        if (formInputs.city && !nameRegex.test(formInputs.city)) {
-            newErrors.city = 'Invalid characters. Only letters and spaces are allowed.';
-        }
+            if (!formInput.lastName) {
+                newErrors[index].lastName = 'Last name is required';
+            } else if (!nameRegex.test(formInput.lastName)) {
+                newErrors[index].lastName = 'Invalid characters. Only letters and spaces are allowed.';
+            }
 
-        if (formInputs.state && !nameRegex.test(formInputs.state)) {
-            newErrors.state = 'Invalid characters. Only letters and spaces are allowed.';
-        }
+            if (!formInput.dateOfBirth) {
+                newErrors[index].dateOfBirth = 'Date of birth is required';
+            } else if (!dobRegex.test(formInput.dateOfBirth)) {
+                newErrors[index].dateOfBirth = 'Invalid date of birth format. Please use YYYY-MM-DD.';
+            }
 
-        if (formInputs.country && !nameRegex.test(formInputs.country)) {
-            newErrors.country = 'Invalid characters. Only letters and spaces are allowed.';
-        }
-        
-        if (formInputs.zip && !zipRegex.test(formInputs.zip)) {
-            newErrors.zip = 'Invalid ZIP code format';
-        }
-
-        if (!formInputs.firstName) newErrors.firstName = 'First name is required';
-        if (!formInputs.lastName) newErrors.lastName = 'Last name is required';
-        if (!formInputs.address1) newErrors.address1 = 'Address 1 is required';
-        if (!formInputs.city) newErrors.city = 'City is required';
-        if (!formInputs.state) newErrors.state = 'State is required';
-        if (!formInputs.zip) newErrors.zip = 'ZIP code is required';
-        if (!formInputs.country) newErrors.country = 'Country is required';
+            if (!formInput.passport) {
+                newErrors[index].passport = 'Passport is required';
+            } else if (!passportRegex.test(formInput.passport)) {
+                newErrors[index].passport = 'Invalid characters. Only letters and numbers are allowed for passport.';
+            }
+        });
 
         setErrors(newErrors);
 
-        return Object.keys(newErrors).length === 0;
+        return newErrors.every(error => Object.keys(error).length === 0);
     };
+
 
     const validatePaymentFields = (): boolean => {
         let valid = true;
@@ -138,25 +135,77 @@ export const useCheckOutViewModel = () => {
         setActiveStep(activeStep - 1);
     };
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (index: number) => (
+        event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
         const { name, value } = event.target;
-        setFormInputs({
-            ...formInputs,
-            [name]: value,
-        });
+        const updatedFormInputs = [...formInputs];
+        updatedFormInputs[index] = { ...updatedFormInputs[index], [name]: value };
 
-        if (name in errors) {
-            if (errors[name as keyof IFormInputs]) {
-                setErrors({ ...errors, [name]: '' });
+        setFormInputs(updatedFormInputs);
+
+        const updatedErrors = [...errors];
+        const nameRegex = /^[a-zA-Z\s]+$/;
+        const passportRegex = /^[a-zA-Z0-9]+$/;
+
+        if (name === 'firstName' || name === 'lastName') {
+            if (!value) {
+                updatedErrors[index][name] = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
+            } else if (!nameRegex.test(value)) {
+                updatedErrors[index][name] = 'Invalid characters. Only letters and spaces are allowed.';
+            } else {
+                delete updatedErrors[index][name];
+            }
+        } else if (name === 'passport') {
+            if (!value) {
+                updatedErrors[index].passport = 'Passport is required';
+            } else if (!passportRegex.test(value)) {
+                updatedErrors[index].passport = 'Invalid characters. Only letters and numbers are allowed for passport.';
+            } else {
+                delete updatedErrors[index].passport;
             }
         }
+
+        setErrors(updatedErrors);
     };
+
+
+
+
+    const handleDateChange = (e: dayjs.Dayjs | null, index: number) => {
+        const formattedDate = e ? e.format('YYYY-MM-DD') : '';
+
+        const updatedFormInputs = [...formInputs];
+        updatedFormInputs[index] = {
+            ...updatedFormInputs[index],
+            dateOfBirth: formattedDate
+        };
+
+        setFormInputs(updatedFormInputs);
+
+        const updatedErrors = [...errors];
+        const dobRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!formattedDate) {
+            updatedErrors[index] = { ...updatedErrors[index], dateOfBirth: 'Date of birth is required' };
+        } else if (!dobRegex.test(formattedDate)) {
+            updatedErrors[index] = { ...updatedErrors[index], dateOfBirth: 'Invalid date of birth format. Please use YYYY-MM-DD.' };
+        } else {
+            if (updatedErrors[index]) {
+                delete updatedErrors[index].dateOfBirth;
+            }
+        }
+
+        setErrors(updatedErrors);
+    };
+
+
+
 
     return {
         formInputs,
         handleInputChange,
         activeStep,
-        setActiveStep,
+        setActiveStep, handleDateChange,
         paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleNext, handleBack, errors, errors2
     }
 }

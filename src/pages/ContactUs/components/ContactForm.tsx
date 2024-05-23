@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Box, Grid, Paper, Typography } from '@mui/material';
 import ErrorMessage from '../../../components/ErrorMessage';
-import useSuccessSnackbar from '../../../components/Snackbar/useSuccessSnackbar';
+import useAlertSnackbar from '../../../components/Snackbar/useSnackbar';
 
  export default function ContactForm () {
   const [formData, setFormData] = useState({
@@ -14,7 +14,7 @@ import useSuccessSnackbar from '../../../components/Snackbar/useSuccessSnackbar'
 
   const [error, setError] = useState('');
 
-  const { handleClickVariant } = useSuccessSnackbar();
+  const { handleClickVariant } = useAlertSnackbar();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({

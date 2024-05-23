@@ -19,13 +19,13 @@ function ResponsiveAppBar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            {pages.map((page) => (
+            {pages.map((page, index) => (
               <NavLink
+                key={index}
                 to={page.link}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <Button
-                  key={page.name}
                   sx={{
                     my: 2,
                     mr: 4,
@@ -33,7 +33,6 @@ function ResponsiveAppBar() {
                     display: 'block',
                   }}
                 >
-
                   {page.name}
 
                 </Button>

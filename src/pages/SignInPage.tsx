@@ -17,7 +17,7 @@ import { SxProps } from '@mui/system';
 import ErrorMessage from '../components/ErrorMessage';
 import { UserLoginType } from '../types';
 import useAuthStore from '../stores/authStore';
-import useSuccessSnackbar from '../components/Snackbar/useSuccessSnackbar';
+import useAlertSnackbar from '../components/Snackbar/useSnackbar';
 
 
 interface CopyrightProps {
@@ -47,7 +47,7 @@ export default  function SignInPage() {
 
   const navigate = useNavigate()
  
-  const { handleClickVariant } = useSuccessSnackbar();
+  const { handleClickVariant } = useAlertSnackbar();
 
   if (isLogged) {
     navigate('/')
@@ -65,7 +65,7 @@ export default  function SignInPage() {
     } else {
       setError('');
       signin(user);
-      handleClickVariant('Thank you for your message!', 'success');
+      handleClickVariant('You are logged in', 'success');
     }
   };
 

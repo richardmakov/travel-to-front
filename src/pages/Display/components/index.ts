@@ -13,7 +13,7 @@ interface Data {
   flights: Flight[];
 }
 
-interface Flight {
+export interface Flight {
   segments: Segment[];
   purchaseLinks: PurchaseLink[];
   itineraryTag?: ItineraryTag;

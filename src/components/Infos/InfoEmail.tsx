@@ -38,9 +38,15 @@ export default function InfoEmail() {
                 Grandes ideas para tus próximos viajes, los mejores destinos y excelentes ofertas, tan solo tienes que darte de alta.
             </Typography>
             <FormControl sx={{ width: '100%' }} component="form" onSubmit={handleSubmit}>
-                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'center' }}>
-                    <Box sx={{ width: { xs: '100%', sm: '65%' }, mb: { xs: 2, sm: 0 }, mr: { xs: 0, sm: '10px' } }}>
+                <Box sx={{ width: { xs: '100%', sm: '100%' }, display: 'flex', justifyContent: 'center' }}>
+                    <Box sx={{ width: { xs: '100%', sm: '45.3%' }}}>
                         {emailError && <ErrorMessage>{emailError}</ErrorMessage>}
+                    </Box>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'center' }}>
+
+                    <Box sx={{ width: { xs: '100%', sm: '40%' }, mb: { xs: 2, sm: 0 }, mr: { xs: 0, sm: '10px' } }}>
+
                         <TextField
                             fullWidth
                             id="email"
