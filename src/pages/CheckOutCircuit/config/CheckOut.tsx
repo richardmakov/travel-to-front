@@ -50,28 +50,28 @@ interface CheckoutProps {
     handleBack: () => void;
     handleNext: () => void;
     activeStep: number;
-    errors:  Partial<IFormInputs>[];
+    errors: Partial<IFormInputs>[];
     errors2: Partial<IPaymentFields>;
 }
 
 function getStepContent(numAdults: number,
     numChildren: number,
     handleAdultsChange: (e: SelectChangeEvent<number>) => void,
-    handleChildrenChange: (e: SelectChangeEvent<number>) => void,handleDateChange: (e: dayjs.Dayjs | null, index: number) => void, errors2: Partial<IPaymentFields>,  errors: Partial<IFormInputs>[], step: number, handleInputChange: (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, formInputs: IFormInputs[], paymentType: string, setPaymentType: React.Dispatch<React.SetStateAction<string>>, cardNumber: string, setCardNumber: React.Dispatch<React.SetStateAction<string>>, cvv: string, setCvv: React.Dispatch<React.SetStateAction<string>>, expirationDate: string, setExpirationDate: React.Dispatch<React.SetStateAction<string>>, cardHolder: string, setCardHolder: React.Dispatch<React.SetStateAction<string>>) {
+    handleChildrenChange: (e: SelectChangeEvent<number>) => void, handleDateChange: (e: dayjs.Dayjs | null, index: number) => void, errors2: Partial<IPaymentFields>, errors: Partial<IFormInputs>[], step: number, handleInputChange: (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, formInputs: IFormInputs[], paymentType: string, setPaymentType: React.Dispatch<React.SetStateAction<string>>, cardNumber: string, setCardNumber: React.Dispatch<React.SetStateAction<string>>, cvv: string, setCvv: React.Dispatch<React.SetStateAction<string>>, expirationDate: string, setExpirationDate: React.Dispatch<React.SetStateAction<string>>, cardHolder: string, setCardHolder: React.Dispatch<React.SetStateAction<string>>) {
     switch (step) {
         case 0:
-            return <PassengersForm numAdults={numAdults} numChildren={numChildren} handleAdultsChange={handleAdultsChange} handleChildrenChange={handleChildrenChange}  handleDateChange={handleDateChange} handleInputChange={handleInputChange} formInputs={formInputs} errors={errors} />;
+            return <PassengersForm numAdults={numAdults} numChildren={numChildren} handleAdultsChange={handleAdultsChange} handleChildrenChange={handleChildrenChange} handleDateChange={handleDateChange} handleInputChange={handleInputChange} formInputs={formInputs} errors={errors} />;
         case 1:
             return <PaymentForm errors2={errors2} paymentType={paymentType} setPaymentType={setPaymentType} cardNumber={cardNumber} setCardNumber={setCardNumber} cvv={cvv} setCvv={setCvv} expirationDate={expirationDate} setExpirationDate={setExpirationDate} cardHolder={cardHolder} setCardHolder={setCardHolder} />;
         case 2:
-            return <Review paymentType={paymentType} cardNumber={cardNumber} expirationDate={expirationDate} cardHolder={cardHolder} />;
+            return <Review numAdults={numAdults} numChildren={numChildren} paymentType={paymentType} cardNumber={cardNumber} expirationDate={expirationDate} cardHolder={cardHolder} />;
         default:
             throw new Error('Unknown step');
     }
 }
 
 
-export default function Checkout({ numAdults,numChildren,handleAdultsChange,handleChildrenChange, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
+export default function Checkout({ numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
     const [mode] = React.useState<PaletteMode>('light');
     const defaultTheme = createTheme({ palette: { mode } });
 
@@ -156,7 +156,7 @@ export default function Checkout({ numAdults,numChildren,handleAdultsChange,hand
                             <Button
                                 startIcon={<ArrowBackRoundedIcon />}
                                 component="a"
-                                sx={{ ml: '-8px', p: 0, px: 2 }}
+                                sx={{ ml: '-8px', p: 1, px: 2 }}
                             >
                                 Back
                             </Button>
@@ -208,14 +208,14 @@ export default function Checkout({ numAdults,numChildren,handleAdultsChange,hand
                                 justifyContent: 'space-between',
                             }}
                         >
-                            <Button
-                                startIcon={<ArrowBackRoundedIcon />}
-                                component="a"
-                                href="/material-ui/getting-started/templates/landing-page/"
-                                sx={{ alignSelf: 'start' }}
-                            >
-                                Back
-                            </Button>
+                            <NavLink to={'/'}>
+                                <Button
+                                    startIcon={<ArrowBackRoundedIcon />}
+                                    sx={{ alignSelf: 'start' }}
+                                >
+                                    Back
+                                </Button>
+                            </NavLink>
                         </Box>
                         <Box
                             sx={{
@@ -224,7 +224,7 @@ export default function Checkout({ numAdults,numChildren,handleAdultsChange,hand
                                 justifyContent: 'space-between',
                                 alignItems: 'flex-end',
                                 flexGrow: 1,
-                                height: 150,
+                                height: 0,
                             }}
                         >
                             <Stepper
@@ -232,7 +232,7 @@ export default function Checkout({ numAdults,numChildren,handleAdultsChange,hand
                                 activeStep={activeStep}
                                 sx={{
                                     width: '100%',
-                                    height: 40,
+                                    height: 100,
                                 }}
                             >
                                 {steps.map((label) => (
@@ -279,7 +279,7 @@ export default function Checkout({ numAdults,numChildren,handleAdultsChange,hand
                         sx={{
                             display: 'flex',
                             flexDirection: 'column',
-                            flexGrow: 1,
+                            
                             width: '100%',
                             maxWidth: { sm: '100%', md: 600 },
                             maxHeight: '720px',
@@ -332,7 +332,7 @@ export default function Checkout({ numAdults,numChildren,handleAdultsChange,hand
                             </Stack>
                         ) : (
                             <React.Fragment>
-                                {getStepContent(numAdults,numChildren,handleAdultsChange,handleChildrenChange,handleDateChange, errors2, errors, activeStep, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder)}
+                                {getStepContent(numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors2, errors, activeStep, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder)}
                                 <Box
                                     sx={{
                                         display: 'flex',

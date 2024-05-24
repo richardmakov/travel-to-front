@@ -8,6 +8,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useLocation } from 'react-router-dom';
 import useAuthStore from '../../../stores/authStore';
+import useFlightSearchForm from '../../Home/components/hooks/useSearchFlightsForm';
 
 interface ReviewProps {
   paymentType: string;
@@ -51,7 +52,12 @@ type Flight = {
 
 export default function Review({ paymentType, cardNumber, expirationDate, cardHolder }: ReviewProps) {
 
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
+  const location = useLocation();
+  const { state } = location;
+  const flights = state as Flight;
+  const { formValues } = useFlightSearchForm()
+  const numberChildren = formValues.numberSenior;
 
   const payments = [
     { name: 'Card type:', detail: paymentType },
@@ -59,6 +65,15 @@ export default function Review({ paymentType, cardNumber, expirationDate, cardHo
     { name: 'Card number:', detail: cardNumber },
     { name: 'Expiry date:', detail: expirationDate },
   ];
+
+
+  const discountChildren = (flights: Flight): string => {
+    const totalPrice = flights.purchaseLinks[0].totalPrice;
+    const discount = (0.05 * numberChildren)
+    const total = (totalPrice * discount)
+    return total.toFixed(2)
+  }
+  const d = discountChildren(flights)
 
   const applyIVA = (price: number): number => {
     return price * 1.10;
@@ -71,31 +86,35 @@ export default function Review({ paymentType, cardNumber, expirationDate, cardHo
   const calculateTotalCost = (flights: Flight): string => {
     const totalPrice = flights.purchaseLinks[0].totalPrice;
 
-    const totalPriceWithIVA = applyIVA(totalPrice);
+    const totalPriceWithIVA = applyIVA(totalPrice) - parseInt(d);
     return totalPriceWithIVA.toFixed(2);
   }
-  const location = useLocation();
-  const { state } = location;
-  const flights = state as Flight;
+
   const totalCost = calculateTotalCost(flights);
 
   return (
     <Stack spacing={2}>
       <List disablePadding>
- 
-          <ListItem  sx={{ py: 1, px: 0 }}>
-            <ListItemText
-              primary={flights.purchaseLinks[0].partnerSuppliedProvider.displayName}
-              secondary={`Total: ${flights.purchaseLinks[0].totalPrice.toFixed(2)}`}
-            />
-            <Typography variant="h5" fontWeight="medium">
-              {flights.purchaseLinks[0].totalPrice.toFixed(2)}
-            </Typography>
-          </ListItem>
+
+        <ListItem sx={{ py: 1, px: 0 }}>
+          <ListItemText
+            primary={flights.purchaseLinks[0].partnerSuppliedProvider.displayName}
+            secondary={`Total: ${flights.purchaseLinks[0].totalPrice.toFixed(2)}`}
+          />
+          <Typography variant="h5" fontWeight="medium">
+            {flights.purchaseLinks[0].totalPrice.toFixed(2)}
+          </Typography>
+        </ListItem>
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Shipping" secondary="Plus taxes" />
           <Typography variant="body2">{showApplyIVA(parseInt(totalCost))}</Typography>
         </ListItem>
+        {formValues.numberSenior > 0 && (
+          <ListItem sx={{ py: 1, px: 0 }}>
+            <ListItemText primary="Children Discount" secondary={`Amount: ${formValues.numberSenior}`} />
+            <Typography variant="body2">{d}</Typography>
+          </ListItem>
+        )}
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>

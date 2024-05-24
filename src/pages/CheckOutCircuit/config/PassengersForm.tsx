@@ -17,14 +17,15 @@ interface CheckoutProps {
 
 export default function PassengersForm({ numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, handleInputChange, formInputs, errors }: CheckoutProps) {
 
+
   return (
     <Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '20px', mt:3, mb:5 }}>
           <Typography variant="h5">Adults:</Typography>
           <Select
             value={numAdults}
             onChange={handleAdultsChange}
-            sx={{ minWidth: '80px', maxHeight:'50px'}}
+            sx={{ minWidth: '50px', maxHeight:'40px'}}
           >
             {[...Array(10)].map((_, index) => (
               <MenuItem key={index} value={index + 1}>{index + 1}</MenuItem>
@@ -35,7 +36,7 @@ export default function PassengersForm({ numAdults, numChildren, handleAdultsCha
           <Select
             value={numChildren}
             onChange={handleChildrenChange}
-            sx={{ minWidth: '80px', maxHeight:'50px'}}
+            sx={{ minWidth: '50px', maxHeight:'40px'}}
           >
             {[...Array(10)].map((_, index) => (
               <MenuItem key={index} value={index}>{index}</MenuItem>
@@ -58,7 +59,7 @@ export default function PassengersForm({ numAdults, numChildren, handleAdultsCha
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={6}>
                         <TextField
-                          id={`firstname-adult-${i}`}
+                          id={`firstName-adult-${i}`}
                           label="First name"
                           variant="outlined"
                           fullWidth

@@ -2,7 +2,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { NavLink } from 'react-router-dom';
-import { Avatar } from '@mui/material';
+import { Avatar, Box } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 import CallIcon from '@mui/icons-material/Call';
@@ -23,15 +23,14 @@ export default function Header({ badges, handleBadgeClick, selectedBadge, setSel
         <AppBar position="static" sx={{ backgroundColor: '#FFF' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <NavLink color="inherit" to="/">
-                    <Avatar alt="" src="/logo2.png" sx={{ width: '4vw', height: '40%' }} />
+              
+                    <Avatar alt="" src="/logo2.png" sx={{ width: '10vh', height: '10vh' }} />
                 </NavLink>
 
-                <div className=''>
+                <Box>
                     <Button
                         sx={{
                             color: '#000',
-                            mr: { xs: 0, md: '1rem' }, 
-                            mb: { xs: '0.5rem', md: 0 }, 
                             cursor: 'default',
                             '&:hover': {
                                 backgroundColor: 'transparent',
@@ -62,7 +61,7 @@ export default function Header({ badges, handleBadgeClick, selectedBadge, setSel
                             </Button>
                         </NavLink>
                     )}
-                </div>
+                </Box>
             </Toolbar>
         </AppBar>
 

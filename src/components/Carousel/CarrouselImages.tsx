@@ -21,7 +21,7 @@ export default function CarrouselImages() {
                     maxWidth: '100%',
                     height: '400px',
                     display: 'block', 
-                    '@media (max-width: 600px)': { 
+                    '@media (max-width: 1000px)': { 
                         display: 'none',
                     },
                     '& .imagenes': {

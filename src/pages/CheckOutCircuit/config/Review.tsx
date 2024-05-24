@@ -17,12 +17,16 @@ interface ReviewProps {
   cardNumber: string;
   expirationDate: string;
   cardHolder: string;
+  numAdults: number;
+  numChildren: number;
 }
 
-export default function Review({paymentType, cardNumber, expirationDate, cardHolder }: ReviewProps) {
+export default function Review({ paymentType, cardNumber, expirationDate, cardHolder, numAdults, numChildren }: ReviewProps) {
   const { id } = useParams();
   const { selectedBadge } = useBadge();
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
+
+  const totalNum = numAdults + numChildren;
 
   const payments = [
     { name: 'Card type:', detail: paymentType },
@@ -30,6 +34,23 @@ export default function Review({paymentType, cardNumber, expirationDate, cardHol
     { name: 'Card number:', detail: cardNumber },
     { name: 'Expiry date:', detail: expirationDate },
   ];
+
+  const discountChildren = () => {
+    const priceMatch = currency().match(/\d+(\.\d+)?/);
+    if (!priceMatch) {
+      return "Price not available";
+    }
+
+    const price = parseFloat(priceMatch[0]);
+    if (isNaN(price)) {
+      return "Price not available";
+    }
+
+    const discount = 0.05*numChildren;
+    return (price * discount).toFixed(2);
+
+  }
+  
 
   const applyIVA = (price: number): number => {
     return price * 1.10;
@@ -47,7 +68,7 @@ export default function Review({paymentType, cardNumber, expirationDate, cardHol
       throw new Error("Price not available");
     }
 
-    const priceWithIVA = Math.floor(price * 0.10); 
+    const priceWithIVA = Math.floor(price * 0.10);
     return `${currencySymbol}${priceWithIVA}`;
   }
 
@@ -62,7 +83,7 @@ export default function Review({paymentType, cardNumber, expirationDate, cardHol
       return "Price not available";
     }
 
-    const priceWithIVA = applyIVA(price);
+    const priceWithIVA = (applyIVA(price) * totalNum) - parseInt(discountChildren()) ;
     const currencySymbol = selectedBadge.symbol === 'USD' ? 'USD' : 'EUR';
 
     return `${priceWithIVA.toFixed(2)} ${currencySymbol} (Taxes included)`;
@@ -87,12 +108,18 @@ export default function Review({paymentType, cardNumber, expirationDate, cardHol
       <List disablePadding>
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Products" secondary="Booking" />
-          <Typography variant="body2">{currency()}</Typography>
+          <Typography variant="body2">{currency()} x {totalNum}</Typography>
         </ListItem>
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Shipping" secondary="Plus taxes" />
           <Typography variant="body2">{applyIVAstring(currency())}</Typography>
         </ListItem>
+        {numChildren > 0 && (
+          <ListItem sx={{ py: 1, px: 0 }}>
+            <ListItemText primary="5% Children Discount" secondary={`Amount: ${numChildren}`} />
+            <Typography variant="body2">{discountChildren()}</Typography>
+          </ListItem>
+        )}
         <ListItem sx={{ py: 1, px: 0 }}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>

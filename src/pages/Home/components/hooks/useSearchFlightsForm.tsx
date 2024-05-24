@@ -25,7 +25,7 @@ const useFlightSearchForm = () => {
         destination: '',
         departureDate: '',
         arrivalDate: '',
-        numberAdults: 0,
+        numberAdults: 1,
         numberSenior: 0,
         classOfService: 'ECONOMY',
         currencyCode: '',
@@ -33,6 +33,7 @@ const useFlightSearchForm = () => {
         pageNumber: 1,
         itineraryType: 'ONE_WAY'
     };
+
 
     const [formValues, setFormValues] = useState<FormValuesSearchFlights>(() => {
         const savedFormValues = localStorage.getItem('formValues');
@@ -79,7 +80,7 @@ const useFlightSearchForm = () => {
 
         navigate("/flights");
         await findFlights();
-        
+
     };
 
     const findFlights = async () => {

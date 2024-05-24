@@ -21,7 +21,6 @@ export interface IPaymentFields {
 export const useCheckOutViewModel = () => {
 
     const [activeStep, setActiveStep] = React.useState(0);
-
     const { formValues } = useFlightSearchForm()
     const [formInputs, setFormInputs] = React.useState<IFormInputs[]>(() => {
         return Array.from({ length: formValues.numberAdults + formValues.numberSenior }, () => ({
@@ -128,7 +127,6 @@ export const useCheckOutViewModel = () => {
         if (activeStep === 2) {
             setActiveStep(activeStep + 1);
         }
-
     };
 
     const handleBack = () => {
@@ -143,34 +141,7 @@ export const useCheckOutViewModel = () => {
         updatedFormInputs[index] = { ...updatedFormInputs[index], [name]: value };
 
         setFormInputs(updatedFormInputs);
-
-        const updatedErrors = [...errors];
-        const nameRegex = /^[a-zA-Z\s]+$/;
-        const passportRegex = /^[a-zA-Z0-9]+$/;
-
-        if (name === 'firstName' || name === 'lastName') {
-            if (!value) {
-                updatedErrors[index][name] = `${name.charAt(0).toUpperCase() + name.slice(1)} is required`;
-            } else if (!nameRegex.test(value)) {
-                updatedErrors[index][name] = 'Invalid characters. Only letters and spaces are allowed.';
-            } else {
-                delete updatedErrors[index][name];
-            }
-        } else if (name === 'passport') {
-            if (!value) {
-                updatedErrors[index].passport = 'Passport is required';
-            } else if (!passportRegex.test(value)) {
-                updatedErrors[index].passport = 'Invalid characters. Only letters and numbers are allowed for passport.';
-            } else {
-                delete updatedErrors[index].passport;
-            }
-        }
-
-        setErrors(updatedErrors);
     };
-
-
-
 
     const handleDateChange = (e: dayjs.Dayjs | null, index: number) => {
         const formattedDate = e ? e.format('YYYY-MM-DD') : '';
@@ -194,12 +165,8 @@ export const useCheckOutViewModel = () => {
                 delete updatedErrors[index].dateOfBirth;
             }
         }
-
         setErrors(updatedErrors);
     };
-
-
-
 
     return {
         formInputs,

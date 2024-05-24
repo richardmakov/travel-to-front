@@ -48,10 +48,10 @@ const TripModal: React.FC<TripModalProps> = ({ buttonText, formValues, setFormVa
         onClick={handleOpen}
         sx={{
           py: 1.5,
-          px: 6,
+          px: 4,
           backgroundColor: 'transparent',
           color: 'black',
-          
+          border:'1px solid blue'
         }}
       >
         {buttonDisplayText}
