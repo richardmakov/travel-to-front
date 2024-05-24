@@ -15,8 +15,8 @@ interface Flight {
     price: string;
     origin: string;
     destination: string;
-    departurDate: string;
-    arrivalData: string;
+    departureDate: string;
+    arrivalDate: string;
 }
 
 interface Trip {
@@ -25,22 +25,46 @@ interface Trip {
     price: number;
 }
 
+interface Passenger {
+    id: number;
+    firstname: string;
+    lastname: string;
+    passport: string;
+    dateOfBirth: string;
+}
+
+interface Payment {
+    id: number;
+    cardType: string;
+    cardHolder: string;
+    cardNumber: string;
+    expiryDate: string;
+}
+
 interface BookingStore {
     bookings: Booking[];
     flights: Flight[];
     trips: Trip[];
+    passengers: Passenger[];
+    payments: Payment[];
     getAllBookings: () => Promise<void>;
     getBookingsByUserId: (userId: number) => Promise<void>;
     createFlight: (flight: Flight) => Promise<void>;
     createTrip: (trip: Trip) => Promise<void>;
+    createPassenger: (passenger: Passenger) => Promise<void>;
+    createPayment: (payment: Payment) => Promise<void>;
     getFlightsByAirline: (airline: string) => Promise<void>;
     getTripsByDestination: (destination: string) => Promise<void>;
     updateBooking: (bookingId: number, newBookingData: Booking) => Promise<void>;
     updateFlight: (flightId: number, newFlightData: Flight) => Promise<void>;
     updateTrip: (tripId: number, newTripData: Trip) => Promise<void>;
+    updatePassenger: (passengerId: number, newPassengerData: Passenger) => Promise<void>;
+    updatePayment: (paymentId: number, newPaymentData: Payment) => Promise<void>;
     deleteBooking: (bookingId: number) => Promise<void>;
     deleteFlight: (flightId: number) => Promise<void>;
     deleteTrip: (tripId: number) => Promise<void>;
+    deletePassenger: (passengerId: number) => Promise<void>;
+    deletePayment: (paymentId: number) => Promise<void>;
 }
 
 const useBookingStore = create<BookingStore>()(
@@ -49,6 +73,8 @@ const useBookingStore = create<BookingStore>()(
             bookings: [],
             flights: [],
             trips: [],
+            passengers: [],
+            payments: [],
             getAllBookings: async () => {
                 const response = await axios.get('/bookings');
                 set({ bookings: response.data });
@@ -64,6 +90,14 @@ const useBookingStore = create<BookingStore>()(
             createTrip: async (trip: Trip) => {
                 const response = await axios.post('/bookings/trip', trip);
                 set((state) => ({ trips: [...state.trips, response.data] }));
+            },
+            createPassenger: async (passenger: Passenger) => {
+                const response = await axios.post('/bookings/passenger', passenger);
+                set((state) => ({ passengers: [...state.passengers, response.data] }));
+            },
+            createPayment: async (payment: Payment) => {
+                const response = await axios.post('/bookings/payment', payment);
+                set((state) => ({ payments: [...state.payments, response.data] }));
             },
             getFlightsByAirline: async (airline: string) => {
                 const response = await axios.get(`/bookings/flights/airline/${airline}`);
@@ -91,6 +125,18 @@ const useBookingStore = create<BookingStore>()(
                     trips: state.trips.map((trip) => trip.id === tripId ? response.data : trip)
                 }));
             },
+            updatePassenger: async (passengerId: number, newPassengerData: Passenger) => {
+                const response = await axios.put(`/bookings/passenger/${passengerId}`, newPassengerData);
+                set((state) => ({
+                    passengers: state.passengers.map((passenger) => passenger.id === passengerId ? response.data : passenger)
+                }));
+            },
+            updatePayment: async (paymentId: number, newPaymentData: Payment) => {
+                const response = await axios.put(`/bookings/payment/${paymentId}`, newPaymentData);
+                set((state) => ({
+                    payments: state.payments.map((payment) => payment.id === paymentId ? response.data : payment)
+                }));
+            },
             deleteBooking: async (bookingId: number) => {
                 await axios.delete(`/bookings/${bookingId}`);
                 set((state) => ({ bookings: state.bookings.filter((booking) => booking.id !== bookingId) }));
@@ -102,6 +148,14 @@ const useBookingStore = create<BookingStore>()(
             deleteTrip: async (tripId: number) => {
                 await axios.delete(`/bookings/trip/${tripId}`);
                 set((state) => ({ trips: state.trips.filter((trip) => trip.id !== tripId) }));
+            },
+            deletePassenger: async (passengerId: number) => {
+                await axios.delete(`/bookings/passenger/${passengerId}`);
+                set((state) => ({ passengers: state.passengers.filter((passenger) => passenger.id !== passengerId) }));
+            },
+            deletePayment: async (paymentId: number) => {
+                await axios.delete(`/bookings/payment/${paymentId}`);
+                set((state) => ({ payments: state.payments.filter((payment) => payment.id !== paymentId) }));
             },
         }),
         {
