@@ -9,7 +9,9 @@ export const ofertasViajes: OffertType[] = [
         "priceEUR": "4320€",
         "dir": "../../../../japan",
         "description": "Embark on a fascinating journey to the land of the rising sun, where tradition intertwines with modernity at every corner. Discover the serenity of zen gardens, the bustling streets of Tokyo, and the majesty of Mount Fuji.",
-        "visit": "Senso-ji Temple in Tokyo, Himeji Castle, Itsukushima Shrine in Miyajima"
+        "visit": "Senso-ji Temple in Tokyo, Himeji Castle, Itsukushima Shrine in Miyajima",
+        "departureDate": "2024-06-01",
+        "returnDate": "2024-06-15"
     },
     {
         "id": "2",
@@ -19,7 +21,9 @@ export const ofertasViajes: OffertType[] = [
         "priceEUR": "1450€",
         "dir": "../../../../turkey",
         "description": "Explore the mystery and diversity of Turkey, a country that spans two continents. From the vibrant bazaars of Istanbul to the ancient ruins of Ephesus, each corner offers a rich history and warm hospitality.",
-        "visit": "The Blue Mosque in Istanbul, Pamukkale, Cappadocia"
+        "visit": "The Blue Mosque in Istanbul, Pamukkale, Cappadocia",
+        "departureDate": "2024-07-10",
+        "returnDate": "2024-07-20"
     },
     {
         "id": "3",
@@ -29,7 +33,9 @@ export const ofertasViajes: OffertType[] = [
         "priceEUR": "2405€",
         "dir": "../../../../nepal",
         "description": "Immerse yourself in the natural beauty and spirituality of Nepal, home to the majestic Himalayan mountains and rich culture of Buddhism and Hinduism. From trekking routes to ancient temples, each experience is enriching.",
-        "visit": "Mount Everest, Swayambhunath Temple, Lumbini"
+        "visit": "Mount Everest, Swayambhunath Temple, Lumbini",
+        "departureDate": "2024-09-05",
+        "returnDate": "2024-09-19"
     },
     {
         "id": "4",
@@ -39,7 +45,9 @@ export const ofertasViajes: OffertType[] = [
         "priceEUR": "1105€",
         "dir": "../../../../turke",
         "description": "Discover the fascinating history and unique architecture of Turkmenistan, a hidden gem in Central Asia. From the ruins of Merv to the gates of the White City, each place tells a story of a rich and varied past.",
-        "visit": "The Gates of Darvaza, Ruins of Nisa, City of Merv"
+        "visit": "The Gates of Darvaza, Ruins of Nisa, City of Merv",
+        "departureDate": "2024-10-01",
+        "returnDate": "2024-10-14"
     },
     {
         "id": "5",
@@ -49,7 +57,9 @@ export const ofertasViajes: OffertType[] = [
         "priceEUR": "870€",
         "dir": "../../../../thai",
         "description": "Explore the tropical lushness and tranquil spirituality of Thailand, from white sandy beaches to ornate temples. With vibrant cuisine and welcoming culture, every moment in Thailand is an unforgettable adventure.",
-        "visit": "Temple of the Emerald Buddha in Bangkok, Phi Phi Islands, Khao Sok National Park"
+        "visit": "Temple of the Emerald Buddha in Bangkok, Phi Phi Islands, Khao Sok National Park",
+        "departureDate": "2024-08-15",
+        "returnDate": "2024-08-25"
     },
     {
         "id": "6",
@@ -59,7 +69,9 @@ export const ofertasViajes: OffertType[] = [
         "priceEUR": "908€",
         "dir": "../../../../thai",
         "description": "Immerse yourself in the serenity and spirituality of Bali, where culture and nature merge into a charming experience. From terraced rice fields to hidden temples, every corner of Bali invites you to relax and rejuvenate.",
-        "visit": "Besakih Temple, Ubud Monkey Forest, Tegallalang Rice Terrace"
+        "visit": "Besakih Temple, Ubud Monkey Forest, Tegallalang Rice Terrace",
+        "departureDate": "2024-11-01",
+        "returnDate": "2024-11-14"
     },
     {
         "id": "7",
@@ -69,7 +81,9 @@ export const ofertasViajes: OffertType[] = [
         "priceEUR": "2258€",
         "dir": "../../../../thai",
         "description": "Enjoy Caribbean paradise in Punta Cana, where white sandy beaches meet the crystal-clear waters of the Caribbean Sea. With a variety of water activities and luxury resorts, every moment in Punta Cana is a tropical getaway.",
-        "visit": "Bavaro Beach, Saona Island, Ojos Indígenas Ecological Park"
+        "visit": "Bavaro Beach, Saona Island, Ojos Indígenas Ecological Park",
+        "departureDate": "2024-12-05",
+        "returnDate": "2024-12-12"
     },
     {
         "id": "8",
@@ -79,7 +93,9 @@ export const ofertasViajes: OffertType[] = [
         "priceEUR": "1020€",
         "dir": "../../../../riga",
         "description": "Explore the charming beauty and rich history of Riga, the capital of Latvia. With its medieval architecture and cosmopolitan atmosphere, Riga offers a unique experience in the Baltic region.",
-        "visit": "Historic Center of Riga, Riga Castle, Museum of the Occupation of Latvia"
+        "visit": "Historic Center of Riga, Riga Castle, Museum of the Occupation of Latvia",
+        "departureDate": "2024-05-10",
+        "returnDate": "2024-05-17"
     },
     {
         "id": "9",
@@ -90,7 +106,7 @@ export const ofertasViajes: OffertType[] = [
         "dir": "../../../../thai",
         "description": "Embark on a journey to dazzling Budapest, where historical architecture meets modern charm along the majestic Danube River. With its famous thermal baths and vibrant nightlife, Budapest offers a unique experience in Central Europe.",
         "visit": "Hungarian Parliament",
+        "departureDate": "2024-04-15",
+        "returnDate": "2024-04-22"
     }
-    
-    
-]
+];

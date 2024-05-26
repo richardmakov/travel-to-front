@@ -46,11 +46,11 @@ export default function Review({ paymentType, cardNumber, expirationDate, cardHo
       return "Price not available";
     }
 
-    const discount = 0.05*numChildren;
+    const discount = 0.05 * numChildren;
     return (price * discount).toFixed(2);
 
   }
-  
+
 
   const applyIVA = (price: number): number => {
     return price * 1.10;
@@ -83,7 +83,7 @@ export default function Review({ paymentType, cardNumber, expirationDate, cardHo
       return "Price not available";
     }
 
-    const priceWithIVA = (applyIVA(price) * totalNum) - parseInt(discountChildren()) ;
+    const priceWithIVA = (applyIVA(price) * totalNum) - parseInt(discountChildren());
     const currencySymbol = selectedBadge.symbol === 'USD' ? 'USD' : 'EUR';
 
     return `${priceWithIVA.toFixed(2)} ${currencySymbol} (Taxes included)`;
@@ -136,7 +136,7 @@ export default function Review({ paymentType, cardNumber, expirationDate, cardHo
       >
         <div>
           <Typography variant="subtitle2" gutterBottom>
-            Shipment details
+            Payer
           </Typography>
           <Typography gutterBottom>{user?.firstname} {user?.lastname}</Typography>
           <Typography color="text.secondary" gutterBottom>

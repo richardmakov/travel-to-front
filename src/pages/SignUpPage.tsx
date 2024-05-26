@@ -10,16 +10,17 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import DatePicker from '../components/OtherField/DatePicker';
 import { formatDate } from '../helper';
 import dayjs from 'dayjs';
-import CountrySelect from '../components/OtherField/ChooseCountry';
+import CountrySelect, { CountryType } from '../components/OtherField/ChooseCountry';
 import ErrorMessage from '../components/ErrorMessage';
 import { SxProps } from '@mui/system';
 import { User } from '../utils';
 import { z } from 'zod';
 import useAuthStore from '../stores/authStore';
+import useAlertSnackbar from '../components/Snackbar/useSnackbar';
 
 interface CopyrightProps {
   sx?: SxProps;
@@ -44,7 +45,11 @@ const defaultTheme = createTheme();
 
 export default function SignUpPage() {
 
-  const { signup, error, setError } = useAuthStore();
+  const { signup, error, setError, isLogged } = useAuthStore();
+
+  const navigate = useNavigate()
+
+  const { handleClickVariant } = useAlertSnackbar();
 
   const [user, setUser] = React.useState<z.infer<typeof User>>({
     firstname: '',
@@ -58,14 +63,23 @@ export default function SignUpPage() {
     password: ''
   });
 
+  const [pais] = React.useState<CountryType>();
+
+  React.useEffect(() => {
+    if (isLogged) {
+      navigate('/');
+    }
+  }, [isLogged, navigate]);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    signup(user);
     if (Object.values(user).some((value) => value === '')) {
       setError('All fields are required');
       return;
     } else {
+      signup(user);
       setError('');
+      handleClickVariant('You are registered and logged in', 'success');
     }
 
   };
@@ -84,24 +98,20 @@ export default function SignUpPage() {
     });
   };
 
-  const handleCountryChange = (e: React.SyntheticEvent<Element, Event>) => {
-    const target = e.target as HTMLElement;
-    const textContent = target.textContent?.trim();
+  const handleCountryChange = (event: React.SyntheticEvent<Element, Event>, newValue: CountryType | null) => {
 
-    if (!textContent) {
+    if(newValue === null) {
       setUser({
         ...user,
         country: ''
       });
-    } else {
-      setUser({
-        ...user,
-        country: textContent
-      });
-
+      return;
     }
+    setUser({
+      ...user,
+      country: newValue?.label
+    });
   };
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -190,7 +200,7 @@ export default function SignUpPage() {
               </Grid>
 
               <Grid item xs={12}>
-                <CountrySelect handleCountryChange={handleCountryChange} user={user} />
+                <CountrySelect handleCountryChange={handleCountryChange} pais={pais} />
               </Grid>
 
               <Grid item xs={12}>

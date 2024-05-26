@@ -30,6 +30,7 @@ import dayjs from 'dayjs';
 const steps = ['Choose Passengers', 'Payment details', 'Review your order'];
 
 interface CheckoutProps {
+    numberId: string;
     numAdults: number;
     numChildren: number;
     handleAdultsChange: (e: SelectChangeEvent<number>) => void;
@@ -71,7 +72,7 @@ function getStepContent(numAdults: number,
 }
 
 
-export default function Checkout({ numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
+export default function Checkout({numberId, numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
     const [mode] = React.useState<PaletteMode>('light');
     const defaultTheme = createTheme({ palette: { mode } });
 
@@ -113,16 +114,7 @@ export default function Checkout({ numAdults, numChildren, handleAdultsChange, h
     }
 
 
-    const generateBookingNumber = () => {
-        const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        const length = 8;
-        let bookingNumber = '';
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * chars.length);
-            bookingNumber += chars[randomIndex];
-        }
-        return bookingNumber;
-    }
+    
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -315,7 +307,7 @@ export default function Checkout({ numAdults, numChildren, handleAdultsChange, h
                                 <Typography variant="h5">Thank you for your payment!</Typography>
                                 <Typography variant="body1" color="text.secondary">
                                     Your book number is
-                                    <strong> {generateBookingNumber()}</strong>. We have emailed your booking
+                                    <strong> {numberId}</strong>. We have emailed your booking
                                     confirmation and will update you once its ready.
                                 </Typography>
                                 <NavLink to={'/'}>

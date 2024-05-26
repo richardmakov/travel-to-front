@@ -25,6 +25,8 @@ export default function MenuHeader() {
     handleClickVariant('Logged out', 'warning');
   }
 
+  const {user} = useAuthStore();
+
   return (
     <>
       <Button
@@ -39,7 +41,7 @@ export default function MenuHeader() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        MY ACCOUNT
+         {user?.firstname} {user?.lastname}
       </Button>
       <Menu
         id="basic-menu"

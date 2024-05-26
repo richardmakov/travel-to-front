@@ -3,8 +3,7 @@ import { UserType } from "../types";
 
 export const InitialUsers: UserType[] = [
     {
-        id: 1,
-        firstname: 'John',
+       firstname: 'John',
         lastname: 'Doe',
         email: 'jhondoe@mail.com',
         phone: '666666666',
@@ -15,7 +14,7 @@ export const InitialUsers: UserType[] = [
         date: '1990-01-01'
     },
     {
-        id: 2,
+  
         firstname: 'Juan',
         lastname: 'Coloma',
         email: 'juancoloma@mail.com',

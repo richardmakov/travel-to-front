@@ -26,7 +26,7 @@ export default function CardFlightView() {
             ))
           ) : (
             flights.data.flights.map((flight, index) => (
-              <div onClick={() => handleClickVariant('You have to be logged', 'info')}>
+              <div key={index} onClick={() => handleClickVariant('You have to be logged', 'info')}>
                 <CardFlight flight={flight} key={index} />
               </div>
             ))

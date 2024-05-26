@@ -49,9 +49,11 @@ export default  function SignInPage() {
  
   const { handleClickVariant } = useAlertSnackbar();
 
-  if (isLogged) {
-    navigate('/')
-  }
+  React.useEffect(() => {
+    if (isLogged) {
+      navigate('/');
+    }
+  }, [isLogged, navigate]);
 
   const [user, setUser] = React.useState<UserLoginType>({
     email: '',

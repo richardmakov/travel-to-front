@@ -125,6 +125,7 @@ export const useCheckOutViewModel = () => {
         }
 
         if (activeStep === 2) {
+            
             setActiveStep(activeStep + 1);
         }
     };

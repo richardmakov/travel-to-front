@@ -31,5 +31,7 @@ export const Offert = z.object({
     description: z.string(),
     visit: z.string(),
     priceEUR: z.string(),
-    dir: z.string()
+    dir: z.string(),
+    departureDate:  z.string(),
+    returnDate:  z.string()
 })

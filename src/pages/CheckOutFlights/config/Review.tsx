@@ -34,6 +34,7 @@ type PurchaseLink = {
   totalPrice: number;
   totalPricePerPassenger: number;
   fareBasisCodes: string[];
+
   containedPurchaseLinks: string[];
   partnerData: Record<string, unknown>;
   isPaid: boolean;
@@ -131,7 +132,7 @@ export default function Review({ paymentType, cardNumber, expirationDate, cardHo
       >
         <div>
           <Typography variant="subtitle2" gutterBottom>
-            Shipment details
+            Payer
           </Typography>
           <Typography gutterBottom>{user?.firstname} {user?.lastname}</Typography>
           <Typography color="text.secondary" gutterBottom>

@@ -73,7 +73,7 @@ export default function DisplayInfo() {
                 <HistoryIcon />
                 <Typography variant='body1' sx={{ fontWeight: 'bold', mx: 1 }}>10 Days, 9 nights</Typography>
                 <ConnectingAirportsIcon />
-                <Typography variant='body1' sx={{ fontWeight: 'bold', mx: 1 }}>July 10, 2024 - July 20, 2024</Typography>
+                <Typography variant='body1' sx={{ fontWeight: 'bold', mx: 1 }}>{oferta?.departureDate} - {oferta?.returnDate}</Typography>
             </Box>
 
             <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
@@ -117,8 +117,7 @@ export default function DisplayInfo() {
                 <Typography variant='h5' sx={{ fontWeight: '300' }}>Purchase Summary of Trip to {oferta?.title}</Typography>
                 <Box sx={{ color: 'white', fontWeight: 'bold', backgroundColor: '#99CCFF', borderRadius: '1rem', p: 2, mt: 2 }}>
                     <Typography variant="h6">Your trip to {oferta?.title} is ready to be booked!</Typography>
-                    <Typography variant="subtitle1">Departure Date: July 10, 2024</Typography>
-                    <Typography variant="subtitle1">Duration: 10 days</Typography>
+                    <Typography variant="subtitle1">Departure Date: {oferta?.departureDate}</Typography>
                     <Typography variant="subtitle1">Total Price: {selectedBadge.symbol === 'EUR' ? (oferta?.priceEUR) : (oferta?.priceUSD)}</Typography>
                     {isLogged ? (
                         <NavLink to={`/checkout/circuit/${oferta?.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>

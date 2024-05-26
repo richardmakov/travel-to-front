@@ -5,21 +5,22 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 
 type CountrySelectProps = {
-  handleCountryChange: (e: React.SyntheticEvent<Element, Event>) => void,
-  user: {
-    country: string
-  }
+  handleCountryChange: (event: React.SyntheticEvent<Element, Event>, newValue: CountryType | null) => void
+  pais:CountryType | undefined
+  
 }
 
-export default function CountrySelect({ handleCountryChange, user }: CountrySelectProps) {
+export default function CountrySelect({ handleCountryChange, pais }: CountrySelectProps) {
   return (
     <Autocomplete
       id="country-select-demo"
       sx={{ width: 420 }}
       options={countries}
+      value={pais} // Set value to the country object in the user state
       onChange={handleCountryChange}
       autoHighlight
       getOptionLabel={(option) => option.label}
+      isOptionEqualToValue={(option, value) => option.code === value?.code}
       renderOption={(props, option) => (
         <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
           <img
@@ -36,8 +37,6 @@ export default function CountrySelect({ handleCountryChange, user }: CountrySele
         <TextField
           {...params}
           required
-          name='country'
-          value={user.country}
           label="Choose your country"
           inputProps={{
             ...params.inputProps,
@@ -49,7 +48,7 @@ export default function CountrySelect({ handleCountryChange, user }: CountrySele
   );
 }
 
-interface CountryType {
+export interface CountryType {
   code: string;
   label: string;
   phone: string;

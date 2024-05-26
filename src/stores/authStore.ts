@@ -65,6 +65,7 @@ const useAuthStore = create<AuthState>()(
           }
 
           const data: UserType = await response.json();
+
           set({ user: data, loading: false, isLogged: true });
         } catch (error) {
           if (error instanceof Error) {

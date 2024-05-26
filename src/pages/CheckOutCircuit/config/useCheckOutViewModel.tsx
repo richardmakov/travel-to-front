@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs';
 import { SelectChangeEvent } from '@mui/material';
+import useBookingStore from '../../../stores/bookingStore';
+import { useParams } from 'react-router-dom';
+import { ofertasViajes } from '../../Home/components/data/offerts';
+import useBadge from '../../../hooks/useBadge';
+import useAuthStore from '../../../stores/authStore';
 export interface IFormInputs {
     firstName: string;
     lastName: string;
@@ -127,7 +132,11 @@ export const useCheckOutViewModel = () => {
     const [cvv, setCvv] = React.useState('');
     const [expirationDate, setExpirationDate] = React.useState('');
     const [cardHolder, setCardHolder] = React.useState('');
-
+    const { id } = useParams();
+    const {createBooking} = useBookingStore();
+    const oferta = ofertasViajes.find(oferta => oferta.id === id);
+    const { selectedBadge } = useBadge();
+    const{user}= useAuthStore();
     const handleNext = () => {
         if (activeStep === 0) {
             if (validate()) {
@@ -143,8 +152,41 @@ export const useCheckOutViewModel = () => {
 
         if (activeStep === 2) {
             setActiveStep(activeStep + 1);
-        }
 
+            if(oferta){
+                const travel = {
+                    id: parseInt(numberId),
+                    destination: oferta.title,
+                    departureDate: oferta.departureDate,
+                    returnDate: oferta.returnDate
+                }
+                const passengers = formInputs.map((formInput) => ({
+                    id: parseInt(numberId),
+                    name: `${formInput.firstName} ${formInput.lastName}`,
+                    passportNumber: formInput.passport
+                }));
+                const newBooking = {
+                    id: parseInt(numberId),
+                    trip: travel,
+                    passengers,
+                    payment: {
+                        id: parseInt(numberId),
+                        paymentMethod: paymentType,
+                        amount: (
+                            (selectedBadge.symbol === 'EUR' ? Number(oferta.priceEUR.replace('€', '')) : Number(oferta.priceUSD.replace('$', ''))) * numAdults +
+                            (selectedBadge.symbol === 'EUR' ? Number(oferta.priceEUR.replace('€', '')) : Number(oferta.priceUSD.replace('$', ''))) * numChildren
+                        ),
+                        paymentDate: dayjs().format('YYYY-MM-DD')
+                    }, 
+                    user: user
+                };
+
+                console.log(newBooking)
+
+                createBooking(newBooking);
+            }
+            
+        }
     };
 
     const handleBack = () => {
@@ -188,12 +230,23 @@ export const useCheckOutViewModel = () => {
         setErrors(updatedErrors);
     };
 
+    const generateBookingNumber = () => {
+        const numbers = '0123456789';
+        const length = 8;
+        let bookingNumber = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * numbers.length);
+            bookingNumber += numbers[randomIndex];
+        }
+        return bookingNumber;
+    };
+    const numberId = generateBookingNumber();
 
     return {
         formInputs,
         handleInputChange,
         activeStep,
-        setActiveStep, handleDateChange, numAdults, numChildren, handleAdultsChange, handleChildrenChange,
+        setActiveStep, handleDateChange, numAdults, numChildren, handleAdultsChange, handleChildrenChange,numberId,
         paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleNext, handleBack, errors, errors2
     }
 }
