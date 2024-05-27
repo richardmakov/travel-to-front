@@ -1,6 +1,7 @@
 import {z} from 'zod'
 
 export const User = z.object({
+    id:z?.number(),
     token: z?.string(),
     firstname: z.string(),
     lastname: z.string(),

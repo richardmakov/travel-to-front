@@ -1,10 +1,9 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-import axiosInstance from '../utils/axiosInstance'; // Import the configured Axios instance
+import axiosInstance from '../utils/axiosInstance';
 import { OffertType } from '../types';
 
 interface Flight {
-    id: number;
     flightNumber: string;
     departureAirport?: string;
     arrivalAirport?: string;
@@ -25,7 +24,7 @@ interface Payment {
 
 interface Booking {
     id: number;
-    booking_number:string;
+    booking_number: string;
     trip?: OffertType;
     flight?: Flight;
     passengers?: Passenger[];
@@ -79,9 +78,10 @@ const useBookingStore = create<BookingStore>()(
             },
         }),
         {
-            name: 'booking-store', 
+            name: 'booking-store', // Nombre del almacenamiento persistente
         }
     )
 );
 
 export default useBookingStore;
+

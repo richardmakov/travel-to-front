@@ -4,8 +4,6 @@ import Button from '@mui/material/Button';
 import { NavLink } from 'react-router-dom';
 import { Avatar, Box } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-
-import CallIcon from '@mui/icons-material/Call';
 import ChooseBadge from '../ChooseBadge';
 import { BadgeInfo } from '../../pages/Home/components/interface/badgeInterface';
 import MenuHeader from './MenuHeader';
@@ -28,19 +26,7 @@ export default function Header({ badges, handleBadgeClick, selectedBadge, setSel
                 </NavLink>
 
                 <Box>
-                    <Button
-                        sx={{
-                            color: '#000',
-                            cursor: 'default',
-                            '&:hover': {
-                                backgroundColor: 'transparent',
-                            }
-                        }}
-                        startIcon={<CallIcon />}
-                        disableRipple
-                    >
-                        666 666 666
-                    </Button>
+                    
 
                     <ChooseBadge badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge} />
 

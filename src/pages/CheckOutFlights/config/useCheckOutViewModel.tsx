@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useFlightSearchForm from '../../Home/components/hooks/useSearchFlightsForm';
-
 export interface IFormInputs {
     firstName: string;
     lastName: string;
@@ -72,6 +71,22 @@ export const useCheckOutViewModel = () => {
 
         return newErrors.every(error => Object.keys(error).length === 0);
     };
+    const [numberId, setNumberId] = useState('');
+    const generateBookingNumber = () => {
+        const numbers = '0123456789';
+        const length = 8;
+        let bookingNumber = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * numbers.length);
+            bookingNumber += numbers[randomIndex];
+        }
+        return bookingNumber;
+    };
+
+    useEffect(() => {
+        const bookingNumber = generateBookingNumber();
+        setNumberId(bookingNumber);
+    }, []);
 
 
     const validatePaymentFields = (): boolean => {
@@ -110,26 +125,7 @@ export const useCheckOutViewModel = () => {
     const [cvv, setCvv] = React.useState('');
     const [expirationDate, setExpirationDate] = React.useState('');
     const [cardHolder, setCardHolder] = React.useState('');
-
-    const handleNext = () => {
-        if (activeStep === 0) {
-            if (validate()) {
-                setActiveStep(activeStep + 1);
-            }
-        }
-
-        if (activeStep === 1) {
-            if (validatePaymentFields()) {
-                setActiveStep(activeStep + 1);
-            }
-        }
-
-        if (activeStep === 2) {
-            
-            setActiveStep(activeStep + 1);
-        }
-    };
-
+    
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
@@ -173,7 +169,7 @@ export const useCheckOutViewModel = () => {
         formInputs,
         handleInputChange,
         activeStep,
-        setActiveStep, handleDateChange,
-        paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleNext, handleBack, errors, errors2
+        setActiveStep, handleDateChange,numberId,
+        paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, validatePaymentFields, validate, handleBack, errors, errors2
     }
 }

@@ -127,6 +127,25 @@ export const useCheckOutViewModel = () => {
         return valid;
     };
 
+    const [numberId, setNumberId] = useState('');
+
+    const generateBookingNumber = () => {
+        const numbers = '0123456789';
+        const length = 8;
+        let bookingNumber = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * numbers.length);
+            bookingNumber += numbers[randomIndex];
+        }
+        return bookingNumber;
+    };
+
+    useEffect(() => {
+        const bookingNumber = generateBookingNumber();
+        setNumberId(bookingNumber);
+    }, []);
+    
+
     const [paymentType, setPaymentType] = React.useState('creditCard');
     const [cardNumber, setCardNumber] = React.useState('');
     const [cvv, setCvv] = React.useState('');
@@ -155,7 +174,6 @@ export const useCheckOutViewModel = () => {
             setActiveStep(activeStep + 1);
 
             if(trip){
-
                 const passengers = formInputs.map((formInput) => ({
                     name: `${formInput.firstName} ${formInput.lastName}`,
                     passportNumber: formInput.passport
@@ -169,12 +187,25 @@ export const useCheckOutViewModel = () => {
                     paymentDate: dayjs().format('YYYY-MM-DD')
                 }
 
+                const userEntry = {
+                    id: user?.id,
+                    token: user?.token,
+                    firstname: user?.firstname,
+                    lastname: user?.lastname,
+                    email: user?.email,
+                    phone: user?.phone,
+                    idCard: user?.idCard,
+                    passport: user?.passport,
+                    country: user?.country,
+                    date: user?.date
+                }
+
                 const newBooking = {
                     booking_number: numberId,
                     trip: trip,
                     passengers: passengers,
                     payment: payment, 
-                    user: user
+                    user: userEntry
                 };
 
                 console.log(newBooking)
@@ -226,18 +257,8 @@ export const useCheckOutViewModel = () => {
         setErrors(updatedErrors);
     };
 
-    const generateBookingNumber = () => {
-        const numbers = '0123456789';
-        const length = 8;
-        let bookingNumber = '';
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * numbers.length);
-            bookingNumber += numbers[randomIndex];
-        }
-        return bookingNumber;
-    };
-    const numberId = generateBookingNumber();
-
+    console.log(numberId)
+    
     return {
         formInputs,
         handleInputChange,

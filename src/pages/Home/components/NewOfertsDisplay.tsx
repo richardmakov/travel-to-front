@@ -10,11 +10,14 @@ export default function NewOfertsDisplay() {
         color: 'inherit',
     };
 
-    const { trips, fetchTrips } = useTripStore();
-    
-    useEffect(() => {
-        fetchTrips();
-    }, [fetchTrips]);
+    const { trips, isLoading, error, fetchTrips } = useTripStore();
+
+  useEffect(() => {
+    fetchTrips();
+  }, [fetchTrips]);
+
+  if (isLoading) return <div style={{display:'flex', justifyContent:'center', fontSize:'3rem', color:'orange'}}>Loading...</div>;
+  if (error) return <div style={{display:'flex', justifyContent:'center', fontSize:'3rem', color:'red'}}>Error: {error}</div>;
     return (
         <>
             <Box sx={{ width: '100%', maxWidth: '1200px', margin: '0 auto', mt: { xs: 5, md: 7 }, mb: 2, px: 2 }}>
