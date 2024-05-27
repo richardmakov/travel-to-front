@@ -22,11 +22,11 @@ import InfoMobile from './InfoMobile';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import { NavLink, useParams } from 'react-router-dom';
-import { ofertasViajes } from '../../Home/components/data/offerts';
 import useBadge from '../../../hooks/useBadge';
 
 import { IFormInputs, IPaymentFields } from './useCheckOutViewModel';
 import dayjs from 'dayjs';
+import useTripStore from '../../../stores/tripStore';
 const steps = ['Choose Passengers', 'Payment details', 'Review your order'];
 
 interface CheckoutProps {
@@ -100,21 +100,20 @@ export default function Checkout({numberId, numAdults, numChildren, handleAdults
         return `${priceWithIVA.toFixed(2)} ${currencySymbol} (Taxes included)`;
     }
 
+    const { trips } = useTripStore();
+
     const currency = () => {
-        const oferta = ofertasViajes.find(oferta => oferta.id === id);
-        if (!oferta) {
+        const trip = trips.find(trip => trip.id.toString() === id);
+        if (!trip) {
             return "Offer not found";
         }
 
         if (selectedBadge.symbol === 'USD') {
-            return `${oferta.priceUSD.toString()}`;
+            return `${trip.price_usd.toString()}`;
         } else {
-            return `${oferta.priceEUR?.toString()}` || "Price not available";
+            return `${trip.price_eur?.toString()}` || "Price not available";
         }
     }
-
-
-    
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -147,7 +146,6 @@ export default function Checkout({numberId, numAdults, numChildren, handleAdults
                         <NavLink to={'/'}>
                             <Button
                                 startIcon={<ArrowBackRoundedIcon />}
-                                component="a"
                                 sx={{ ml: '-8px', p: 1, px: 2 }}
                             >
                                 Back

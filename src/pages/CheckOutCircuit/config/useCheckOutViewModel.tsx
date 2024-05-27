@@ -3,9 +3,9 @@ import dayjs from 'dayjs';
 import { SelectChangeEvent } from '@mui/material';
 import useBookingStore from '../../../stores/bookingStore';
 import { useParams } from 'react-router-dom';
-import { ofertasViajes } from '../../Home/components/data/offerts';
 import useBadge from '../../../hooks/useBadge';
 import useAuthStore from '../../../stores/authStore';
+import useTripStore from '../../../stores/tripStore';
 export interface IFormInputs {
     firstName: string;
     lastName: string;
@@ -132,9 +132,10 @@ export const useCheckOutViewModel = () => {
     const [cvv, setCvv] = React.useState('');
     const [expirationDate, setExpirationDate] = React.useState('');
     const [cardHolder, setCardHolder] = React.useState('');
-    const { id } = useParams();
     const {createBooking} = useBookingStore();
-    const oferta = ofertasViajes.find(oferta => oferta.id === id);
+    const { id } = useParams();
+    const { trips } = useTripStore();
+    const trip = trips.find(trip => trip.id.toString() === id);
     const { selectedBadge } = useBadge();
     const{user}= useAuthStore();
     const handleNext = () => {
@@ -153,31 +154,26 @@ export const useCheckOutViewModel = () => {
         if (activeStep === 2) {
             setActiveStep(activeStep + 1);
 
-            if(oferta){
-                const travel = {
-                    id: parseInt(numberId),
-                    destination: oferta.title,
-                    departureDate: oferta.departureDate,
-                    returnDate: oferta.returnDate
-                }
+            if(trip){
+
                 const passengers = formInputs.map((formInput) => ({
-                    id: parseInt(numberId),
                     name: `${formInput.firstName} ${formInput.lastName}`,
                     passportNumber: formInput.passport
                 }));
+                const payment = {
+                    paymentMethod: paymentType,
+                    amount: (
+                        (selectedBadge.symbol === 'EUR' ? Number(trip.price_eur.replace('€', '')) : Number(trip.price_usd.replace('$', ''))) * numAdults +
+                        (selectedBadge.symbol === 'EUR' ? Number(trip.price_eur.replace('€', '')) : Number(trip.price_usd.replace('$', ''))) * numChildren
+                    ),
+                    paymentDate: dayjs().format('YYYY-MM-DD')
+                }
+
                 const newBooking = {
-                    id: parseInt(numberId),
-                    trip: travel,
-                    passengers,
-                    payment: {
-                        id: parseInt(numberId),
-                        paymentMethod: paymentType,
-                        amount: (
-                            (selectedBadge.symbol === 'EUR' ? Number(oferta.priceEUR.replace('€', '')) : Number(oferta.priceUSD.replace('$', ''))) * numAdults +
-                            (selectedBadge.symbol === 'EUR' ? Number(oferta.priceEUR.replace('€', '')) : Number(oferta.priceUSD.replace('$', ''))) * numChildren
-                        ),
-                        paymentDate: dayjs().format('YYYY-MM-DD')
-                    }, 
+                    booking_number: numberId,
+                    trip: trip,
+                    passengers: passengers,
+                    payment: payment, 
                     user: user
                 };
 

@@ -1,6 +1,7 @@
 import {z} from 'zod'
 
 export const User = z.object({
+    token: z?.string(),
     firstname: z.string(),
     lastname: z.string(),
     email: z.string(),
@@ -24,14 +25,14 @@ export const Label = z.object({
 })
 
 export const Offert = z.object({
-    id:z.string(),
-    title:z.string(),
+    id:z.number(),
+    destination:z.string(),
     image:z.string(),
-    priceUSD: z.string(),
+    price_usd: z.string(),
     description: z.string(),
     visit: z.string(),
-    priceEUR: z.string(),
-    dir: z.string(),
-    departureDate:  z.string(),
-    returnDate:  z.string()
+    price_eur: z.string(),
+    images_route: z.string(),
+    departure_date:  z.string(),
+    return_date:  z.string()
 })

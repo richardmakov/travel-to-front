@@ -5,8 +5,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router-dom';
-import { ofertasViajes } from '../../Home/components/data/offerts';
 import useBadge from '../../../hooks/useBadge';
+import useTripStore from '../../../stores/tripStore';
 
 interface InfoProps {
   totalPrice: string;
@@ -14,19 +14,20 @@ interface InfoProps {
 
 export default function Info({ totalPrice }: InfoProps) {
   const { id } = useParams();
-  const oferta = ofertasViajes.find(oferta => oferta.id === id);
+  const { trips } = useTripStore();
+  const trip = trips.find(trip => trip.id.toString() === id);
   const { selectedBadge } = useBadge();
 
   const currency = () => {
-    const oferta = ofertasViajes.find(oferta => oferta.id === id);
-    if (!oferta) {
+    const trip = trips.find(trip => trip.id.toString() === id);
+    if (!trip) {
       return "Offer not found";
     }
 
     if (selectedBadge.symbol === 'USD') {
-      return `${oferta.priceUSD.toString()}`;
+      return `${trip.price_usd.toString()}`;
     } else {
-      return `${oferta.priceEUR?.toString()}` || "Price not available";
+      return `${trip.price_eur?.toString()}` || "Price not available";
     }
   }
   
@@ -39,11 +40,11 @@ export default function Info({ totalPrice }: InfoProps) {
         {totalPrice}
       </Typography>
       <List disablePadding>
-          <ListItem key={oferta?.title} sx={{ py: 1, px: 0 }}>
+          <ListItem key={trip?.destination} sx={{ py: 1, px: 0 }}>
             <ListItemText
               sx={{ mr: 2 }}
-              primary={oferta?.title}
-              secondary={oferta?.description}
+              primary={trip?.destination}
+              secondary={trip?.description}
             />
             <Typography variant="h5" fontWeight="medium">
               {currency()}

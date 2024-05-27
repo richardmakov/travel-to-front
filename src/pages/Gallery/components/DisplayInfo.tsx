@@ -1,5 +1,4 @@
 import { Box, Button, Card, Divider, Grid } from '@mui/material'
-import { ofertasViajes } from '../../Home/components/data/offerts'
 import { NavLink, useParams } from 'react-router-dom';
 import HistoryIcon from '@mui/icons-material/History';
 import Typography from '@mui/material/Typography';
@@ -8,6 +7,7 @@ import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
 import useBadge from '../../../hooks/useBadge';
 import useAlertSnackbar from '../../../components/Snackbar/useSnackbar';
 import useAuthStore from '../../../stores/authStore';
+import useTripStore from '../../../stores/tripStore';
 
 export default function DisplayInfo() {
 
@@ -20,10 +20,10 @@ export default function DisplayInfo() {
             transform: 'scale(1.10)',
         },
     });
-
-    const { id } = useParams();
     const { selectedBadge } = useBadge();
-    const oferta = ofertasViajes.find(oferta => oferta.id === id);
+    const { trips } = useTripStore();
+    const { id } = useParams();
+    const trip = trips.find(trip => trip.id.toString() === id);
     const { isLogged } = useAuthStore();
     const { handleClickVariant } = useAlertSnackbar();
 
@@ -44,13 +44,13 @@ export default function DisplayInfo() {
                     mb: 2,
                 }}
             >
-                The best of {oferta?.title}
+                The best of {trip?.destination}
             </Box>
             <Box
                 sx={{
                     color: 'white',
                     fontWeight: 'bold',
-                    backgroundImage: `url(${oferta?.dir}/expo.jpg)`,
+                    backgroundImage: `url(${trip?.images_route}/expo.jpg)`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     height: '300px',
@@ -73,15 +73,15 @@ export default function DisplayInfo() {
                 <HistoryIcon />
                 <Typography variant='body1' sx={{ fontWeight: 'bold', mx: 1 }}>10 Days, 9 nights</Typography>
                 <ConnectingAirportsIcon />
-                <Typography variant='body1' sx={{ fontWeight: 'bold', mx: 1 }}>{oferta?.departureDate} - {oferta?.returnDate}</Typography>
+                <Typography variant='body1' sx={{ fontWeight: 'bold', mx: 1 }}>{trip?.departure_date} - {trip?.return_date}</Typography>
             </Box>
 
             <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
                 <Typography variant='h5' sx={{ fontWeight: '300' }}>
-                    Discover the best of {oferta?.title ?? 'this destination'} and enjoy a few days of relaxation in the beach area of your choice
+                    Discover the best of {trip?.destination ?? 'this destination'} and enjoy a few days of relaxation in the beach area of your choice
                 </Typography>
                 <Typography variant='body1' sx={{ fontWeight: '100', mt: 2 }}>
-                    {oferta?.visit}
+                    {trip?.visit}
                 </Typography>
             </Box>
 
@@ -96,7 +96,7 @@ export default function DisplayInfo() {
                         <Grid item key={index} xs={12} sm={6} md={6} lg={3}>
                             <Card sx={{ maxWidth: 500, height: '100%' }}>
                                 <StyledImage
-                                    src={`${oferta?.dir}/${index + 1}.jpg`}
+                                    src={`${trip?.images_route}/${index + 1}.jpg`}
                                     alt={`Imagen ${index + 1}`}
                                     sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                 />
@@ -106,21 +106,21 @@ export default function DisplayInfo() {
                 </Grid>
             </Box>
             <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
-                <Typography variant='h5' sx={{ fontWeight: '300' }}>Trip to {oferta?.title}</Typography>
+                <Typography variant='h5' sx={{ fontWeight: '300' }}>Trip to {trip?.destination}</Typography>
                 <Typography variant='body1' sx={{ fontWeight: '100', mt: 2 }}>
-                    {oferta?.description}
+                    {trip?.description}
                 </Typography>
 
             </Box>
 
             <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
-                <Typography variant='h5' sx={{ fontWeight: '300' }}>Purchase Summary of Trip to {oferta?.title}</Typography>
+                <Typography variant='h5' sx={{ fontWeight: '300' }}>Purchase Trip to {trip?.destination}</Typography>
                 <Box sx={{ color: 'white', fontWeight: 'bold', backgroundColor: '#99CCFF', borderRadius: '1rem', p: 2, mt: 2 }}>
-                    <Typography variant="h6">Your trip to {oferta?.title} is ready to be booked!</Typography>
-                    <Typography variant="subtitle1">Departure Date: {oferta?.departureDate}</Typography>
-                    <Typography variant="subtitle1">Total Price: {selectedBadge.symbol === 'EUR' ? (oferta?.priceEUR) : (oferta?.priceUSD)}</Typography>
+                    <Typography variant="h6">Your trip to {trip?.destination} is ready to be booked!</Typography>
+                    <Typography variant="subtitle1">Departure Date: {trip?.departure_date}</Typography>
+                    <Typography variant="subtitle1">Total Price: {selectedBadge.symbol === 'EUR' ? (trip?.price_eur) : (trip?.price_usd)}</Typography>
                     {isLogged ? (
-                        <NavLink to={`/checkout/circuit/${oferta?.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <NavLink to={`/checkout/circuit/${trip?.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                             <Button variant="contained" color="secondary" size="large" sx={{ mt: 2 }}>
                                 Book Now
                             </Button>

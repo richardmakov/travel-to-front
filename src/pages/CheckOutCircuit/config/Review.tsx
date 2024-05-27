@@ -7,10 +7,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { ofertasViajes } from '../../Home/components/data/offerts';
 import { useParams } from 'react-router-dom';
 import useBadge from '../../../hooks/useBadge';
 import useAuthStore from '../../../stores/authStore';
+import useTripStore from '../../../stores/tripStore';
 
 interface ReviewProps {
   paymentType: string;
@@ -89,17 +89,18 @@ export default function Review({ paymentType, cardNumber, expirationDate, cardHo
     return `${priceWithIVA.toFixed(2)} ${currencySymbol} (Taxes included)`;
   }
 
+  const { trips } = useTripStore();
 
   const currency = () => {
-    const oferta = ofertasViajes.find(oferta => oferta.id === id);
-    if (!oferta) {
+    const trip = trips.find(trip => trip.id.toString() === id);
+    if (!trip) {
       return "Offer not found";
     }
 
     if (selectedBadge.symbol === 'USD') {
-      return `${oferta.priceUSD.toString()}`;
+      return `${trip.price_usd.toString()}`;
     } else {
-      return `${oferta.priceEUR?.toString()}` || "Price not available";
+      return `${trip.price_eur?.toString()}` || "Price not available";
     }
   }
 
