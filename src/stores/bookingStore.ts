@@ -26,7 +26,7 @@ interface Booking {
     id: number;
     booking_number: string;
     trip?: OffertType;
-    flight?: Flight;
+    flight?: Flight[];
     passengers?: Passenger[];
     payment?: Payment;
     userId: number;
@@ -34,6 +34,7 @@ interface Booking {
 
 interface BookingStore {
     bookings: Booking[];
+    error: unknown | null;
     fetchBookings: () => Promise<void>;
     createBooking: (newBooking: Partial<Booking>) => Promise<void>;
     getBookingById: (id: number) => Promise<Booking | undefined>;
@@ -44,12 +45,13 @@ const useBookingStore = create<BookingStore>()(
     persist(
         (set) => ({
             bookings: [],
+            error: null,
             fetchBookings: async () => {
                 try {
                     const response = await axiosInstance.get('/bookings');
                     set({ bookings: response.data });
                 } catch (error) {
-                    console.error('Failed to fetch bookings:', error);
+                    set( {error: error});
                 }
             },
             createBooking: async (newBooking) => {
@@ -57,7 +59,7 @@ const useBookingStore = create<BookingStore>()(
                     const response = await axiosInstance.post('/bookings/create', newBooking);
                     set((state) => ({ bookings: [...state.bookings, response.data] }));
                 } catch (error) {
-                    console.error('Failed to create booking:', error);
+                    set( {error: error});
                 }
             },
             getBookingById: async (id) => {
@@ -65,7 +67,7 @@ const useBookingStore = create<BookingStore>()(
                     const response = await axiosInstance.get(`/bookings/${id}`);
                     return response.data;
                 } catch (error) {
-                    console.error(`Failed to fetch booking with id ${id}:`, error);
+                    set({error: error});
                 }
             },
             deleteBooking: async (id) => {
@@ -73,12 +75,12 @@ const useBookingStore = create<BookingStore>()(
                     await axiosInstance.delete(`/bookings/${id}`);
                     set((state) => ({ bookings: state.bookings.filter((booking) => booking.id !== id) }));
                 } catch (error) {
-                    console.error(`Failed to delete booking with id ${id}:`, error);
+                    set({error: error});
                 }
             },
         }),
         {
-            name: 'booking-store', // Nombre del almacenamiento persistente
+            name: 'booking-store',
         }
     )
 );

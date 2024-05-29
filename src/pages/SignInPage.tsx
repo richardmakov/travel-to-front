@@ -14,7 +14,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { SxProps } from '@mui/system';
-import ErrorMessage from '../components/ErrorMessage';
 import { UserLoginType } from '../types';
 import useAuthStore from '../stores/authStore';
 import useAlertSnackbar from '../components/Snackbar/useSnackbar';
@@ -43,7 +42,7 @@ const defaultTheme = createTheme();
 
 export default  function SignInPage() {
 
-  const { signin, error, setError, isLogged } = useAuthStore();
+  const { signin, isLogged } = useAuthStore();
 
   const navigate = useNavigate()
  
@@ -52,6 +51,7 @@ export default  function SignInPage() {
   React.useEffect(() => {
     if (isLogged) {
       navigate('/');
+      
     }
   }, [isLogged, navigate]);
 
@@ -63,11 +63,10 @@ export default  function SignInPage() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (Object.values(user).some((value) => value === '')) {
-      setError('All fields are required');
+      handleClickVariant('Please fill all the fields', 'error');
     } else {
-      setError('');
       signin(user);
-      handleClickVariant('You are logged in', 'success');
+      
     }
   };
 
@@ -98,7 +97,6 @@ export default  function SignInPage() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          {error && <ErrorMessage>{error}</ErrorMessage>}
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"

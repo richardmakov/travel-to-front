@@ -17,10 +17,8 @@ const useTripStore = create<TripStore>((set) => ({
     set({ isLoading: true, error: null }); 
     try {
       const response = await axios.get<OffertType[]>('http://localhost:8080/api/trips/all');
-      console.log(response);
       set({ trips: response.data, isLoading: false }); 
     } catch (error) {
-      console.error('Error fetching trips:', error);
       set({ error: 'Failed to load trips', isLoading: false }); 
     }
   },

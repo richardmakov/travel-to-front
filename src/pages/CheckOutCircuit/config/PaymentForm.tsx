@@ -48,7 +48,6 @@ export default function PaymentForm({paymentType, setPaymentType,cardNumber, set
     target: { value: React.SetStateAction<string> };
   }) => {
     setPaymentType(event.target.value);
-    console.log(paymentType)
   };
 
   const handleCardNumberChange = (event: { target: { value: string } }) => {

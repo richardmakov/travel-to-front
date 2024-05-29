@@ -14,6 +14,18 @@ export const User = z.object({
     password: z.string()
 })
 
+export const UserRegister = z.object({
+    firstname: z.string(),
+    lastname: z.string(),
+    email: z.string(),
+    phone: z.string(),
+    idCard: z.string(),
+    passport: z.string(),
+    country: z.string(),
+    date: z.string(),
+    password: z.string()
+})
+
 export const Userlogin = z.object({
     email: z.string(),
     password: z.string()

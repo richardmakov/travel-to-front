@@ -75,7 +75,6 @@ function getStepContent(numAdults: number,
 export default function Checkout({numberId, numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
     const [mode] = React.useState<PaletteMode>('light');
     const defaultTheme = createTheme({ palette: { mode } });
-    console.log(numberId)
     const { id } = useParams();
     const { selectedBadge } = useBadge();
 

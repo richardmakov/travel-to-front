@@ -15,9 +15,8 @@ import DatePicker from '../components/OtherField/DatePicker';
 import { formatDate } from '../helper';
 import dayjs from 'dayjs';
 import CountrySelect, { CountryType } from '../components/OtherField/ChooseCountry';
-import ErrorMessage from '../components/ErrorMessage';
 import { SxProps } from '@mui/system';
-import { User } from '../utils';
+import { UserRegister } from '../utils';
 import { z } from 'zod';
 import useAuthStore from '../stores/authStore';
 import useAlertSnackbar from '../components/Snackbar/useSnackbar';
@@ -45,13 +44,13 @@ const defaultTheme = createTheme();
 
 export default function SignUpPage() {
 
-  const { signup, error, setError, isLogged } = useAuthStore();
+  const { signup, isLogged } = useAuthStore();
 
   const navigate = useNavigate()
 
   const { handleClickVariant } = useAlertSnackbar();
 
-  const [user, setUser] = React.useState<z.infer<typeof User>>({
+  const [user, setUser] = React.useState<z.infer<typeof UserRegister>>({
     firstname: '',
     lastname: '',
     email: '',
@@ -74,11 +73,10 @@ export default function SignUpPage() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (Object.values(user).some((value) => value === '')) {
-      setError('All fields are required');
+      handleClickVariant('Please fill all the fields', 'error');
       return;
     } else {
       signup(user);
-      setError('');
       handleClickVariant('You are registered and logged in', 'success');
     }
 
@@ -98,9 +96,8 @@ export default function SignUpPage() {
     });
   };
 
-  const handleCountryChange = (event: React.SyntheticEvent<Element, Event>, newValue: CountryType | null) => {
-
-    if(newValue === null) {
+  const handleCountryChange = (newValue: CountryType | null) => {
+    if (newValue === null) {
       setUser({
         ...user,
         country: ''
@@ -131,7 +128,6 @@ export default function SignUpPage() {
             Sign up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField

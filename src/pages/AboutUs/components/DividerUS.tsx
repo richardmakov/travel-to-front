@@ -15,8 +15,8 @@ const scrollText = keyframes`
 const AnimatedBox = styled(Box)({
   display: 'flex',
   whiteSpace: 'nowrap',
-  animation: `${scrollText} 30s linear infinite`, // Mueve más lento
-  color: 'white', // Texto en blanco
+  animation: `${scrollText} 100s linear infinite`, 
+  color: 'white', 
 });
 
 const ScrollingText = () => {

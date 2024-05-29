@@ -107,8 +107,6 @@ const useFlightSearchForm = () => {
                 currencyCode: selectedBadge.symbol,
             };
 
-            console.log(params)
-
             await searchFlights(params);
 
         } catch (error: unknown) {

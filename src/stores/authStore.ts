@@ -1,5 +1,5 @@
 import { create  } from 'zustand';
-import { UserLoginType, UserType } from "../types";
+import { UserLoginType, UserRegisterType, UserType } from "../types";
 import { persist, createJSONStorage } from 'zustand/middleware';
 
 interface AuthState {
@@ -8,7 +8,7 @@ interface AuthState {
   loading: boolean;
   isLogged: boolean;
   signin: (credentials: UserLoginType) => Promise<void>;
-  signup: (userData: UserType) => Promise<void>;
+  signup: (userData: UserRegisterType) => Promise<void>;
   signout: () => void;
   setError: (message: string) => void;
 }
@@ -48,7 +48,7 @@ const useAuthStore = create<AuthState>()(
         }
       },
 
-      signup: async (userData: UserType) => {
+      signup: async (userData: UserRegisterType) => {
         set({ loading: true, error: null });
 
         try {

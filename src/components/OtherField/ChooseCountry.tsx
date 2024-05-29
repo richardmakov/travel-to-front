@@ -5,19 +5,23 @@ import Autocomplete from '@mui/material/Autocomplete';
 
 
 type CountrySelectProps = {
-  handleCountryChange: (event: React.SyntheticEvent<Element, Event>, newValue: CountryType | null) => void
+  handleCountryChange: (newValue: CountryType | null) => void
   pais:CountryType | undefined
   
 }
 
 export default function CountrySelect({ handleCountryChange, pais }: CountrySelectProps) {
+  const handleCountryChangeWrapper = (_event: React.SyntheticEvent<Element, Event>, newValue: CountryType | null) => {
+    handleCountryChange(newValue);
+  }
+
   return (
     <Autocomplete
       id="country-select-demo"
       sx={{ width: 420 }}
       options={countries}
-      value={pais} // Set value to the country object in the user state
-      onChange={handleCountryChange}
+      value={pais} 
+      onChange={handleCountryChangeWrapper}
       autoHighlight
       getOptionLabel={(option) => option.label}
       isOptionEqualToValue={(option, value) => option.code === value?.code}

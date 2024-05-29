@@ -208,8 +208,6 @@ export const useCheckOutViewModel = () => {
                     user: userEntry
                 };
 
-                console.log(newBooking)
-
                 createBooking(newBooking);
             }
             
@@ -256,8 +254,6 @@ export const useCheckOutViewModel = () => {
 
         setErrors(updatedErrors);
     };
-
-    console.log(numberId)
     
     return {
         formInputs,

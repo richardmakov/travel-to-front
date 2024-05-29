@@ -1,26 +1,24 @@
 import { Box, Button, FormControl, TextField, Typography } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import ErrorMessage from '../ErrorMessage';
+import useAlertSnackbar from '../Snackbar/useSnackbar';
 
 export default function InfoEmail() {
     const [email, setEmail] = useState<string>('');
-    const [emailError, setEmailError] = useState<string>('');
+    const {handleClickVariant} = useAlertSnackbar();
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
-        setEmailError('');
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!validateEmail(email)) {
-            setEmailError('Por favor, introduce un correo electrónico válido.');
+            handleClickVariant('Email not valid', 'error');
             return;
         }
 
         setEmail('');
-        setEmailError('');
     };
 
     const validateEmail = (email: string) => {
@@ -38,11 +36,6 @@ export default function InfoEmail() {
                 Grandes ideas para tus próximos viajes, los mejores destinos y excelentes ofertas, tan solo tienes que darte de alta.
             </Typography>
             <FormControl sx={{ width: '100%' }} component="form" onSubmit={handleSubmit}>
-                <Box sx={{ width: { xs: '100%', sm: '100%' }, display: 'flex', justifyContent: 'center' }}>
-                    <Box sx={{ width: { xs: '100%', sm: '45.3%' }}}>
-                        {emailError && <ErrorMessage>{emailError}</ErrorMessage>}
-                    </Box>
-                </Box>
                 <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'center' }}>
 
                     <Box sx={{ width: { xs: '100%', sm: '40%' }, mb: { xs: 2, sm: 0 }, mr: { xs: 0, sm: '10px' } }}>
@@ -55,7 +48,6 @@ export default function InfoEmail() {
                             onChange={handleInputChange}
                             InputLabelProps={{ shrink: false }}
                             placeholder='Email'
-                            error={!!emailError}
                             sx={{
                                 backgroundColor: '#FFF',
                                 borderRadius: '0.3rem',

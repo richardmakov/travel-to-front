@@ -9,7 +9,6 @@ type PasswordFieldProps = {
 }
 
 export default function PasswordField({ value, handlePassChange}: PasswordFieldProps) {
-    console.log(value)
     value = value.trim().toLowerCase();
     const [showPassword, setShowPassword] = useState(false);
     
