@@ -6,17 +6,10 @@ import useFlightStore from '../../../../stores/flightStore';
 import useValidateForm from './useValidateForm';
 import { FlightSearchParams } from '../../../../types/flightStore';
 
-interface City {
-    name: string;
-}
+
 
 const useFlightSearchForm = () => {
-    const cities: City[] = [
-        { name: 'New York' },
-        { name: 'Los Angeles' },
-        { name: 'London' },
-        { name: 'Paris' },
-    ];
+
 
     const navigate = useNavigate();
 
@@ -116,7 +109,6 @@ const useFlightSearchForm = () => {
     };
 
     return {
-        cities,
         formValues,
         setFormValues,
         handleChange,
