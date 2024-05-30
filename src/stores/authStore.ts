@@ -59,7 +59,7 @@ const useAuthStore = create<AuthState>()(
             },
             body: JSON.stringify(userData),
           });
-
+            console.log(JSON.stringify(userData))
           if (!response.ok) {
             throw new Error('Error in register');
           }

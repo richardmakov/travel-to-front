@@ -27,7 +27,7 @@ export default function DisplayInfo() {
     const { isLogged } = useAuthStore();
     const { handleClickVariant } = useAlertSnackbar();
 
-    const handleClickBookNow = () =>{
+    const handleClickBookNow = () => {
         handleClickVariant('You have to be logged', 'info')
     }
     return (
@@ -77,7 +77,7 @@ export default function DisplayInfo() {
             </Box>
 
             <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
-                <Typography variant='h5' sx={{ fontWeight: '300' }}>
+                <Typography variant='h5' sx={{ fontWeight: '400' }}>
                     Discover the best of {trip?.destination ?? 'this destination'} and enjoy a few days of relaxation in the beach area of your choice
                 </Typography>
                 <Typography variant='body1' sx={{ fontWeight: '100', mt: 2 }}>
@@ -86,35 +86,34 @@ export default function DisplayInfo() {
             </Box>
 
             <Box sx={{ color: '#666', textAlign: 'center', mb: 2 }}>
-                <Typography variant='h5' sx={{ fontWeight: '300' }}>Gallery</Typography>
+                <Typography variant='h5' sx={{ fontWeight: '400' }}>Gallery</Typography>
                 <Divider sx={{ width: '50%', mx: 'auto', my: 2 }} />
             </Box>
 
-            <Box sx={{ maxWidth: '100%', my: 3 }}>
-                <Grid container spacing={1} justifyContent="center">
-                    {Array.from({ length: 8 }).map((_, index) => (
-                        <Grid item key={index} xs={12} sm={6} md={6} lg={3}>
-                            <Card sx={{ maxWidth: 500, height: '100%' }}>
-                                <StyledImage
-                                    src={`${trip?.images_route}/${index + 1}.jpg`}
-                                    alt={`Imagen ${index + 1}`}
-                                    sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                />
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
-            </Box>
-            <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
-                <Typography variant='h5' sx={{ fontWeight: '300' }}>Trip to {trip?.destination}</Typography>
-                <Typography variant='body1' sx={{ fontWeight: '100', mt: 2 }}>
+
+            <Grid container spacing={2} justifyContent="center">
+                {Array.from({ length: 8 }).map((_, index) => (
+                    <Grid key={index} item xs={12} sm={6} md={4.1}>
+                        <Card sx={{  height: '100%' }}>
+                            <StyledImage
+                                src={`${trip?.images_route}/${index + 1}.jpg`}
+                                alt={`Imagen ${index + 1}`}
+                                sx={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+
+            <Box sx={{ color: '#666', textAlign: 'center', my: 8, width:'100%', display:'flex', flexDirection:'column', alignItems:'center' }}>
+                <Typography variant='h5' sx={{ fontWeight: '400' }}>Trip to {trip?.destination}</Typography>
+                <Typography variant='body1'  sx={{ fontWeight: '300', width:'70%', mt: 2, textAlign:'center'}}>
                     {trip?.description}
                 </Typography>
-
             </Box>
 
             <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
-                <Typography variant='h5' sx={{ fontWeight: '300' }}>Purchase Trip to {trip?.destination}</Typography>
+                <Typography variant='h5' sx={{ fontWeight: '400' }}>Purchase Trip to {trip?.destination}</Typography>
                 <Box sx={{ color: 'white', fontWeight: 'bold', backgroundColor: '#99CCFF', borderRadius: '1rem', p: 2, mt: 2 }}>
                     <Typography variant="h6">Your trip to {trip?.destination} is ready to be booked!</Typography>
                     <Typography variant="subtitle1">Departure Date: {trip?.departure_date}</Typography>

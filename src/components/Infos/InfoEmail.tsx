@@ -28,8 +28,8 @@ export default function InfoEmail() {
     };
 
     return (
-        <Box sx={{ backgroundColor: '#00A9FF', color: '#FFF', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 2 }}>
-            <Typography variant="h5" sx={{ color: '#FFF', mb: '1rem', mt: '3rem', fontSize: { xs: '20px', sm: '24px' } }}>
+        <Box sx={{ backgroundColor: '#00A9FF', color: '#FFF', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 6 }}>
+            <Typography variant="h5" sx={{ color: '#FFF', mb: '1rem', fontSize: { xs: '20px', sm: '24px' } }}>
                 Grandes viajes en tu bandeja de entrada
             </Typography>
             <Typography sx={{ color: '#FFF', marginBottom: '2rem', fontSize: { xs: '16px', sm: '18px' }, textAlign: 'center', px: { xs: 2, sm: 0 } }}>
