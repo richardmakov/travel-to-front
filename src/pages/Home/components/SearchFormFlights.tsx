@@ -12,14 +12,14 @@ const SearchBarFlights = () => {
     const { setFormValues, formValues, handleChange, handleSubmit, formError } = useFlightSearchForm();
 
     return (
-        <Box sx={{ mt: 3 }}>
-            <Card sx={{  borderRadius: 10,boxShadow: 3 }}>
-                <Box sx={{ backgroundColor: '#F1C40F', width: '100%', padding: 3 }}>
-                    <Typography variant="h5" sx={{ textAlign: 'center', fontWeight: 'bold', color: '#FFF', mr:2}}>
-                         Flight search Engine
+        <>
+            <Card sx={{ borderRadius: 10, boxShadow: 3 }}>
+                <Box sx={{ backgroundColor: '#A3E4D7', width: '100%', padding: 3 }}>
+                    <Typography variant="h5" sx={{ textAlign: 'center', fontWeight: 'bold', color: '#FFF', mr: 2 }}>
+                        Flight search Engine
                     </Typography>
                 </Box>
-                <Box sx={{ backgroundColor: '#f5f5f5f5', maxWidth: '100%', display: 'flex', flexDirection: 'column', px:3, pb:3, pt:1 }}>
+                <Box sx={{ backgroundColor: '#f5f5f5f5', maxWidth: '100%', display: 'flex', flexDirection: 'column', px: 3, pb: 3, pt: 1 }}>
                     <form onSubmit={handleSubmit}>
                         {formError && <ErrorMessage>{formError}</ErrorMessage>}
                         <Grid container spacing={2} sx={{ mt: 1 }}>
@@ -32,6 +32,33 @@ const SearchBarFlights = () => {
                                     onChange={(event) => handleChange('origin', event.target.value)}
                                     value={formValues.origin}
                                     focused
+                                    placeholder='Barcelona'
+                                    InputProps={{
+                                        style: { color: 'black' },
+
+                                    }}
+                                    InputLabelProps={{
+                                        sx: {
+                                            color: '#1ABC9C',
+                                            '&.Mui-focused': {
+                                                color: '#1ABC9C', // Cambia el color de la etiqueta cuando está enfocado
+                                            }
+
+                                        },
+                                    }}
+                                    sx={{
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                        },
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={2.5} xl={3}>
@@ -43,6 +70,33 @@ const SearchBarFlights = () => {
                                     onChange={(event) => handleChange('destination', event.target.value)}
                                     value={formValues.destination}
                                     focused
+                                    placeholder='Madrid'
+                                    InputProps={{
+                                        style: { color: 'black' },
+
+                                    }}
+                                    InputLabelProps={{
+                                        sx: {
+                                            color: '#1ABC9C',
+                                            '&.Mui-focused': {
+                                                color: '#1ABC9C', // Cambia el color de la etiqueta cuando está enfocado
+                                            }
+
+                                        },
+                                    }}
+                                    sx={{
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                        },
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6} md={6} lg={2.5} xl={3}>
@@ -50,14 +104,38 @@ const SearchBarFlights = () => {
                                     id="departure-date"
                                     label="Departure Date"
                                     type="date"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
                                     variant="outlined"
                                     fullWidth
                                     onChange={(event) => handleChange('departureDate', event.target.value)}
                                     value={formValues.departureDate}
                                     focused
+                                    InputProps={{
+                                        style: { color: 'black' },
+
+                                    }}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                        sx: {
+                                            color: '#1ABC9C',
+                                            '&.Mui-focused': {
+                                                color: '#1ABC9C', // Cambia el color de la etiqueta cuando está enfocado
+                                            }
+
+                                        },
+                                    }}
+                                    sx={{
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#1ABC9C',
+                                            },
+                                        },
+                                    }}
                                 />
                             </Grid>
 
@@ -71,6 +149,21 @@ const SearchBarFlights = () => {
                                         label="Class"
                                         onChange={(event) => handleChange('classOfService', event.target.value)}
                                         variant="outlined"
+                                        sx={{
+
+                                            '.MuiInputLabel-outlined.Mui-focused': {
+                                             
+                                                    color: '#1ABC9C',
+                                                  
+                                            },
+                                            "&.MuiOutlinedInput-notchedOutline": { borderColor: '#1ABC9C' },
+                                            "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
+                                              borderColor: '#1ABC9C'
+                                            },
+                                            "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                              borderColor: '#1ABC9C'
+                                            }
+                                          }}
                                     >
                                         <MenuItem value={"ECONOMY"}>ECONOMY</MenuItem>
                                         <MenuItem value={"BUSINESS"}>BUSINESS</MenuItem>
@@ -95,10 +188,10 @@ const SearchBarFlights = () => {
                                         fullWidth
                                         sx={{
                                             px: 1,
-                                            backgroundColor: '#F1C40F',
+                                            backgroundColor: '#A3E4D7',
                                             color: 'white',
                                             '&:hover': {
-                                                backgroundColor: '#F39C12 ',
+                                                backgroundColor: '#1ABC9C',
                                             },
                                         }}
                                     >
@@ -109,13 +202,13 @@ const SearchBarFlights = () => {
                         </Box>
                     </form>
                 </Box>
-                <Box sx={{ backgroundColor: '#F1C40F', width: '100%', padding: 1 }}>
+                <Box sx={{ backgroundColor: '#A3E4D7', width: '100%', padding: 1 }}>
                     <Typography variant="body2" sx={{ textAlign: 'center', fontWeight: 500, color: '#FFF' }}>
                         TravelTO
                     </Typography>
                 </Box>
             </Card>
-        </Box>
+        </>
 
     );
 };

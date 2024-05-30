@@ -11,7 +11,8 @@ export const User = z.object({
     passport: z.string(),
     country: z.string(),
     date: z.string(),
-    password: z.string()
+    password: z.string(),
+    roles:z?.array(z.string())
 })
 
 export const UserRegister = z.object({

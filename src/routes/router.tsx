@@ -10,23 +10,83 @@ import ContactUsPage from "../pages/ContactUs/ContactUsPage";
 import GalleryPage from "../pages/Gallery/GalleryPage";
 import CheckOutCircuitView from "../pages/CheckOutCircuit/CheckOutCircuitView";
 import CheckOutFlightsView from "../pages/CheckOutFlights/CheckOutFlightsView";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import ProtectedRoute from "./protectedRoute";
+import useAuthStore from "../stores/authStore";
 
 export default function AppRouter() {
   return (
-    <div>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<SignInPage />} />
-          <Route path="/register" element={<SignUpPage />} />
-          <Route path="/aboutus" element={<AboutUsPage />} />
-          <Route path="/flights" element={<FlightsPage />} />
-          <Route path="/contact" element={<ContactUsPage />} />
-          <Route path="/gallery/:id" element={<GalleryPage />} />
-          <Route path="/checkout/circuit/:id" element={<CheckOutCircuitView />} />
-          <Route path="/checkout/flights/:id" element={<CheckOutFlightsView />} />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route index path="/" element={<HomePage />} />
+        <Route path="/dashboard/*" element={<DashboardRoutes />} />
+        <Route path="/dashboard/admin/*" element={<DashboardAdminRoutes />} />
+        <Route path="/login" element={<SignInPage />} />
+        <Route path="/register" element={<SignUpPage />} />
+        <Route path="/aboutus" element={<AboutUsPage />} />
+        <Route path="/flights" element={<FlightsPage />} />
+        <Route path="/contact" element={<ContactUsPage />} />
+        <Route path="/gallery/:id" element={<GalleryPage />} />
+        <Route path="/checkout/circuit/:id" element={<CheckOutCircuitView />} />
+        <Route path="/checkout/flights/:id" element={<CheckOutFlightsView />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
+
+const DashboardRoutes = () => {
+  const { user } = useAuthStore()
+  return (
+    <Routes>
+      <Route index
+        element={
+          <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
+            <Dashboard />
+          </ProtectedRoute>} />
+      <Route path="profile"
+        element={
+          <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
+            <Dashboard />
+          </ProtectedRoute>}
+      />
+      <Route path="bookings"
+        element={
+          <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
+            <Dashboard />
+          </ProtectedRoute>} />
+    </Routes>
+  )
+}
+
+const DashboardAdminRoutes = () => {
+  const { user } = useAuthStore()
+  return (
+    <Routes>
+      <Route
+        path="users"
+        element={
+          <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="bookings"
+        element={
+          <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="offerts"
+        element={
+          <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+};
+

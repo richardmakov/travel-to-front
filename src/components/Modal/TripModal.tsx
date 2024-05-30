@@ -51,7 +51,7 @@ const TripModal: React.FC<TripModalProps> = ({ buttonText, formValues, setFormVa
           px: 4,
           backgroundColor: 'transparent',
           color: 'black',
-          border:'1px solid blue'
+          border:'2px solid #1ABC9C'
         }}
       >
         {buttonDisplayText}

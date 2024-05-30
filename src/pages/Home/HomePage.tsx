@@ -8,6 +8,7 @@ import NewOfertsDisplay from './components/NewOfertsDisplay'
 import NavBar from '../../components/AppNavBar/NavBar'
 import useBadge from '../../hooks/useBadge'
 import SearchBar from './components/SearchBar'
+import DiscountMessage from '../../components/DiscountMessage'
 
 export default function HomePage() {
 
@@ -16,9 +17,9 @@ export default function HomePage() {
   return (
     <>
       <Header badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge} />
-      <NavBar />
+      <DiscountMessage />
       <CarrouselImages />
-      
+      <NavBar />
       <SearchBar />
       <NewOfertsDisplay />
       <AbousUsInfo />

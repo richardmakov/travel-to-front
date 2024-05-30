@@ -21,19 +21,16 @@ export default function Header({ badges, handleBadgeClick, selectedBadge, setSel
         <AppBar position="static" sx={{ backgroundColor: '#ECF0F1' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <NavLink color="inherit" to="/">
-              
                     <Avatar alt="" src="/logo2.png" sx={{ width: '10vh', height: '10vh' }} />
                 </NavLink>
 
                 <Box>
                     <ChooseBadge badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge} />
-
                     {isLogged ? (
                         <MenuHeader />
                     ) : (
                         <NavLink to="/login" style={{ color: '#000', textDecoration: 'none' }}>
                             <Button
-                                color="inherit"
                                 sx={{
                                     '&:hover': {
                                         backgroundColor: 'transparent',

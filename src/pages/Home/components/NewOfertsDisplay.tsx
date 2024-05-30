@@ -20,7 +20,7 @@ export default function NewOfertsDisplay() {
   if (error) return <div style={{display:'flex', justifyContent:'center', fontSize:'3rem', color:'red'}}>Error: {error}</div>;
     return (
         <>
-            <Box sx={{ width: '100%', maxWidth: '1200px', margin: '0 auto', mt: { xs: 5, md: 7 }, mb: 2, px: 2 }}>
+            <Box sx={{ width: '100%', maxWidth: '1200px', margin: '0 auto', mt: { xs: 5, md: 5 }, mb: 2, px: 2 }}>
                 <Typography variant="h4" sx={{ fontWeight: 'bold', color: '#333', marginBottom: '2rem', textAlign: 'center' }}>
                     Discover our Offers
                 </Typography>

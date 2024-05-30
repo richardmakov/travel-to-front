@@ -77,7 +77,6 @@ export default function SignUpPage() {
       return;
     } else {
       signup(user);
-      handleClickVariant('You are registered and logged in', 'success');
     }
 
   };

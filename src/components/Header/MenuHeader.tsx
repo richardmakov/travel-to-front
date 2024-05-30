@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import useAuthStore from '../../stores/authStore';
 import useAlertSnackbar from '../Snackbar/useSnackbar';
+import { NavLink } from 'react-router-dom';
 
 
 export default function MenuHeader() {
@@ -17,7 +18,7 @@ export default function MenuHeader() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const {signout} = useAuthStore();
+  const { signout } = useAuthStore();
 
   const handleLogOutClose = () => {
     handleClose()
@@ -25,23 +26,24 @@ export default function MenuHeader() {
     handleClickVariant('Logged out', 'warning');
   }
 
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
 
   return (
     <>
       <Button
         sx={{
-            '&:hover': {
-                color:"#666", 
-                backgroundColor: 'transparent'
-            }}}
-            startIcon={<AccountCircleIcon />}
+          '&:hover': {
+            color: "#666",
+            backgroundColor: 'transparent'
+          }
+        }}
+        startIcon={<AccountCircleIcon />}
         aria-controls={open ? 'basic-menu' : undefined}
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-         {user?.firstname} {user?.lastname}
+        {user?.firstname} {user?.lastname}
       </Button>
       <Menu
         id="basic-menu"
@@ -52,8 +54,9 @@ export default function MenuHeader() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-{/*         <MenuItem onClick={handleClose}>My account</MenuItem> */}
+        <NavLink to={'/dashboard'} style={{textDecoration:'none', color:'inherit'}}>
+          <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+        </NavLink>
         <MenuItem onClick={handleLogOutClose}>Logout</MenuItem>
       </Menu>
     </>
