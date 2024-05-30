@@ -4,30 +4,31 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PeopleIcon from '@mui/icons-material/People';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Link } from 'react-router-dom';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import AirplaneTicketIcon from '@mui/icons-material/AirplaneTicket';
 
 export const mainListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset>
       Profile Panel
     </ListSubheader>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/dashboard">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/dashboard/profile">
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <AccountBoxIcon />
       </ListItemIcon>
       <ListItemText primary="Profile" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/dashboard/bookings">
       <ListItemIcon>
-        <PeopleIcon />
+        <AirplaneTicketIcon />
       </ListItemIcon>
       <ListItemText primary="Bookings" />
     </ListItemButton>

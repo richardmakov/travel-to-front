@@ -5,24 +5,26 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { mainListItems, secondaryListItems } from './components/ListItems';
-import Orders from './components/Order';
 import { NavLink } from 'react-router-dom';
 import { AppBar, Drawer } from './styles/dashboardStyles';
 import useDashboardViewModel from './view-model/useDashboardViewModel';
-import useAuthStore from '../../stores/authStore';
+import useAuthStore from '../../../stores/authStore';
+import { ReactNode } from 'react';
 
-export default function Dashboard() {
+interface DashboardProps{
+    children: ReactNode
+}
+
+export default function Dashboard({children}: DashboardProps) {
     const {toggleDrawer, open, isAdmin} =  useDashboardViewModel()
     const {user} = useAuthStore()
 
     return (
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', width:'100%' }}>
                 <CssBaseline />
                 <AppBar position="absolute" open={open}>
                     <Toolbar
@@ -71,7 +73,6 @@ export default function Dashboard() {
                         {mainListItems}
                         <Divider sx={{ my: 1 }} />
                         {isAdmin() ? secondaryListItems : null}
-                        
                     </List>
                 </Drawer>
                 <Box
@@ -83,19 +84,13 @@ export default function Dashboard() {
                                 : theme.palette.grey[900],
                         flexGrow: 1,
                         height: '100vh',
-                        overflow: 'auto',
+                        overflow: 'auto'
                     }}
                 >
                     <Toolbar />
-                    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                        <Grid container spacing={3}>
-                            
-                            {/* Recent Orders */}
-                            <Grid item xs={12}>
-                                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                                    <Orders />
-                                </Paper>
-                            </Grid>
+                    <Box sx={{ mt: 4, mb: 4}}>
+                        <Grid container >
+                            {children}
                         </Grid>
                         <Box sx={{ pt: 4 }}>
                             <Typography variant="body2" color="text.secondary" align="center">
@@ -107,7 +102,7 @@ export default function Dashboard() {
                                 {'.'}
                             </Typography>
                         </Box>
-                    </Container>
+                    </Box>
                 </Box>
             </Box>
     );

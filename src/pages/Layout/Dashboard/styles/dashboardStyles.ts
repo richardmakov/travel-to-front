@@ -48,7 +48,11 @@ export const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 
                 },
             }),
         },
+        '& .css-12i7wg6-MuiPaper-root-MuiDrawer-paper': { 
+            height: '100vh',
+        }
     }),
 );
+
 
 export const defaultTheme = createTheme();

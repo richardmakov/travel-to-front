@@ -1,6 +1,5 @@
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import HomePage from "../pages/Home/HomePage";
 import SignInPage from "../pages/SignInPage";
 import SignUpPage from "../pages/SignUpPage";
@@ -10,9 +9,12 @@ import ContactUsPage from "../pages/ContactUs/ContactUsPage";
 import GalleryPage from "../pages/Gallery/GalleryPage";
 import CheckOutCircuitView from "../pages/CheckOutCircuit/CheckOutCircuitView";
 import CheckOutFlightsView from "../pages/CheckOutFlights/CheckOutFlightsView";
-import Dashboard from "../pages/Dashboard/Dashboard";
 import ProtectedRoute from "./protectedRoute";
 import useAuthStore from "../stores/authStore";
+import { Layout } from "../pages/Layout/Layout";
+import DashboardView from "../pages/Layout/Dashboard/DashboardView";
+import Profile from "../pages/Layout/Dashboard/components/profile-panel/Profile";
+
 
 export default function AppRouter() {
   return (
@@ -40,19 +42,20 @@ const DashboardRoutes = () => {
     <Routes>
       <Route index
         element={
-          <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
-            <Dashboard />
-          </ProtectedRoute>} />
+          <DashboardView/>} />
+
       <Route path="profile"
         element={
-          <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
-            <Dashboard />
-          </ProtectedRoute>}
+          <Layout>
+            <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
+              <Profile />
+            </ProtectedRoute>
+          </Layout>}
       />
       <Route path="bookings"
         element={
           <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
-            <Dashboard />
+            <GalleryPage />
           </ProtectedRoute>} />
     </Routes>
   )
@@ -66,7 +69,7 @@ const DashboardAdminRoutes = () => {
         path="users"
         element={
           <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
-            <Dashboard />
+            <GalleryPage />
           </ProtectedRoute>
         }
       />
@@ -74,7 +77,7 @@ const DashboardAdminRoutes = () => {
         path="bookings"
         element={
           <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
-            <Dashboard />
+            <GalleryPage />
           </ProtectedRoute>
         }
       />
@@ -82,7 +85,7 @@ const DashboardAdminRoutes = () => {
         path="offerts"
         element={
           <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
-            <Dashboard />
+            <GalleryPage />
           </ProtectedRoute>
         }
       />
