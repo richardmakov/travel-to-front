@@ -14,7 +14,7 @@ const SearchBarFlights = () => {
     return (
         <Box sx={{ mt: 3 }}>
             <Card sx={{  borderRadius: 10,boxShadow: 3 }}>
-                <Box sx={{ backgroundColor: '#ADD8E6', width: '100%', padding: 3 }}>
+                <Box sx={{ backgroundColor: '#F1C40F', width: '100%', padding: 3 }}>
                     <Typography variant="h5" sx={{ textAlign: 'center', fontWeight: 'bold', color: '#FFF', mr:2}}>
                          Flight search Engine
                     </Typography>
@@ -95,10 +95,10 @@ const SearchBarFlights = () => {
                                         fullWidth
                                         sx={{
                                             px: 1,
-                                            backgroundColor: '#00A9FF',
+                                            backgroundColor: '#F1C40F',
                                             color: 'white',
                                             '&:hover': {
-                                                backgroundColor: '#66CCFF',
+                                                backgroundColor: '#F39C12 ',
                                             },
                                         }}
                                     >
@@ -109,7 +109,7 @@ const SearchBarFlights = () => {
                         </Box>
                     </form>
                 </Box>
-                <Box sx={{ backgroundColor: '#ADD8E6', width: '100%', padding: 1 }}>
+                <Box sx={{ backgroundColor: '#F1C40F', width: '100%', padding: 1 }}>
                     <Typography variant="body2" sx={{ textAlign: 'center', fontWeight: 500, color: '#FFF' }}>
                         TravelTO
                     </Typography>

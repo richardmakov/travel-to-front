@@ -76,25 +76,25 @@ export default function DisplayInfo() {
                 <Typography variant='body1' sx={{ fontWeight: 'bold', mx: 1 }}>{trip?.departure_date} - {trip?.return_date}</Typography>
             </Box>
 
-            <Box sx={{ color: '#666', textAlign: 'center', my: 2 }}>
+            <Box sx={{ color: '#666', textAlign: 'center', my: 6 }}>
                 <Typography variant='h5' sx={{ fontWeight: '400' }}>
-                    Discover the best of {trip?.destination ?? 'this destination'} and enjoy a few days of relaxation in the beach area of your choice
+                    Explore the beauty of {trip?.destination ?? 'this destination'} and relax with a few days of downtime
                 </Typography>
-                <Typography variant='body1' sx={{ fontWeight: '100', mt: 2 }}>
+                <Typography variant='body1' sx={{ fontWeight: '100', mt: 1 }}>
                     {trip?.visit}
                 </Typography>
             </Box>
 
-            <Box sx={{ color: '#666', textAlign: 'center', mb: 2 }}>
+            <Box sx={{ color: '#666', textAlign: 'center'}}>
                 <Typography variant='h5' sx={{ fontWeight: '400' }}>Gallery</Typography>
-                <Divider sx={{ width: '50%', mx: 'auto', my: 2 }} />
+                <Divider sx={{ width: '65%', mx: 'auto', my: 2 }} />
             </Box>
 
 
             <Grid container spacing={2} justifyContent="center">
                 {Array.from({ length: 8 }).map((_, index) => (
                     <Grid key={index} item xs={12} sm={6} md={4.1}>
-                        <Card sx={{  height: '100%' }}>
+                        <Card sx={{ height: '100%' }}>
                             <StyledImage
                                 src={`${trip?.images_route}/${index + 1}.jpg`}
                                 alt={`Imagen ${index + 1}`}
@@ -105,9 +105,9 @@ export default function DisplayInfo() {
                 ))}
             </Grid>
 
-            <Box sx={{ color: '#666', textAlign: 'center', my: 8, width:'100%', display:'flex', flexDirection:'column', alignItems:'center' }}>
+            <Box sx={{ color: '#666', textAlign: 'center', my: 8, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant='h5' sx={{ fontWeight: '400' }}>Trip to {trip?.destination}</Typography>
-                <Typography variant='body1'  sx={{ fontWeight: '300', width:'70%', mt: 2, textAlign:'center'}}>
+                <Typography variant='body1' sx={{ fontWeight: '300', width: '70%', mt: 2, textAlign: 'center' }}>
                     {trip?.description}
                 </Typography>
             </Box>

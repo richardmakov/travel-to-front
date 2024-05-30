@@ -18,7 +18,7 @@ interface HeaderProps {
 export default function Header({ badges, handleBadgeClick, selectedBadge, setSelectedBadge }: HeaderProps) {
     const isLogged = useAuthStore((state) => state.isLogged);
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#FFF' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#ECF0F1' }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <NavLink color="inherit" to="/">
               
@@ -26,8 +26,6 @@ export default function Header({ badges, handleBadgeClick, selectedBadge, setSel
                 </NavLink>
 
                 <Box>
-                    
-
                     <ChooseBadge badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge} />
 
                     {isLogged ? (

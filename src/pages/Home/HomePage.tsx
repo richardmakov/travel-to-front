@@ -16,8 +16,9 @@ export default function HomePage() {
   return (
     <>
       <Header badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge} />
-      <CarrouselImages />
       <NavBar />
+      <CarrouselImages />
+      
       <SearchBar />
       <NewOfertsDisplay />
       <AbousUsInfo />
