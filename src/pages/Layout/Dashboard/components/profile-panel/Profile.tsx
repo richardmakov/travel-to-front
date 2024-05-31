@@ -1,13 +1,38 @@
 import useAuthStore from '../../../../../stores/authStore'
-import { Container, Grid, TextField, Typography } from '@mui/material'
+import { Button, Container, Grid, TextField, Typography } from '@mui/material'
+import useUserStore from '../../../../../stores/userStore';
+import { useState } from 'react';
 
 export default function Profile() {
 
     const { user } = useAuthStore()
+    const updatePassword = useUserStore(state => state.updatePassword);
 
+    const [passwordData, setPasswordData] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setPasswordData({ ...passwordData, [name]: value });
+    };
+
+    const handleUpdatePassword = () => {
+        const { currentPassword, newPassword, confirmPassword } = passwordData;
+        
+        if (newPassword === confirmPassword && newPassword !== '' && confirmPassword !== '' && currentPassword !== '' && newPassword !== currentPassword) {
+            if(user){
+                updatePassword(user.id, currentPassword, newPassword);
+            }
+        } else {
+            console.log("New password and confirm password must match.");
+        }
+    };
     return (
         <Container>
-            <Typography variant="h4" sx={{ color: '#7F8C8D', py:3 }} gutterBottom>My Profile</Typography>
+            <Typography variant="h4" sx={{ color: '#7F8C8D', py: 3 }} gutterBottom>My Profile</Typography>
 
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -72,6 +97,46 @@ export default function Profile() {
                         fullWidth
                         disabled
                     />
+                </Grid>
+                
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        label="New Password"
+                        name="newPassword"
+                        value={passwordData.newPassword}
+                        onChange={handleChange}
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        label="Confirm New Password"
+                        name="confirmPassword"
+                        value={passwordData.confirmPassword}
+                        onChange={handleChange}
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    {/* Campos para actualizar contraseña */}
+                    <TextField
+                        label="Current Password"
+                        name="currentPassword"
+                        value={passwordData.currentPassword}
+                        onChange={handleChange}
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button variant="contained" color="primary" onClick={handleUpdatePassword}>
+                        Update Password
+                    </Button>
                 </Grid>
             </Grid>
         </Container>

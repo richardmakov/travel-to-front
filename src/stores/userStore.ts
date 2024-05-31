@@ -18,6 +18,7 @@ interface UserStore {
     error: unknown;
     fetchUsers: () => Promise<FetchUsers[]>;
     updateUser: (id: number, user: FetchUsers) => Promise<void>;
+    updatePassword: (userId: number, currentPassword: string, newPassword: string) => Promise<void>;
 }
 
 const useUserStore = create<UserStore>()(
@@ -41,6 +42,18 @@ const useUserStore = create<UserStore>()(
                     throw error; 
                 }
             },
+            updatePassword: async (userId, currentPassword, newPassword) => {
+                try {
+                    await axiosInstance.put(`/users/${userId}/updatePassword`, null, {
+                        params: {
+                            currentPassword: currentPassword,
+                            newPassword: newPassword
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error updating password:', error);
+                }
+            }
         }),
         {
             name: 'booking-store',
