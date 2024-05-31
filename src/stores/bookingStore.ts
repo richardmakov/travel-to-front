@@ -2,6 +2,7 @@ import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
 import axiosInstance from '../utils/axiosInstance';
 import { OffertType } from '../types';
+import { IBooking } from '../types/IBookingUserByID';
 
 interface Flight {
     flightNumber: string;
@@ -22,11 +23,11 @@ interface Payment {
     paymentDate: string;
 }
 
-interface Booking {
+export interface Booking {
     id: number;
     booking_number: string;
     trip?: OffertType;
-    flight?: Flight[];
+    flights?: Flight[];
     passengers?: Passenger[];
     payment?: Payment;
     userId: number;
@@ -38,6 +39,7 @@ interface BookingStore {
     fetchBookings: () => Promise<void>;
     createBooking: (newBooking: Partial<Booking>) => Promise<void>;
     getBookingById: (id: number) => Promise<Booking | undefined>;
+    getBookingByUserId: (id: number) => Promise<IBooking[] | undefined>;
     deleteBooking: (id: number) => Promise<void>;
 }
 
@@ -48,7 +50,7 @@ const useBookingStore = create<BookingStore>()(
             error: null,
             fetchBookings: async () => {
                 try {
-                    const response = await axiosInstance.get('/bookings');
+                    const response = await axiosInstance.get('/bookings/all');
                     set({ bookings: response.data });
                 } catch (error) {
                     set( {error: error});
@@ -65,6 +67,14 @@ const useBookingStore = create<BookingStore>()(
             getBookingById: async (id) => {
                 try {
                     const response = await axiosInstance.get(`/bookings/${id}`);
+                    return response.data;
+                } catch (error) {
+                    set({error: error});
+                }
+            },
+            getBookingByUserId: async (id) => {
+                try {
+                    const response = await axiosInstance.get(`/bookings/user/${id}`);
                     return response.data;
                 } catch (error) {
                     set({error: error});

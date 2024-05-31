@@ -41,23 +41,23 @@ export const secondaryListItems = (
     <ListSubheader component="div" inset>
       Admin Panel
     </ListSubheader>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/dashboard/admin/users">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Users Control" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/dashboard/admin/bookings">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Bookings Control" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/dashboard/admin/offerts">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Offerts Control" />
+      <ListItemText primary="Offers Control" />
     </ListItemButton>
   </React.Fragment>
 );

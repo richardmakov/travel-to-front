@@ -10,10 +10,11 @@ import useBadge from '../../hooks/useBadge'
 import SearchBar from './components/SearchBar'
 import DiscountMessage from '../../components/DiscountMessage'
 
+
 export default function HomePage() {
 
   const { badges, handleBadgeClick, selectedBadge, setSelectedBadge } = useBadge();
-
+  
   return (
     <>
       <Header badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge} />

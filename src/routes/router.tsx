@@ -14,7 +14,9 @@ import useAuthStore from "../stores/authStore";
 import { Layout } from "../pages/Layout/Layout";
 import DashboardView from "../pages/Layout/Dashboard/DashboardView";
 import Profile from "../pages/Layout/Dashboard/components/profile-panel/Profile";
-
+import Booking from "../pages/Layout/Dashboard/components/profile-panel/Booking";
+import UsersControl from "../pages/Layout/Dashboard/components/admin-panel/UsersControl";
+import BookingControl from "../pages/Layout/Dashboard/components/admin-panel/BookingControl";
 
 export default function AppRouter() {
   return (
@@ -42,7 +44,7 @@ const DashboardRoutes = () => {
     <Routes>
       <Route index
         element={
-          <DashboardView/>} />
+          <DashboardView />} />
 
       <Route path="profile"
         element={
@@ -54,9 +56,11 @@ const DashboardRoutes = () => {
       />
       <Route path="bookings"
         element={
-          <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
-            <GalleryPage />
-          </ProtectedRoute>} />
+          <Layout>
+            <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
+              <Booking />
+            </ProtectedRoute>
+          </Layout>} />
     </Routes>
   )
 }
@@ -68,25 +72,31 @@ const DashboardAdminRoutes = () => {
       <Route
         path="users"
         element={
-          <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
-            <GalleryPage />
-          </ProtectedRoute>
+          <Layout>
+            <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
+              <UsersControl />
+            </ProtectedRoute>
+          </Layout>
         }
       />
       <Route
         path="bookings"
         element={
-          <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
-            <GalleryPage />
-          </ProtectedRoute>
+          <Layout>
+            <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
+              <BookingControl />
+            </ProtectedRoute>
+          </Layout>
         }
       />
       <Route
         path="offerts"
         element={
-          <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
-            <GalleryPage />
-          </ProtectedRoute>
+          <Layout>
+            <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
+              <UsersControl />
+            </ProtectedRoute>
+          </Layout>
         }
       />
     </Routes>
