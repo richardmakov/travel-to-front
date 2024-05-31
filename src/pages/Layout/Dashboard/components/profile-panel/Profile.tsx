@@ -107,6 +107,7 @@ export default function Profile() {
                         onChange={handleChange}
                         type="password"
                         variant="outlined"
+                        focused
                         fullWidth
                     />
                 </Grid>
@@ -118,11 +119,11 @@ export default function Profile() {
                         onChange={handleChange}
                         type="password"
                         variant="outlined"
+                        focused
                         fullWidth
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
-                    {/* Campos para actualizar contraseña */}
                     <TextField
                         label="Current Password"
                         name="currentPassword"
@@ -130,6 +131,7 @@ export default function Profile() {
                         onChange={handleChange}
                         type="password"
                         variant="outlined"
+                        focused
                         fullWidth
                     />
                 </Grid>

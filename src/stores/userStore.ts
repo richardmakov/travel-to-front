@@ -44,7 +44,7 @@ const useUserStore = create<UserStore>()(
             },
             updatePassword: async (userId, currentPassword, newPassword) => {
                 try {
-                    await axiosInstance.put(`/users/${userId}/updatePassword`, null, {
+                    await axiosInstance.put(`/users/updatePassword/${userId}`, null, {
                         params: {
                             currentPassword: currentPassword,
                             newPassword: newPassword
