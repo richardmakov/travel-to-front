@@ -9,7 +9,6 @@ interface BodyProps {
 }
 
 export default function Body({ booking, loading, error }: BodyProps) {
-    console.log(booking)
     return (
         <>
             {loading ? (

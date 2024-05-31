@@ -27,7 +27,7 @@ export default function Profile() {
                 updatePassword(user.id, currentPassword, newPassword);
             }
         } else {
-            console.log("New password and confirm password must match.");
+            throw new Error('Passwords do not match or are empty');
         }
     };
     return (

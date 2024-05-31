@@ -51,7 +51,7 @@ const useUserStore = create<UserStore>()(
                         }
                     });
                 } catch (error) {
-                    console.error('Error updating password:', error);
+                    throw new Error('Passwords do not match or are empty');
                 }
             }
         }),
