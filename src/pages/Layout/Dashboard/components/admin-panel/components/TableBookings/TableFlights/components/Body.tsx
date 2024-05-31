@@ -16,17 +16,23 @@ export default function Body({ bookings, error }: BodyProps) {
                     Error loading booking information.
                 </Typography>
             ) : bookings && bookings.length > 0 ? (
-                bookings.flatMap((book) =>
-                    book.flights.map((flight) => (
-                        <StyledTableRow key={`${book.id}`}>
-                            <StyledTableCell component="th" scope="row">{book.booking_number}</StyledTableCell>
-                            <StyledTableCell>{flight.flightNumber}</StyledTableCell>
-                            <StyledTableCell>{flight.departureAirport}</StyledTableCell>
-                            <StyledTableCell>{flight.arrivalAirport}</StyledTableCell>
-                            <StyledTableCell>{flight.departureTime}</StyledTableCell>
-                            <StyledTableCell>{flight.arrivalTime}</StyledTableCell>
-                        </StyledTableRow>
-                    ))
+                bookings.some(book => book.flights && book.flights.length > 0) ? (
+                    bookings.flatMap((book) =>
+                        book.flights?.map((flight) => (
+                            <StyledTableRow key={`${book.id}-${flight.flightNumber}`}>
+                                <StyledTableCell component="th" scope="row">{book.booking_number}</StyledTableCell>
+                                <StyledTableCell>{flight.flightNumber}</StyledTableCell>
+                                <StyledTableCell>{flight.departureAirport}</StyledTableCell>
+                                <StyledTableCell>{flight.arrivalAirport}</StyledTableCell>
+                                <StyledTableCell>{flight.departureTime}</StyledTableCell>
+                                <StyledTableCell>{flight.arrivalTime}</StyledTableCell>
+                            </StyledTableRow>
+                        ))
+                    )
+                ) : (
+                    <Typography variant="body1" color="textSecondary" sx={{ p: 2 }}>
+                        No booking flight information available
+                    </Typography>
                 )
             ) : (
                 <Typography variant="body1" color="textSecondary" sx={{ p: 2 }}>
@@ -34,5 +40,6 @@ export default function Body({ bookings, error }: BodyProps) {
                 </Typography>
             )}
         </>
+
     );
 }

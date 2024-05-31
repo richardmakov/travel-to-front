@@ -7,7 +7,7 @@ export default function Profile() {
 
     return (
         <Container>
-            <Typography variant="h4" gutterBottom>My Profile</Typography>
+            <Typography variant="h4" sx={{ color: '#7F8C8D', py:3 }} gutterBottom>My Profile</Typography>
 
             <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>

@@ -13,7 +13,7 @@ interface BodyProps {
 }
 
 export default function TableFlightView({bookings, error}: BodyProps) {
-  console.log(bookings)
+
   return (
     <TableContainer component={Paper} sx={{ mt:3 }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">    

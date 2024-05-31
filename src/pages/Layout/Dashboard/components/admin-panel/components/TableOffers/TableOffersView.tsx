@@ -5,15 +5,15 @@ import TableHead from '@mui/material/TableHead';
 import Paper from '@mui/material/Paper';
 import Head from './components/Head';
 import Body from './components/Body';
-import { FetchUsers } from '../../../../../../../stores/userStore';
+import { OffertType } from '../../../../../../../types';
 
 interface BodyProps {
-  users: FetchUsers[]| undefined,
+  trips: OffertType[]| undefined,
   loading: boolean,
   error: string | null
 }
 
-export default function TableUsersView({users, loading, error}: BodyProps) {
+export default function TableOffersView({trips, loading, error}: BodyProps) {
 
 
   return (
@@ -23,7 +23,7 @@ export default function TableUsersView({users, loading, error}: BodyProps) {
           <Head />
         </TableHead>
         <TableBody>
-            <Body users={users} loading={loading} error={error}/>
+            <Body trips={trips} loading={loading} error={error}/>
         </TableBody>
       </Table>
     </TableContainer>

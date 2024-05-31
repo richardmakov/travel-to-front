@@ -36,7 +36,7 @@ export interface Booking {
 interface BookingStore {
     bookings: Booking[];
     error: unknown | null;
-    fetchBookings: () => Promise<void>;
+    fetchBookings: () => Promise<Booking[]>;
     createBooking: (newBooking: Partial<Booking>) => Promise<void>;
     getBookingById: (id: number) => Promise<Booking | undefined>;
     getBookingByUserId: (id: number) => Promise<IBooking[] | undefined>;
@@ -51,7 +51,7 @@ const useBookingStore = create<BookingStore>()(
             fetchBookings: async () => {
                 try {
                     const response = await axiosInstance.get('/bookings/all');
-                    set({ bookings: response.data });
+                    return response.data;
                 } catch (error) {
                     set( {error: error});
                 }

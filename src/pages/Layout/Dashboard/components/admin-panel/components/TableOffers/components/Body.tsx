@@ -1,14 +1,14 @@
 import { Box, LinearProgress, Typography } from '@mui/material'
 import { StyledTableCell, StyledTableRow } from '../styles/tableTripStyles'
-import { FetchUsers } from '../../../../../../../../stores/userStore';
+import { OffertType } from '../../../../../../../../types';
 
 interface BodyProps {
-    users: FetchUsers[] | undefined,
+    trips: OffertType[] | undefined,
     loading: boolean,
     error: string | null
 }
 
-export default function Body({ users, loading, error }: BodyProps) {
+export default function Body({ trips, loading, error }: BodyProps) {
     return (
         <>
             {loading ? (
@@ -19,18 +19,17 @@ export default function Body({ users, loading, error }: BodyProps) {
                 <Typography variant="body1" color="error" sx={{ p: 2 }}>
                     Error loading users information.
                 </Typography>
-            ) : users && users.length > 0 ? (
-                users.flatMap((user) =>
-                        <StyledTableRow key={`${user.id}`}>
-                            <StyledTableCell component="th" scope="row">{user.id}</StyledTableCell>
-                            <StyledTableCell>{user.firstname}</StyledTableCell>
-                            <StyledTableCell>{user.lastname}</StyledTableCell>
-                            <StyledTableCell>{user.email}</StyledTableCell>
-                            <StyledTableCell>{user.phone}</StyledTableCell>
-                            <StyledTableCell>{user.idCard}</StyledTableCell>
-                            <StyledTableCell>{user.passport}</StyledTableCell>
-                            <StyledTableCell>{user.country}</StyledTableCell>
-                            <StyledTableCell>{user.date}</StyledTableCell>
+            ) : trips && trips.length > 0 ? (
+                trips.flatMap((trip) =>
+                        <StyledTableRow key={`${trip.id}`}>
+                            <StyledTableCell component="th" scope="row">{trip.id}</StyledTableCell>
+                            <StyledTableCell>{trip.destination}</StyledTableCell>
+                            <StyledTableCell>{trip.departure_date}</StyledTableCell>
+                            <StyledTableCell>{trip.return_date}</StyledTableCell>
+                            <StyledTableCell>{trip.description}</StyledTableCell>
+                            <StyledTableCell>{trip.visit}</StyledTableCell>
+                            <StyledTableCell>{trip.price_usd}</StyledTableCell>
+                            <StyledTableCell>{trip.price_eur}</StyledTableCell>
                         </StyledTableRow>
                     
                 )

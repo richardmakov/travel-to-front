@@ -12,11 +12,11 @@ import CheckOutFlightsView from "../pages/CheckOutFlights/CheckOutFlightsView";
 import ProtectedRoute from "./protectedRoute";
 import useAuthStore from "../stores/authStore";
 import { Layout } from "../pages/Layout/Layout";
-import DashboardView from "../pages/Layout/Dashboard/DashboardView";
 import Profile from "../pages/Layout/Dashboard/components/profile-panel/Profile";
 import Booking from "../pages/Layout/Dashboard/components/profile-panel/Booking";
 import UsersControl from "../pages/Layout/Dashboard/components/admin-panel/UsersControl";
 import BookingControl from "../pages/Layout/Dashboard/components/admin-panel/BookingControl";
+import OffertsControl from "../pages/Layout/Dashboard/components/admin-panel/OffersControl";
 
 export default function AppRouter() {
   return (
@@ -42,11 +42,8 @@ const DashboardRoutes = () => {
   const { user } = useAuthStore()
   return (
     <Routes>
-      <Route index
-        element={
-          <DashboardView />} />
 
-      <Route path="profile"
+      <Route index path="profile"
         element={
           <Layout>
             <ProtectedRoute role={'ROLE_USER'} userRole={user?.roles}>
@@ -94,7 +91,7 @@ const DashboardAdminRoutes = () => {
         element={
           <Layout>
             <ProtectedRoute role={'ROLE_ADMIN'} userRole={user?.roles}>
-              <UsersControl />
+              <OffertsControl />
             </ProtectedRoute>
           </Layout>
         }

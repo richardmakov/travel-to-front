@@ -54,7 +54,7 @@ export default function MenuHeader() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <NavLink to={'/dashboard'} style={{textDecoration:'none', color:'inherit'}}>
+        <NavLink to={'/dashboard/profile'} style={{textDecoration:'none', color:'inherit'}}>
           <MenuItem onClick={handleClose}>Dashboard</MenuItem>
         </NavLink>
         <MenuItem onClick={handleLogOutClose}>Logout</MenuItem>

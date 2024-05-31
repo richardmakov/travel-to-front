@@ -1,5 +1,4 @@
-import { Box, Button, Typography } from '@mui/material'
-import { NavLink } from 'react-router-dom'
+import { Box, Typography } from '@mui/material'
 
 export default function Message() {
     return (
@@ -9,8 +8,9 @@ export default function Message() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width:'60%',
+                width:'100%',
                 borderRadius: 2,
+                p:20,
             }}
         >
             <Typography variant="h4" gutterBottom>
@@ -19,14 +19,7 @@ export default function Message() {
             <Typography variant="body1" gutterBottom>
                 You do not have permission to access this page.
             </Typography>
-            <NavLink to={'/'} style={{ color: 'inherit', textDecoration: 'none' }}>
-                <Button
-                    variant="contained"
-                    color="primary"
-                >
-                    Go to Home Page
-                </Button>
-            </NavLink>
+
         </Box>
     )
 }

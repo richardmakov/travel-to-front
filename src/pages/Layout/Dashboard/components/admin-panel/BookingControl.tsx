@@ -1,12 +1,13 @@
 import { Container, Grid, Typography } from '@mui/material'
-import useBookingStore from '../../../../../stores/bookingStore'
+
 
 import TableTripView from './components/TableBookings/TableTrip/TableTripView'
 import TableFlightView from './components/TableBookings/TableFlights/TableFlightView'
+import useTableBookingViewModel from './components/TableBookings/view-model/useTableBookingViewModel'
 
 export default function BookingControl() {
 
-  const { bookings, error } = useBookingStore()
+  const { bookings, error } = useTableBookingViewModel()
   
   return (
     <Container>

@@ -6,14 +6,13 @@ export default function Head() {
         <>
             <TableRow>
                 <StyledTableCell>Id</StyledTableCell>
-                <StyledTableCell>Firstname</StyledTableCell>
-                <StyledTableCell>Lastname</StyledTableCell>
-                <StyledTableCell>Email</StyledTableCell>
-                <StyledTableCell>Phone</StyledTableCell>
-                <StyledTableCell>IdCard</StyledTableCell>
-                <StyledTableCell>Passport</StyledTableCell>
-                <StyledTableCell>Country</StyledTableCell>
-                <StyledTableCell>Date of birth</StyledTableCell>
+                <StyledTableCell>Destination</StyledTableCell>
+                <StyledTableCell>Departure date</StyledTableCell>
+                <StyledTableCell>Return date</StyledTableCell>
+                <StyledTableCell>Description</StyledTableCell>
+                <StyledTableCell>Visit</StyledTableCell>
+                <StyledTableCell>Price USD</StyledTableCell>
+                <StyledTableCell>Price EUR</StyledTableCell>
             </TableRow>
         </>
     )

@@ -70,10 +70,8 @@ const useFlightSearchForm = () => {
             setFormError('Fill all the fields');
             return false;
         }
-
         navigate("/flights");
         await findFlights();
-
     };
 
     const findFlights = async () => {
