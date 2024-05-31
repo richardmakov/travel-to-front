@@ -53,11 +53,11 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Bookings Control" />
     </ListItemButton>
-    <ListItemButton component={Link} to="/dashboard/admin/offerts">
+{/*     <ListItemButton component={Link} to="/dashboard/admin/offerts">
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="Offers Control" />
-    </ListItemButton>
+    </ListItemButton> */}
   </React.Fragment>
 );

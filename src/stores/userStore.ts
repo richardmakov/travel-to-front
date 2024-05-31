@@ -1,4 +1,4 @@
-import {create} from 'zustand';
+import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import axiosInstance from '../utils/axiosInstance';
 
@@ -17,6 +17,7 @@ export interface FetchUsers {
 interface UserStore {
     error: unknown;
     fetchUsers: () => Promise<FetchUsers[]>;
+    updateUser: (id: number, user: FetchUsers) => Promise<void>;
 }
 
 const useUserStore = create<UserStore>()(
@@ -26,11 +27,20 @@ const useUserStore = create<UserStore>()(
             fetchUsers: async () => {
                 try {
                     const response = await axiosInstance.get('/users/all');
-                    return response.data
+                    return response.data;
                 } catch (error) {
-                    set( {error: error});
+                    set({ error: error });
+                    throw error; 
                 }
-            }
+            },
+            updateUser: async (id, user) => {
+                try {
+                    await axiosInstance.put(`/users/update/${id}`, user);
+                } catch (error) {
+                    set({ error: error });
+                    throw error; 
+                }
+            },
         }),
         {
             name: 'booking-store',
