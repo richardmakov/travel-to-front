@@ -25,7 +25,7 @@ const useAuthStore = create<AuthState>()(
         set({ loading: true, error: null });
 
         try {
-          const response = await fetch('http://localhost:8080/api/auth/signin', {
+          const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signin`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const useAuthStore = create<AuthState>()(
         set({ loading: true, error: null });
 
         try {
-          const response = await fetch('http://localhost:8080/api/auth/signup', {
+          const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

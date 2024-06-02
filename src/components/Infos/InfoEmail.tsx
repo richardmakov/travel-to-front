@@ -5,7 +5,7 @@ import useAlertSnackbar from '../Snackbar/useSnackbar';
 
 export default function InfoEmail() {
     const [email, setEmail] = useState<string>('');
-    const {handleClickVariant} = useAlertSnackbar();
+    const { handleClickVariant } = useAlertSnackbar();
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -30,16 +30,14 @@ export default function InfoEmail() {
     return (
         <Box sx={{ backgroundColor: '#00A9FF', color: '#FFF', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', p: 6 }}>
             <Typography variant="h5" sx={{ color: '#FFF', mb: '1rem', fontSize: { xs: '20px', sm: '24px' } }}>
-                Grandes viajes en tu bandeja de entrada
+                Great trips in your inbox
             </Typography>
             <Typography sx={{ color: '#FFF', marginBottom: '2rem', fontSize: { xs: '16px', sm: '18px' }, textAlign: 'center', px: { xs: 2, sm: 0 } }}>
-                Grandes ideas para tus próximos viajes, los mejores destinos y excelentes ofertas, tan solo tienes que darte de alta.
+                Great ideas for your next trips, the best destinations and excellent offers, you just have to sign up.
             </Typography>
             <FormControl sx={{ width: '100%' }} component="form" onSubmit={handleSubmit}>
                 <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center', justifyContent: 'center' }}>
-
                     <Box sx={{ width: { xs: '100%', sm: '40%' }, mb: { xs: 2, sm: 0 }, mr: { xs: 0, sm: '10px' } }}>
-
                         <TextField
                             fullWidth
                             id="email"
@@ -70,12 +68,10 @@ export default function InfoEmail() {
                 </Box>
                 <Box sx={{ width: '100%', textAlign: 'center', mt: 2 }}>
                     <Typography variant="body2" sx={{ width: '100%', textAlign: 'center' }}>
-                        Autorizo el uso de mis datos para todos los fines detallados en la política de privacidad salvo en aquellos supuestos que nos indique lo contrario
+                        I authorize the use of my data for all purposes detailed in the privacy policy except in cases where I indicate otherwise.
                     </Typography>
                 </Box>
             </FormControl>
         </Box>
-
-
     );
 }

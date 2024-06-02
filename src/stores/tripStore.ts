@@ -16,7 +16,7 @@ const useTripStore = create<TripStore>((set) => ({
   fetchTrips: async () => {
     set({ isLoading: true, error: null }); 
     try {
-      const response = await axios.get<OffertType[]>('http://localhost:8080/api/trips/all');
+      const response = await axios.get<OffertType[]>(`${import.meta.env.VITE_API_BASE_URL}/api/trips/all`);
       set({ trips: response.data, isLoading: false }); 
     } catch (error) {
       set({ error: 'Failed to load trips', isLoading: false }); 

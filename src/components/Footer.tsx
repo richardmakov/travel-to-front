@@ -27,7 +27,7 @@ export default function Footer() {
                 <img src="/logo2.png" alt="logo" style={{ width: '150px', height: '150px', maxWidth: '100%' }} />
             </Box>
             <Box sx={{ backgroundColor: '#333', color: '#FFF', textAlign: 'center', p: 2 }}>
-                <p>© TravelTO. desarrollado por Richard Makovs como proyecto de fin de grado</p>
+                <Typography variant="body1" sx={{ color: '#999999', my: 2 }}>© TravelTO. developed by Richard Makovs as a final degree project</Typography>
             </Box>
         </Box>
 

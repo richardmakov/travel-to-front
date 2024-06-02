@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, CircularProgress, Grid, Typography } from '@mui/material'
 import CardOffer from '../../../components/Cards/CardOffer'
 import { NavLink } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -16,7 +16,7 @@ export default function NewOfertsDisplay() {
     fetchTrips();
   }, [fetchTrips]);
 
-  if (isLoading) return <div style={{display:'flex', justifyContent:'center', fontSize:'3rem', color:'orange'}}>Loading...</div>;
+  if (isLoading) return <div style={{display:'flex', justifyContent:'center', fontSize:'3rem', color:'orange'}}><CircularProgress /></div>;
   if (error) return <div style={{display:'flex', justifyContent:'center', fontSize:'3rem', color:'red'}}>Error: {error}</div>;
     return (
         <>
