@@ -16,7 +16,7 @@ export default function CardFlightView() {
           <CircularProgress />
         </Box>
       ) : (
-        flights ? (
+        flights? (
           isLogged ? (
             flights.data.flights.map((flight, index) => (
               <NavLink to={`/checkout/flights/${index}`} state={flight} style={{ textDecoration: 'none' }} key={index}>
