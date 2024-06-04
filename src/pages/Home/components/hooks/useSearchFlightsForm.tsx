@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FormValuesSearchFlights } from '../interface/flightsInterface';
 import { useNavigate } from 'react-router-dom';
 import useBadge from '../../../../hooks/useBadge';
@@ -33,24 +33,40 @@ const useFlightSearchForm = () => {
     const [error, setError] = useState<string | null>(null);
 
     const { searchFlights, searchAirportArrival, searchAirportDeparture, airportsDeparture, airportsLanding } = useFlightStore();
-    
-    const [params,setParams] = useState<FlightSearchParams>({
-        sourceAirportCode: '',
-        destinationAirportCode: '',
-        date: '',
-        itineraryType: 'ONE_WAY',
-        sortOrder: 'PRICE',
-        numAdults: '1',
-        numSeniors: '0',
-        classOfService: 'ECONOMY',
-        pageNumber: '1',
-        currencyCode: ''
-    });
-    
-    useEffect(() => {
-        if (airportsDeparture && airportsLanding) {
 
-            setParams({
+
+    const handleChange = (field: keyof FormValuesSearchFlights, value: string) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            [field]: value
+        }));
+    };
+
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        if (!validateForm()) {
+            setFormError('Please fill out all fields');
+            return false;
+        }
+
+        navigate("/flights");
+        await findFlights();
+    };
+
+    const findFlights = async () => {
+        setError(null);
+
+        try {
+            await searchAirportDeparture(formValues.origin);
+            await searchAirportArrival(formValues.destination);
+
+            if (!airportsDeparture || !airportsLanding) {
+                throw new Error('Airports not found');
+            }
+
+            const params: FlightSearchParams = {
                 sourceAirportCode: airportsDeparture.data[0].airportCode,
                 destinationAirportCode: airportsLanding.data[0].airportCode,
                 date: formValues.departureDate,
@@ -61,49 +77,17 @@ const useFlightSearchForm = () => {
                 classOfService: formValues.classOfService,
                 pageNumber: formValues.pageNumber.toString(),
                 currencyCode: selectedBadge.symbol,
-            });
-            
-        }
-    }, [airportsDeparture, airportsLanding, formValues, selectedBadge.symbol]);
-    
-    const handleChange = (field: keyof FormValuesSearchFlights, value: string) => {
-        setFormValues((prevState) => ({
-            ...prevState,
-            [field]: value
-        }));
-    };
+            };
+            console.log(params)
 
-    
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        if (!validateForm()) {
-            setFormError('Fill all the fields');
-            return false;
-        }
-        navigate("/flights");
-        await findFlights();
-    };
-
-    const findFlights = async () => {
-        setError(null);
-        console.log(params);
-        try {
-            await searchAirportDeparture(formValues.origin);
-            await searchAirportArrival(formValues.destination);
-            
-            if (!airportsDeparture || !airportsLanding) {
-                throw new Error('Airports not found');
-            }
-    
             searchFlights(params);
         } catch (error: unknown) {
             const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
             setError(errorMessage);
         }
     };
-    
-    
+
+
 
     //Validate form
     const { validateOrigin, validateDestination, validateDate, validateNumberOfPassengers } = useValidateForm();

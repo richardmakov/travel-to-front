@@ -5,7 +5,6 @@ import useAuthStore from '../../../stores/authStore';
 import CardFlight from './CardFlight';
 import useAlertSnackbar from '../../../components/Snackbar/useSnackbar';
 
-
 export default function CardFlightView() {
   const { flights, load } = useFlightStore();
   const { isLogged } = useAuthStore();

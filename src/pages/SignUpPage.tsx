@@ -20,6 +20,7 @@ import { UserRegister } from '../utils';
 import { z } from 'zod';
 import useAuthStore from '../stores/authStore';
 import useAlertSnackbar from '../components/Snackbar/useSnackbar';
+import ErrorMessage from '../components/ErrorMessage';
 
 interface CopyrightProps {
   sx?: SxProps;
@@ -44,7 +45,7 @@ const defaultTheme = createTheme();
 
 export default function SignUpPage() {
 
-  const { signup, isLogged } = useAuthStore();
+  const { signup, isLogged, error } = useAuthStore();
 
   const navigate = useNavigate()
 
@@ -72,13 +73,13 @@ export default function SignUpPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (Object.values(user).some((value) => value === '')) {
-      handleClickVariant('Please fill all the fields', 'error');
+      handleClickVariant('Please fill out all fields', 'error');
       return;
     } else {
       signup(user);
     }
-
   };
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -128,6 +129,7 @@ export default function SignUpPage() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { BadgeInfo } from "../pages/Home/components/interface/badgeInterface";
 
-
 const useBadge = () => {
     const [selectedBadge, setSelectedBadge] =  useState<BadgeInfo>(() => {
         const savedBadgeString = localStorage.getItem('selectedBadge');

@@ -37,7 +37,6 @@ export default function ChooseBadge({ badges, handleBadgeClick, selectedBadge }:
         handleBadgeClick(badge);
         setOpen(false);
         window.location.reload();
-
     };
 
     return (

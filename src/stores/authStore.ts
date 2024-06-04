@@ -23,7 +23,7 @@ const useAuthStore = create<AuthState>()(
 
       signin: async (credentials: UserLoginType) => {
         set({ loading: true, error: null });
-
+      
         try {
           const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signin`, {
             method: 'POST',
@@ -32,13 +32,14 @@ const useAuthStore = create<AuthState>()(
             },
             body: JSON.stringify(credentials),
           });
-
+      
           if (!response.ok) {
-            throw new Error('Error logging in');
+            const errorData = await response.json();
+            throw new Error(errorData.message || response.status);
           }
-
+      
           const data: UserType = await response.json();
-          set({ user: data, loading: false, isLogged: true });
+          set({ user: data, loading: false, isLogged: true, error: '' });
         } catch (error) {
           if (error instanceof Error) {
             set({ error: error.message, loading: false });
@@ -50,7 +51,7 @@ const useAuthStore = create<AuthState>()(
 
       signup: async (userData: UserRegisterType) => {
         set({ loading: true, error: null });
-
+      
         try {
           const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`, {
             method: 'POST',
@@ -59,13 +60,14 @@ const useAuthStore = create<AuthState>()(
             },
             body: JSON.stringify(userData),
           });
+      
           if (!response.ok) {
-            throw new Error('Error in register');
+            const errorData = await response.json();
+            throw new Error(errorData.message || `Error ${response.status}`);
           }
-
+      
           const data: UserType = await response.json();
-
-          set({ user: data, loading: false, isLogged: true });
+          set({ user: data, loading: false, isLogged: true, error: '' });
         } catch (error) {
           if (error instanceof Error) {
             set({ error: error.message, loading: false });

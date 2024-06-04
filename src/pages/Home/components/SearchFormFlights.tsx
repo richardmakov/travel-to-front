@@ -41,7 +41,7 @@ const SearchBarFlights = () => {
                                         sx: {
                                             color: '#1ABC9C',
                                             '&.Mui-focused': {
-                                                color: '#1ABC9C', // Cambia el color de la etiqueta cuando está enfocado
+                                                color: '#1ABC9C', 
                                             }
 
                                         },

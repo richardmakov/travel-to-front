@@ -15,6 +15,7 @@ import { SxProps } from '@mui/system';
 import { UserLoginType } from '../types';
 import useAuthStore from '../stores/authStore';
 import useAlertSnackbar from '../components/Snackbar/useSnackbar';
+import ErrorMessage from '../components/ErrorMessage';
 
 
 interface CopyrightProps {
@@ -38,18 +39,17 @@ function Copyright(props: CopyrightProps) {
 
 const defaultTheme = createTheme();
 
-export default  function SignInPage() {
+export default function SignInPage() {
 
-  const { signin, isLogged } = useAuthStore();
+  const { signin, isLogged, error} = useAuthStore();
 
   const navigate = useNavigate()
- 
+
   const { handleClickVariant } = useAlertSnackbar();
 
   React.useEffect(() => {
     if (isLogged) {
       navigate('/');
-      
     }
   }, [isLogged, navigate]);
 
@@ -60,11 +60,11 @@ export default  function SignInPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (Object.values(user).some((value) => value === '')) {
-      handleClickVariant('Please fill all the fields', 'error');
+      handleClickVariant('Please fill out all fields', 'error');
     } else {
       signin(user);
-      
     }
   };
 
@@ -96,6 +96,7 @@ export default  function SignInPage() {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
             <TextField
               margin="normal"
               required
@@ -130,7 +131,7 @@ export default  function SignInPage() {
             </Button>
             <Grid container>
               <Grid item xs>
-                
+
               </Grid>
               <Grid item>
                 <Link href="/register" variant="body2">
