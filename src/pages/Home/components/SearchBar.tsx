@@ -7,7 +7,6 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({selectedBadge}:SearchBarProps) {
-  
 
     return (
         <Grid container direction="column" alignItems="center" spacing={0} sx={{ backgroundColor: '#fff', my:10 }}>

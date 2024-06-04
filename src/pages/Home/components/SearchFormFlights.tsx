@@ -4,15 +4,13 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import useFlightSearchForm from './hooks/useSearchFlightsForm';
-import { Card, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Typography } from '@mui/material';
+import { Card, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import TripModal from '../../../components/Modal/TripModal';
 import ErrorMessage from '../../../components/ErrorMessage';
 import { BadgeInfo } from './interface/badgeInterface';
 
 interface SearchBarFlightsProps {
     selectedBadge: BadgeInfo;
-    handleChangeSelectNumbersAdults:(e: SelectChangeEvent<number>) => void;
-    handleChangeSelectNumbersSeniors:(e: SelectChangeEvent<number>) => void;
 }
 
 const SearchBarFlights = ({selectedBadge}:SearchBarFlightsProps) => {

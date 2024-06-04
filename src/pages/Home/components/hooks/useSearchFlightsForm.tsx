@@ -54,7 +54,6 @@ const useFlightSearchForm = (selectedBadge: BadgeInfo) => {
     }, [selectedBadge]);
 
     const handleChange = (field: keyof FormValuesSearchFlights, value: string) => {
-        console.log(field, value);
         setFormValues((prevState) => ({
             ...prevState,
             [field]: value
