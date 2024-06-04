@@ -4,16 +4,18 @@ import useFlightSearchForm from '../../Home/components/hooks/useSearchFlightsFor
 import DatePicker from '../../../components/OtherField/DatePicker';
 import dayjs from 'dayjs';
 import { Box, TextField, Typography } from '@mui/material';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 
 interface CheckoutProps {
   handleDateChange: (e: dayjs.Dayjs | null, index: number) => void;
   handleInputChange: (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   formInputs: IFormInputs[];
   errors:  Partial<IFormInputs>[];
+  selectedBadge: BadgeInfo;
 }
 
-export default function PassengersForm({ handleDateChange, handleInputChange, formInputs, errors }: CheckoutProps) {
-  const { formValues } = useFlightSearchForm()
+export default function PassengersForm({ handleDateChange, handleInputChange, formInputs, errors, selectedBadge }: CheckoutProps) {
+  const { formValues } = useFlightSearchForm(selectedBadge)
   const numberAdults = formValues.numberAdults;
   const numberChildren = formValues.numberSenior;
   return (

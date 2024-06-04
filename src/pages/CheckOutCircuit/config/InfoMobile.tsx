@@ -10,12 +10,14 @@ import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 
 import Info from './Info';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 
 interface InfoProps {
   totalPrice: string;
+  selectedBadge: BadgeInfo;
 }
 
-export default function InfoMobile({ totalPrice }: InfoProps) {
+export default function InfoMobile({ totalPrice, selectedBadge }: InfoProps) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -30,7 +32,7 @@ export default function InfoMobile({ totalPrice }: InfoProps) {
       >
         <CloseIcon />
       </IconButton>
-      <Info totalPrice={totalPrice} />
+      <Info selectedBadge={selectedBadge} totalPrice={totalPrice} />
     </Box>
   );
 

@@ -9,12 +9,14 @@ import Typography from '@mui/material/Typography';
 import { useLocation } from 'react-router-dom';
 import useAuthStore from '../../../stores/authStore';
 import useFlightSearchForm from '../../Home/components/hooks/useSearchFlightsForm';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 
 interface ReviewProps {
   paymentType: string;
   cardNumber: string;
   expirationDate: string;
   cardHolder: string;
+  selectedBadge: BadgeInfo;
 }
 
 type PurchaseLink = {
@@ -51,13 +53,13 @@ type Flight = {
   };
 };
 
-export default function Review({ paymentType, cardNumber, expirationDate, cardHolder }: ReviewProps) {
+export default function Review({ paymentType, cardNumber, expirationDate, cardHolder, selectedBadge }: ReviewProps) {
 
   const { user } = useAuthStore();
   const location = useLocation();
   const { state } = location;
   const flights = state as Flight;
-  const { formValues } = useFlightSearchForm()
+  const { formValues } = useFlightSearchForm(selectedBadge)
   const numberChildren = formValues.numberSenior;
 
   const payments = [

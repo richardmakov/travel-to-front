@@ -29,7 +29,7 @@ export default function Body({ booking, loading, error }: BodyProps) {
                             <StyledTableCell>{book.trip.destination}</StyledTableCell>
                             <StyledTableCell>{book.trip.departure_date}</StyledTableCell>
                             <StyledTableCell>{book.trip.return_date}</StyledTableCell>
-                            <StyledTableCell>{book.trip.price_eur}</StyledTableCell>
+                            <StyledTableCell>{book.payment.amount}</StyledTableCell>
                         </StyledTableRow>
                     ) : (
                         <Box></Box>

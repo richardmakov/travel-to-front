@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormValuesSearchFlights } from '../interface/flightsInterface';
 import { useNavigate } from 'react-router-dom';
-import useBadge from '../../../../hooks/useBadge';
 import useFlightStore from '../../../../stores/flightStore';
 import useValidateForm from './useValidateForm';
 import { FlightSearchParams } from '../../../../types/flightStore';
+import { BadgeInfo } from '../interface/badgeInterface';
 
-const useFlightSearchForm = () => {
+const useFlightSearchForm = (selectedBadge:BadgeInfo) => {
 
     const navigate = useNavigate();
 
@@ -28,12 +28,9 @@ const useFlightSearchForm = () => {
 
     const [formError, setFormError] = useState('');
 
-    const { selectedBadge } = useBadge();
-
     const [error, setError] = useState<string | null>(null);
 
     const { searchFlights, searchAirportArrival, searchAirportDeparture, airportsDeparture, airportsLanding } = useFlightStore();
-
 
     const handleChange = (field: keyof FormValuesSearchFlights, value: string) => {
         setFormValues((prevState) => ({
@@ -42,6 +39,9 @@ const useFlightSearchForm = () => {
         }));
     };
 
+    const updateFormValues = (data : FormValuesSearchFlights) => {
+        setFormValues({...formValues, ...data});
+    }   
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -50,14 +50,14 @@ const useFlightSearchForm = () => {
             setFormError('Please fill out all fields');
             return false;
         }
-
+        updateFormValues(formValues)
         navigate("/flights");
         await findFlights();
     };
 
     const findFlights = async () => {
         setError(null);
-
+        console.log(formValues)
         try {
             await searchAirportDeparture(formValues.origin);
             await searchAirportArrival(formValues.destination);
@@ -78,7 +78,6 @@ const useFlightSearchForm = () => {
                 pageNumber: formValues.pageNumber.toString(),
                 currencyCode: selectedBadge.symbol,
             };
-            console.log(params)
 
             searchFlights(params);
         } catch (error: unknown) {
@@ -87,7 +86,11 @@ const useFlightSearchForm = () => {
         }
     };
 
-
+    useEffect(() => {
+        if (formValues.origin && formValues.destination) {
+            findFlights();
+        }
+    }, [formValues.origin, formValues.destination]);
 
     //Validate form
     const { validateOrigin, validateDestination, validateDate, validateNumberOfPassengers } = useValidateForm();
@@ -96,7 +99,6 @@ const useFlightSearchForm = () => {
         const destinationValid = validateDestination(formValues.destination);
         const departureDateValid = validateDate(formValues.departureDate);
         const passengersValid = validateNumberOfPassengers(formValues.numberAdults, formValues.numberSenior);
-
         return (originValid && destinationValid && departureDateValid && passengersValid);
     };
     return {

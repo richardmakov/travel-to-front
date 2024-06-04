@@ -3,9 +3,9 @@ import dayjs from 'dayjs';
 import { SelectChangeEvent } from '@mui/material';
 import useBookingStore from '../../../stores/bookingStore';
 import { useParams } from 'react-router-dom';
-import useBadge from '../../../hooks/useBadge';
 import useAuthStore from '../../../stores/authStore';
 import useTripStore from '../../../stores/tripStore';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 export interface IFormInputs {
     firstName: string;
     lastName: string;
@@ -22,7 +22,8 @@ export interface IPaymentFields {
     cardHolder: string;
 }
 
-export const useCheckOutViewModel = () => {
+
+export const useCheckOutViewModel = (selectedBadge: BadgeInfo) => {
 
     const [numAdults, setNumAdults] = useState<number>(1);
     const [numChildren, setNumChildren] = useState<number>(0);
@@ -155,7 +156,6 @@ export const useCheckOutViewModel = () => {
     const { id } = useParams();
     const { trips } = useTripStore();
     const trip = trips.find(trip => trip.id.toString() === id);
-    const { selectedBadge } = useBadge();
     const{user}= useAuthStore();
     const handleNext = () => {
         if (activeStep === 0) {
@@ -186,6 +186,7 @@ export const useCheckOutViewModel = () => {
                     ),
                     paymentDate: dayjs().format('YYYY-MM-DD')
                 }
+                console.log(payment)
 
                 const userEntry = {
                     id: user?.id,

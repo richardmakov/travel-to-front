@@ -5,18 +5,18 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router-dom';
-import useBadge from '../../../hooks/useBadge';
 import useTripStore from '../../../stores/tripStore';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 
 interface InfoProps {
   totalPrice: string;
+  selectedBadge: BadgeInfo;
 }
 
-export default function Info({ totalPrice }: InfoProps) {
+export default function Info({ totalPrice, selectedBadge }: InfoProps) {
   const { id } = useParams();
   const { trips } = useTripStore();
   const trip = trips.find(trip => trip.id.toString() === id);
-  const { selectedBadge } = useBadge();
 
   const currency = () => {
     const trip = trips.find(trip => trip.id.toString() === id);

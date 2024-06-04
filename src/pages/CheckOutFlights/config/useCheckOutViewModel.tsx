@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import React, { useEffect, useState } from 'react'
 import useFlightSearchForm from '../../Home/components/hooks/useSearchFlightsForm';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 export interface IFormInputs {
     firstName: string;
     lastName: string;
@@ -17,10 +18,10 @@ export interface IPaymentFields {
     cardHolder: string;
 }
 
-export const useCheckOutViewModel = () => {
+export const useCheckOutViewModel = (selectedBadge : BadgeInfo) => {
 
     const [activeStep, setActiveStep] = React.useState(0);
-    const { formValues } = useFlightSearchForm()
+    const { formValues } = useFlightSearchForm(selectedBadge)
     const [formInputs, setFormInputs] = React.useState<IFormInputs[]>(() => {
         return Array.from({ length: formValues.numberAdults + formValues.numberSenior }, () => ({
             firstName: '',

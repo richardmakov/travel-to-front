@@ -43,7 +43,6 @@ interface PaymentFormProps {
 
 export default function PaymentForm({paymentType, setPaymentType,cardNumber, setCardNumber,cvv, setCvv, expirationDate, setExpirationDate, cardHolder,setCardHolder, errors2}: PaymentFormProps) {
   
-
   const handlePaymentTypeChange = (event: {
     target: { value: React.SetStateAction<string> };
   }) => {

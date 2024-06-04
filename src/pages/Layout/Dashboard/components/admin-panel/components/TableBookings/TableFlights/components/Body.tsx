@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material'
 import { StyledTableCell, StyledTableRow } from '../styles/tableTripStyles'
 import { Booking } from '../../../../../../../../../stores/bookingStore';
+import { formatDateAndTime } from '../../../../../../../../../helper';
 
 interface BodyProps {
     bookings: Booking[] | undefined,
@@ -24,8 +25,8 @@ export default function Body({ bookings, error }: BodyProps) {
                                 <StyledTableCell>{flight.flightNumber}</StyledTableCell>
                                 <StyledTableCell>{flight.departureAirport}</StyledTableCell>
                                 <StyledTableCell>{flight.arrivalAirport}</StyledTableCell>
-                                <StyledTableCell>{flight.departureTime}</StyledTableCell>
-                                <StyledTableCell>{flight.arrivalTime}</StyledTableCell>
+                                <StyledTableCell>{formatDateAndTime(flight.departureTime)}</StyledTableCell>
+                                <StyledTableCell>{formatDateAndTime(flight.arrivalTime)}</StyledTableCell>
                             </StyledTableRow>
                         ))
                     )

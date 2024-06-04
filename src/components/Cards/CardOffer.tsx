@@ -4,16 +4,20 @@ import Box from '@mui/material/Box';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Typography from '@mui/material/Typography';
 import { OffertType } from '../../types';
-import useBadge from '../../hooks/useBadge';
+
 
 interface CardOfferProps {
     trip: OffertType
+    selectedBadge: {
+        name: string;
+        symbol: string;
+        image: string;
+    };
 }
 
-export default function CardOffer({ trip }: CardOfferProps) {
-    const { selectedBadge } = useBadge();
-    return (
+export default function CardOffer({ trip, selectedBadge }: CardOfferProps) {
 
+    return (
         <Card sx={{ maxWidth: 400, margin: '0 auto' }}>
             <Box
                 sx={{

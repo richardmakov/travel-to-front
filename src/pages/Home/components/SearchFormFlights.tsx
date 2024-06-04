@@ -7,9 +7,14 @@ import useFlightSearchForm from './hooks/useSearchFlightsForm';
 import { Card, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import TripModal from '../../../components/Modal/TripModal';
 import ErrorMessage from '../../../components/ErrorMessage';
+import { BadgeInfo } from './interface/badgeInterface';
 
-const SearchBarFlights = () => {
-    const { setFormValues, formValues, handleChange, handleSubmit, formError } = useFlightSearchForm();
+interface SearchBarFlightsProps {
+    selectedBadge: BadgeInfo;
+}
+
+const SearchBarFlights = ({selectedBadge}:SearchBarFlightsProps) => {
+    const { setFormValues, formValues, handleChange, handleSubmit, formError } = useFlightSearchForm(selectedBadge);
 
     return (
         <>

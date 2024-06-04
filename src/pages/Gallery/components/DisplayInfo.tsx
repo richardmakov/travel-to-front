@@ -4,12 +4,19 @@ import HistoryIcon from '@mui/icons-material/History';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ConnectingAirportsIcon from '@mui/icons-material/ConnectingAirports';
-import useBadge from '../../../hooks/useBadge';
 import useAlertSnackbar from '../../../components/Snackbar/useSnackbar';
 import useAuthStore from '../../../stores/authStore';
 import useTripStore from '../../../stores/tripStore';
 
-export default function DisplayInfo() {
+interface DisplayInfoProps {
+    selectedBadge: {
+        name: string;
+        symbol: string;
+        image: string;
+    };
+}
+
+export default function DisplayInfo({selectedBadge}: DisplayInfoProps) {
 
     const StyledImage = styled('img')({
         width: '100%',
@@ -20,7 +27,7 @@ export default function DisplayInfo() {
             transform: 'scale(1.10)',
         },
     });
-    const { selectedBadge } = useBadge();
+
     const { trips } = useTripStore();
     const { id } = useParams();
     const trip = trips.find(trip => trip.id.toString() === id);
@@ -30,6 +37,7 @@ export default function DisplayInfo() {
     const handleClickBookNow = () => {
         handleClickVariant('You have to be logged', 'info')
     }
+    
     return (
         <Box sx={{ maxWidth: '100%', margin: 'auto', px: 2 }}>
             <Box

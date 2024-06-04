@@ -27,9 +27,11 @@ import { IFormInputs, IPaymentFields } from './useCheckOutViewModel';
 import dayjs from 'dayjs';
 import useBookingStore from '../../../stores/bookingStore';
 import useAuthStore from '../../../stores/authStore';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 const steps = ['Passengers', 'Payment details', 'Review and Pay'];
 
 interface CheckoutProps {
+    selectedBadge: BadgeInfo;
     numberId: string;
     validate: () => boolean;
     validatePaymentFields: () => boolean;
@@ -53,20 +55,20 @@ interface CheckoutProps {
     errors2: Partial<IPaymentFields>;
 }
 
-function getStepContent(handleDateChange: (e: dayjs.Dayjs | null, index: number) => void, errors2: Partial<IPaymentFields>, errors: Partial<IFormInputs>[], step: number, handleInputChange: (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, formInputs: IFormInputs[], paymentType: string, setPaymentType: React.Dispatch<React.SetStateAction<string>>, cardNumber: string, setCardNumber: React.Dispatch<React.SetStateAction<string>>, cvv: string, setCvv: React.Dispatch<React.SetStateAction<string>>, expirationDate: string, setExpirationDate: React.Dispatch<React.SetStateAction<string>>, cardHolder: string, setCardHolder: React.Dispatch<React.SetStateAction<string>>) {
+function getStepContent(selectedBadge: BadgeInfo, handleDateChange: (e: dayjs.Dayjs | null, index: number) => void, errors2: Partial<IPaymentFields>, errors: Partial<IFormInputs>[], step: number, handleInputChange: (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, formInputs: IFormInputs[], paymentType: string, setPaymentType: React.Dispatch<React.SetStateAction<string>>, cardNumber: string, setCardNumber: React.Dispatch<React.SetStateAction<string>>, cvv: string, setCvv: React.Dispatch<React.SetStateAction<string>>, expirationDate: string, setExpirationDate: React.Dispatch<React.SetStateAction<string>>, cardHolder: string, setCardHolder: React.Dispatch<React.SetStateAction<string>>) {
     switch (step) {
         case 0:
-            return <PassengersForm handleDateChange={handleDateChange} handleInputChange={handleInputChange} formInputs={formInputs} errors={errors} />;
+            return <PassengersForm selectedBadge={selectedBadge} handleDateChange={handleDateChange} handleInputChange={handleInputChange} formInputs={formInputs} errors={errors} />;
         case 1:
             return <PaymentForm errors2={errors2} paymentType={paymentType} setPaymentType={setPaymentType} cardNumber={cardNumber} setCardNumber={setCardNumber} cvv={cvv} setCvv={setCvv} expirationDate={expirationDate} setExpirationDate={setExpirationDate} cardHolder={cardHolder} setCardHolder={setCardHolder} />;
         case 2:
-            return <Review paymentType={paymentType} cardNumber={cardNumber} expirationDate={expirationDate} cardHolder={cardHolder} />;
+            return <Review selectedBadge={selectedBadge} paymentType={paymentType} cardNumber={cardNumber} expirationDate={expirationDate} cardHolder={cardHolder} />;
         default:
             throw new Error('Unknown step');
     }
 }
 
-export default function Checkout({ numberId, validate, validatePaymentFields, setActiveStep, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, activeStep }: CheckoutProps) {
+export default function Checkout({selectedBadge, numberId, validate, validatePaymentFields, setActiveStep, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, activeStep }: CheckoutProps) {
     const [mode] = React.useState<PaletteMode>('light');
     const defaultTheme = createTheme({ palette: { mode } });
     const location = useLocation();
@@ -349,7 +351,7 @@ export default function Checkout({ numberId, validate, validatePaymentFields, se
                             </Stack>
                         ) : (
                             <React.Fragment>
-                                {getStepContent(handleDateChange, errors2, errors, activeStep, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder)}
+                                {getStepContent(selectedBadge,handleDateChange, errors2, errors, activeStep, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder)}
                                 <Box
                                     sx={{
                                         display: 'flex',

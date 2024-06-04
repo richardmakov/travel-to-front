@@ -17,22 +17,24 @@ import Booking from "../pages/Layout/Dashboard/components/profile-panel/Booking"
 import UsersControl from "../pages/Layout/Dashboard/components/admin-panel/UsersControl";
 import BookingControl from "../pages/Layout/Dashboard/components/admin-panel/BookingControl";
 import OffertsControl from "../pages/Layout/Dashboard/components/admin-panel/OffersControl";
+import useBadge from "../hooks/useBadge";
 
 export default function AppRouter() {
+  const { badges, handleBadgeClick, selectedBadge, setSelectedBadge } = useBadge();
   return (
     <BrowserRouter>
       <Routes>
-        <Route index path="/" element={<HomePage />} />
+        <Route index path="/" element={<HomePage badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
         <Route path="/dashboard/*" element={<DashboardRoutes />} />
         <Route path="/dashboard/admin/*" element={<DashboardAdminRoutes />} />
         <Route path="/login" element={<SignInPage />} />
         <Route path="/register" element={<SignUpPage />} />
-        <Route path="/aboutus" element={<AboutUsPage />} />
+        <Route path="/aboutus" element={<AboutUsPage badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
         <Route path="/flights" element={<FlightsPage />} />
-        <Route path="/contact" element={<ContactUsPage />} />
-        <Route path="/gallery/:id" element={<GalleryPage />} />
-        <Route path="/checkout/circuit/:id" element={<CheckOutCircuitView />} />
-        <Route path="/checkout/flights/:id" element={<CheckOutFlightsView />} />
+        <Route path="/contact" element={<ContactUsPage badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
+        <Route path="/gallery/:id" element={<GalleryPage badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
+        <Route path="/checkout/circuit/:id" element={<CheckOutCircuitView badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
+        <Route path="/checkout/flights/:id" element={<CheckOutFlightsView badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
       </Routes>
     </BrowserRouter>
   )

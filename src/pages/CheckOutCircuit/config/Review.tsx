@@ -8,11 +8,12 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router-dom';
-import useBadge from '../../../hooks/useBadge';
 import useAuthStore from '../../../stores/authStore';
 import useTripStore from '../../../stores/tripStore';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 
 interface ReviewProps {
+  selectedBadge: BadgeInfo;
   paymentType: string;
   cardNumber: string;
   expirationDate: string;
@@ -21,9 +22,8 @@ interface ReviewProps {
   numChildren: number;
 }
 
-export default function Review({ paymentType, cardNumber, expirationDate, cardHolder, numAdults, numChildren }: ReviewProps) {
+export default function Review({selectedBadge, paymentType, cardNumber, expirationDate, cardHolder, numAdults, numChildren }: ReviewProps) {
   const { id } = useParams();
-  const { selectedBadge } = useBadge();
   const { user } = useAuthStore();
 
   const totalNum = numAdults + numChildren;
@@ -50,7 +50,6 @@ export default function Review({ paymentType, cardNumber, expirationDate, cardHo
     return (price * discount).toFixed(2);
 
   }
-
 
   const applyIVA = (price: number): number => {
     return price * 1.10;

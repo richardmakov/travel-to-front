@@ -22,14 +22,14 @@ import InfoMobile from './InfoMobile';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import { NavLink, useParams } from 'react-router-dom';
-import useBadge from '../../../hooks/useBadge';
-
 import { IFormInputs, IPaymentFields } from './useCheckOutViewModel';
 import dayjs from 'dayjs';
 import useTripStore from '../../../stores/tripStore';
+import { BadgeInfo } from '../../Home/components/interface/badgeInterface';
 const steps = ['Choose Passengers', 'Payment details', 'Review your order'];
 
 interface CheckoutProps {
+    selectedBadge: BadgeInfo;
     numberId: string;
     numAdults: number;
     numChildren: number;
@@ -55,7 +55,9 @@ interface CheckoutProps {
     errors2: Partial<IPaymentFields>;
 }
 
-function getStepContent(numAdults: number,
+function getStepContent(
+    selectedBadge: BadgeInfo,
+    numAdults: number,
     numChildren: number,
     handleAdultsChange: (e: SelectChangeEvent<number>) => void,
     handleChildrenChange: (e: SelectChangeEvent<number>) => void, handleDateChange: (e: dayjs.Dayjs | null, index: number) => void, errors2: Partial<IPaymentFields>, errors: Partial<IFormInputs>[], step: number, handleInputChange: (index: number) => (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, formInputs: IFormInputs[], paymentType: string, setPaymentType: React.Dispatch<React.SetStateAction<string>>, cardNumber: string, setCardNumber: React.Dispatch<React.SetStateAction<string>>, cvv: string, setCvv: React.Dispatch<React.SetStateAction<string>>, expirationDate: string, setExpirationDate: React.Dispatch<React.SetStateAction<string>>, cardHolder: string, setCardHolder: React.Dispatch<React.SetStateAction<string>>) {
@@ -65,18 +67,17 @@ function getStepContent(numAdults: number,
         case 1:
             return <PaymentForm errors2={errors2} paymentType={paymentType} setPaymentType={setPaymentType} cardNumber={cardNumber} setCardNumber={setCardNumber} cvv={cvv} setCvv={setCvv} expirationDate={expirationDate} setExpirationDate={setExpirationDate} cardHolder={cardHolder} setCardHolder={setCardHolder} />;
         case 2:
-            return <Review numAdults={numAdults} numChildren={numChildren} paymentType={paymentType} cardNumber={cardNumber} expirationDate={expirationDate} cardHolder={cardHolder} />;
+            return <Review selectedBadge={selectedBadge} numAdults={numAdults} numChildren={numChildren} paymentType={paymentType} cardNumber={cardNumber} expirationDate={expirationDate} cardHolder={cardHolder} />;
         default:
             throw new Error('Unknown step');
     }
 }
 
 
-export default function Checkout({numberId, numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
+export default function Checkout({selectedBadge, numberId, numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors, errors2, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder, handleBack, handleNext, activeStep }: CheckoutProps) {
     const [mode] = React.useState<PaletteMode>('light');
     const defaultTheme = createTheme({ palette: { mode } });
     const { id } = useParams();
-    const { selectedBadge } = useBadge();
 
     const applyIVA = (price: number): number => {
         return price * 1.10;
@@ -160,7 +161,7 @@ export default function Checkout({numberId, numAdults, numChildren, handleAdults
                             maxWidth: 500,
                         }}
                     >
-                        <Info totalPrice={activeStep >= 2 ? total() : currency()} />
+                        <Info selectedBadge={selectedBadge} totalPrice={activeStep >= 2 ? total() : currency()} />
                     </Box>
                 </Grid>
                 <Grid
@@ -261,7 +262,7 @@ export default function Checkout({numberId, numAdults, numChildren, handleAdults
                                     {activeStep >= 2 ? total() : currency()}
                                 </Typography>
                             </div>
-                            <InfoMobile totalPrice={activeStep >= 2 ? total() : currency()} />
+                            <InfoMobile selectedBadge={selectedBadge} totalPrice={activeStep >= 2 ? total() : currency()} />
                         </CardContent>
                     </Card>
                     <Box
@@ -321,7 +322,7 @@ export default function Checkout({numberId, numAdults, numChildren, handleAdults
                             </Stack>
                         ) : (
                             <React.Fragment>
-                                {getStepContent(numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors2, errors, activeStep, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder)}
+                                {getStepContent(selectedBadge,numAdults, numChildren, handleAdultsChange, handleChildrenChange, handleDateChange, errors2, errors, activeStep, handleInputChange, formInputs, paymentType, setPaymentType, cardNumber, setCardNumber, cvv, setCvv, expirationDate, setExpirationDate, cardHolder, setCardHolder)}
                                 <Box
                                     sx={{
                                         display: 'flex',

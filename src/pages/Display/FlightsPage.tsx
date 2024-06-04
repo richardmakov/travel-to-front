@@ -8,7 +8,7 @@ export default function FlightsPage() {
   return (
     <>
       <NavBar />
-      <CardFlightView />
+      <CardFlightView/>
       <InfoEmail />
       <Footer />
     </>

@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import { Box, Button, Modal } from '@mui/material';
 import Badge from './Badge';
 import { BadgeInfo } from '../pages/Home/components/interface/badgeInterface';
-import useFlightSearchForm from '../pages/Home/components/hooks/useSearchFlightsForm';
 
 interface ChooseBadgeProps {
     badges: BadgeInfo[];
@@ -14,16 +13,6 @@ interface ChooseBadgeProps {
 
 export default function ChooseBadge({ badges, handleBadgeClick, selectedBadge }: ChooseBadgeProps) {
     const [open, setOpen] = useState(false);
-    const { setFormValues } = useFlightSearchForm();
-
-    useEffect(() => {
-        if (selectedBadge) {
-            setFormValues(prevFormValues => ({
-                ...prevFormValues,
-                currencyCode: selectedBadge.symbol
-            }));
-        }
-    }, [selectedBadge, setFormValues]);
 
     const handleOpen = () => {
         setOpen(true);
@@ -36,7 +25,6 @@ export default function ChooseBadge({ badges, handleBadgeClick, selectedBadge }:
     const handleBadgeSelect = (badge: BadgeInfo) => {
         handleBadgeClick(badge);
         setOpen(false);
-        window.location.reload();
     };
 
     return (
