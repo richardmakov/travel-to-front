@@ -29,12 +29,12 @@ export default function AppRouter() {
         <Route path="/dashboard/admin/*" element={<DashboardAdminRoutes />} />
         <Route path="/login" element={<SignInPage />} />
         <Route path="/register" element={<SignUpPage />} />
-        <Route path="/aboutus" element={<AboutUsPage badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
+        <Route path="/aboutus" element={<AboutUsPage  badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
         <Route path="/flights" element={<FlightsPage />} />
         <Route path="/contact" element={<ContactUsPage badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
         <Route path="/gallery/:id" element={<GalleryPage badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
-        <Route path="/checkout/circuit/:id" element={<CheckOutCircuitView badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
-        <Route path="/checkout/flights/:id" element={<CheckOutFlightsView badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
+        <Route path="/checkout/circuit/:id" element={<CheckOutCircuitView  badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
+        <Route path="/checkout/flights/:id" element={<CheckOutFlightsView  badges={badges} handleBadgeClick={handleBadgeClick} selectedBadge={selectedBadge} setSelectedBadge={setSelectedBadge}/>} />
       </Routes>
     </BrowserRouter>
   )

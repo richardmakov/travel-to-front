@@ -7,9 +7,11 @@ interface TripModalProps {
   buttonText: string;
   formValues: FormValuesSearchFlights;
   setFormValues: React.Dispatch<React.SetStateAction<FormValuesSearchFlights>>;
+  handleChangeSelectNumbersAdults:(e: SelectChangeEvent<number>) => void;
+    handleChangeSelectNumbersSeniors:(e: SelectChangeEvent<number>) => void;
 }
 
-const TripModal: React.FC<TripModalProps> = ({ buttonText, formValues, setFormValues }) => {
+const TripModal: React.FC<TripModalProps> = ({ buttonText, formValues, handleChangeSelectNumbersAdults,handleChangeSelectNumbersSeniors  }) => {
   const [open, setOpen] = useState(false);
 
   const [buttonDisplayText, setButtonDisplayText] = useState(buttonText);
@@ -22,19 +24,7 @@ const TripModal: React.FC<TripModalProps> = ({ buttonText, formValues, setFormVa
     setOpen(false);
   };
 
-  const handleChangeSelectNumbersAdults = (e: SelectChangeEvent<number>) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      numberAdults: e.target.value as number,
-    }));
-  };
-
-  const handleChangeSelectNumbersSeniors = (e: SelectChangeEvent<number>) => {
-    setFormValues((prevFormValues) => ({
-      ...prevFormValues,
-      numberSenior: e.target.value as number,
-    }));
-  };
+ 
 
   const handleSave = () => {
     setButtonDisplayText(`${formValues.numberAdults} adults, ${formValues.numberSenior} children`);

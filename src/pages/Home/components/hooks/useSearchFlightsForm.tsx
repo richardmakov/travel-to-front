@@ -5,8 +5,9 @@ import useFlightStore from '../../../../stores/flightStore';
 import useValidateForm from './useValidateForm';
 import { FlightSearchParams } from '../../../../types/flightStore';
 import { BadgeInfo } from '../interface/badgeInterface';
+import { SelectChangeEvent } from '@mui/material';
 
-const useFlightSearchForm = (selectedBadge:BadgeInfo) => {
+const useFlightSearchForm = (selectedBadge: BadgeInfo) => {
 
     const navigate = useNavigate();
 
@@ -24,7 +25,20 @@ const useFlightSearchForm = (selectedBadge:BadgeInfo) => {
         itineraryType: 'ONE_WAY'
     };
 
-    const [formValues, setFormValues] = useState<FormValuesSearchFlights>(initialFormValues);
+    const [formValues, setFormValues] = useState<FormValuesSearchFlights>(() => {
+        const savedValues = localStorage.getItem('formValues');
+        if (savedValues) {
+            const parsedValues = JSON.parse(savedValues);
+            return { ...initialFormValues, ...parsedValues };
+        }
+        return initialFormValues;
+    });
+
+    useEffect(() => {
+        const { numberAdults, numberSenior } = formValues;
+        const savedValues = { numberAdults, numberSenior };
+        localStorage.setItem('formValues', JSON.stringify(savedValues));
+    }, [formValues.numberAdults, formValues.numberSenior, formValues]);
 
     const [formError, setFormError] = useState('');
 
@@ -32,16 +46,39 @@ const useFlightSearchForm = (selectedBadge:BadgeInfo) => {
 
     const { searchFlights, searchAirportArrival, searchAirportDeparture, airportsDeparture, airportsLanding } = useFlightStore();
 
+    useEffect(() => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            currencyCode: selectedBadge.symbol
+        }));
+    }, [selectedBadge]);
+
     const handleChange = (field: keyof FormValuesSearchFlights, value: string) => {
+        console.log(field, value);
         setFormValues((prevState) => ({
             ...prevState,
             [field]: value
         }));
     };
 
-    const updateFormValues = (data : FormValuesSearchFlights) => {
-        setFormValues({...formValues, ...data});
-    }   
+    const handleChangeSelectNumbersAdults = (e: SelectChangeEvent<number>) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            numberAdults: e.target.value as number,
+        }));
+    };
+
+    const handleChangeSelectNumbersSeniors = (e: SelectChangeEvent<number>) => {
+        setFormValues((prevState) => ({
+            ...prevState,
+            numberSenior: e.target.value as number,
+        }));
+    };
+
+    const updateFormValues = (data: FormValuesSearchFlights) => {
+        setFormValues(prevState => ({ ...prevState, ...data }));
+    };
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -57,7 +94,6 @@ const useFlightSearchForm = (selectedBadge:BadgeInfo) => {
 
     const findFlights = async () => {
         setError(null);
-        console.log(formValues)
         try {
             await searchAirportDeparture(formValues.origin);
             await searchAirportArrival(formValues.destination);
@@ -107,7 +143,9 @@ const useFlightSearchForm = (selectedBadge:BadgeInfo) => {
         handleChange,
         handleSubmit,
         formError,
-        error
+        error,
+        handleChangeSelectNumbersAdults,
+        handleChangeSelectNumbersSeniors
     };
 };
 

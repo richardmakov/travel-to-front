@@ -186,7 +186,6 @@ export const useCheckOutViewModel = (selectedBadge: BadgeInfo) => {
                     ),
                     paymentDate: dayjs().format('YYYY-MM-DD')
                 }
-                console.log(payment)
 
                 const userEntry = {
                     id: user?.id,
