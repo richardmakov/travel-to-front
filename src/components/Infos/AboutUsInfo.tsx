@@ -4,8 +4,8 @@ import { Box, Grid, Typography } from '@mui/material'
 export default function AbousUsInfo() {
   return (
 
-    <Box sx={{ maxWidth: '100%', margin: '0 auto', p: 12, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-      <Grid container spacing={2} sx={{ width: '60%', display: 'flex', justifyContent: 'center' }}>
+    <Box sx={{ maxWidth: '100%', margin: '0 auto', p: {xs:5,sm:5, md: 8, lg:10}, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+      <Grid container spacing={2} sx={{ width: { xs: '90%', md:'80%', lg:'70%' }, display: 'flex', justifyContent: 'center' }}>
         <Typography variant="h5" sx={{ color: '#333', marginBottom: '1rem', fontWeight: 400, textAlign: 'center' }}>
           TravelTO, your online travel agency
         </Typography>

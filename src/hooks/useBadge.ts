@@ -4,7 +4,7 @@ import { BadgeInfo } from "../pages/Home/components/interface/badgeInterface";
 const useBadge = () => {
     const [selectedBadge, setSelectedBadge] =  useState<BadgeInfo>(() => {
         const savedBadgeString = localStorage.getItem('selectedBadge');
-        return savedBadgeString ? JSON.parse(savedBadgeString) : { name: 'Euro', symbol: 'EUR', image: './../public/euro.png' }
+        return savedBadgeString ? JSON.parse(savedBadgeString) : { name: 'Euro', symbol: 'EUR', image: '/euro.png' }
     });
 
     useEffect(() => {

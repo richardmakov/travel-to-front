@@ -8,19 +8,19 @@ export default function BasicCard() {
         
         <Card sx={{ height: '20%', mt:12}}>
 
-            <CardContent>
+            <CardContent sx ={{display:'flex', justifyContent:'center', flexDirection:'column'}}>
 
                 <Typography variant="h5" sx={{mt:3, ml:1}} component="div">
                    Contact us:
                 </Typography>
 
-                <Typography variant="body2" sx={{ mt: 3, ml: 3, color: '#999999' }}>
+                <Typography variant="body2" sx={{ mt: 3, ml: 1, color: '#999999' }}>
                     Call us 666 666 666
                 </Typography>
-                <Typography variant="body2" sx={{ ml: 3, color: '#999999' }}>
-                    New Itenerary: Monday to Friday 09:30h a 19:30h .
+                <Typography variant="body2" sx={{ ml: 1, color: '#999999' }}>
+                    New Itenerary: Monday to Friday, From 09:30h to 19:30h .
                 </Typography>
-                <Typography variant="body2" sx={{mt: 3, mb:3, ml: 3, color: '#999999' }}>
+                <Typography variant="body2" sx={{mt: 3, mb:3, ml: 1, color: '#999999' }}>
                     Email to get in contact: 
                     <br />
                     <a href="mailto:rmakovs@iesmordefuentes.com">rmakovs@iesmordefuentes.com</a>

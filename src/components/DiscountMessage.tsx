@@ -24,11 +24,11 @@ export default function DiscountMessage() {
                 sx={{
                     fontSize: {
                         xs: '1rem',
-                        sm: '1.25rem',
+                        sm: '1rem',
                         md: '1.25rem'
                     },
                     mb: { xs: 1, sm: 0 },
-                    display: { xs: 'none', sm: 'none', md:'block' }
+                    display: { xs: 'block', sm: 'block', md: 'block' }
                 }}
             >
                 🎉 Special Offer! 🎉
@@ -38,7 +38,7 @@ export default function DiscountMessage() {
                     whiteSpace: 'nowrap',
                     fontStyle: 'italic',
                     fontSize: {
-                        xs: '0.75rem',
+                        xs: '0.55rem',
                         sm: '0.95rem',
                         md: '1rem'
                     },
@@ -48,5 +48,6 @@ export default function DiscountMessage() {
                 For every child, enjoy a 5% discount on all purchases! Act fast, this offer won't last long.
             </Typography>
         </Box>
+
     );
 }

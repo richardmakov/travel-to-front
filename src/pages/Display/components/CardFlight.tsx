@@ -15,7 +15,7 @@ const CardFlight = ({ flight }: CardFlightProps) => {
             {flight && (
                 <Card
                     sx={{
-                        width: '50%',
+                        width: {xs:'90%',md:'50%'},
                         margin: 'auto',
                         boxShadow: 3,
                         marginBottom: 10,

@@ -12,31 +12,38 @@ export default function CardFlightView() {
   return (
     <>
       {load ? (
-        <Box sx={{ p: 50, display: 'flex', justifyContent: 'center' }}>
+        <Box sx={{py: 50, display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </Box>
       ) : (
-        flights? (
+        flights && flights.data && flights.data.flights ? (
           isLogged ? (
             flights.data.flights.map((flight, index) => (
-              <NavLink to={`/checkout/flights/${index}`} state={flight} style={{ textDecoration: 'none' }} key={index}>
-                <CardFlight flight={flight} key={index} />
+              <NavLink
+                to={`/checkout/flights/${index}`}
+                state={flight}
+                style={{ textDecoration: 'none' }}
+                key={index}
+              >
+                <CardFlight flight={flight} />
               </NavLink>
             ))
           ) : (
             flights.data.flights.map((flight, index) => (
-              <div key={index} onClick={() => handleClickVariant('You have to be logged', 'info')}>
-                <CardFlight flight={flight} key={index} />
+              <div
+                key={index}
+                onClick={() => handleClickVariant('You have to be logged', 'info')}
+              >
+                <CardFlight flight={flight} />
               </div>
             ))
           )
-
         ) : (
-          <Box sx={{ p: 50, display: 'flex', justifyContent: 'center' }}>
+          <Box sx={{ py: 50, display: 'flex', justifyContent: 'center' }}>
             <Typography variant="h6">No flights available</Typography>
           </Box>
         )
       )}
     </>
-  )
+  );
 }
